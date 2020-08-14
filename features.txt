@@ -8,12 +8,18 @@
 - When medicines are about to be exhausted, Alert is issued.
 - Inventory Management
 - Barcode support
-- Auto Backup of all the data
+- Auto Backup of all the data ( at the given time )
 - GST return
 - Report generation
 - Chart to see profits and sales intuitively
 - Bill email to customer
 - Profit % calculation while adding entries of medicines
+- Searching Bills
+    * Date Wise
+    * Month Wise
+    * Price Wise
+    * Bill no. Wise
+    * Year wise
 
 
 If we have time.
