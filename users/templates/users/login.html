@@ -1,12 +1,28 @@
+{% load static %}
 <html>
     <head>
         <title>Login</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ==" crossorigin="anonymous" />
+        <link rel="stylesheet" href="{% static 'users/semantic.min.css' %}">
     </head>
     <body>
-        <h1>Login</h1>
         
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw==" crossorigin="anonymous"></script>
+        
+        <div class="ui container">
+            <div class="column four wide">
+                <h1>Login</h1>
+                <div class="ui form">
+                    <form method='post'>
+                        {% csrf_token %}
+                        {{form}}
+                    
+                </div>
+                <br />
+                <input type="submit" class="ui positive button" value='Login'>
+            </form>
+            </div>
+        </div>
+
+        <script src="{% static 'users/semantic.min.js' %}" integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw==" crossorigin="anonymous"></script>
     </body>
 
 </html>
