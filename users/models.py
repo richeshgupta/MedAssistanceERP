@@ -1,12 +1,18 @@
 from django.db import models
 from django.contrib.auth.models import User
-# Create your models here.
+
+# PhoneField import
+from phone_field import PhoneField
+
+
 
 # 1 - Basic, 2 - Intermediate, 3 - Admin (see docs) for better understanding of access_level
-access_level = [1,2,3]
+access_level = [(1,'basic'),(2,'Intermediate'),(3,'Admin')]
 
 class user_relationship(models.Model):
-    access_level = models.IntegerField(choices=access_level,default=1)
-    models.ForeignKey(User,on_delete=models.CASCADE)
-    
+    access_level = access_level = models.IntegerField(choices=access_level,default=1)
+    User = models.OneToOneField(User,on_delete=models.CASCADE)
+    address = models.CharField(max_length=100,default="")
+    mobile = PhoneField(blank=True,help_text="Mobile_Number")
+
 
