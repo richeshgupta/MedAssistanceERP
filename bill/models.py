@@ -5,7 +5,7 @@ payment = [(1,'Cash'),(2,'Credit')]
 
 class Bill_Wholeseller(models.Model):
     date = models.DateField(default=timezone.now,null=False)
-    mode_of_payment = models.IntegerField(choices=payment,default=1)
+    mode_of_payment = models.PositiveSmallIntegerField(choices=payment,default=1)
     
 
 
