@@ -1,6 +1,7 @@
 from django.db import models
 from phone_field import PhoneField
 from django.utils import timezone
+from party.models import Party_Wholeseller
 
 class Company(models.Model):
     comp_id = models.IntegerField(primary_key=True)
@@ -23,6 +24,7 @@ class Product(models.Model):
     sale_sgst = models.FloatField(null=False)
     free = models.IntegerField(null=False)
     mrp = models.FloatField(null=False)
+    party_wholeseller_id=models.ForeignKey(Party_Wholeseller, on_delete=models.CASCADE, null=False)
 
     # def __str__(self):
     #     return self.name
@@ -31,5 +33,5 @@ class Batch(models.Model):
     batch_number = models.PositiveIntegerField()
     expiry = models.DateField(default=timezone.now,null=False)
     product_id = models.OneToOneField(Product,on_delete=models.SET_DEFAULT,default=0)
-
+    quantity = models.IntegerField(null=False)
 
