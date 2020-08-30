@@ -14,15 +14,15 @@ class Company(models.Model):
         # return self.comp_name
 
 class Product(models.Model):
-    name = models.CharField(max_length=20, null=False)
+    name = models.CharField(max_length=35, null=False)
     comp_id = models.ForeignKey(Company, on_delete=models.CASCADE)
-    purchase_rate = models.FloatField(null=False)
-    purchase_sgst = models.FloatField(null=False)
+    purchase_rate = models.FloatField(null=True)
+    purchase_sgst = models.FloatField(null=True)
     scheduled_drug = models.BooleanField(default=False)
-    unit_of_packing = models.PositiveIntegerField()
-    sale_rate = models.FloatField(null=False)
-    sale_sgst = models.FloatField(null=False)
-    free = models.IntegerField(null=False)
+    unit_of_packing = models.CharField()    #Unit of packing has units in char e.g. 10*1TAB or 10*10CAP {(Number of Tab in each strip,no.of strips)}
+    sale_rate = models.FloatField(null=True)
+    sale_sgst = models.FloatField(null=True)
+    free = models.IntegerField(null=True)
     mrp = models.FloatField(null=False)
     party_wholeseller_id=models.ForeignKey(Party_Wholeseller, on_delete=models.CASCADE, null=False)
 
@@ -30,7 +30,7 @@ class Product(models.Model):
     #     return self.name
 
 class Batch(models.Model):
-    batch_number = models.PositiveIntegerField()
+    batch_number = models.CharField()
     expiry = models.DateField(default=timezone.now,null=False)
     product_id = models.OneToOneField(Product,on_delete=models.SET_DEFAULT,default=0)
     quantity = models.IntegerField(null=False)
