@@ -11,8 +11,8 @@ class Party_Wholeseller(models.Model):
     contact = PhoneField(blank=True, help_text='Company_Number')
     pan_number = models.CharField(max_length=11,null=False)
 
-    # def __str__(self):
-    #     return self.name
+    def __str__(self):
+        return self.name
 
 class Party_Retailer(models.Model):
     name = models.CharField(max_length=20,null=False)
@@ -21,7 +21,7 @@ class Party_Retailer(models.Model):
     contact = PhoneField(blank=True, help_text='Company_Number')
     doctor = models.CharField(max_length=20,null=False)
 
-    # def __str__(self):
-        # return self.name
+    def __str__(self):
+        return self.name
 
 

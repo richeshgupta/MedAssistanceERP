@@ -14,5 +14,7 @@ class user_extended(models.Model):
     User = models.OneToOneField(User,on_delete=models.CASCADE)
     address = models.CharField(max_length=100,default="")
     mobile = PhoneField(blank=True,help_text="Mobile_Number")
+    def __str__(self):
+        self.super.get_username()
 
 
