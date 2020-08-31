@@ -11,10 +11,10 @@ access_level = [(1,'basic'),(2,'Intermediate'),(3,'Admin')]
 
 class user_extended(models.Model):
     access_level = access_level = models.PositiveSmallIntegerField(choices=access_level,default=1)
-    User = models.OneToOneField(User,on_delete=models.CASCADE)
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
     address = models.CharField(max_length=100,default="")
     mobile = PhoneField(blank=True,help_text="Mobile_Number")
     def __str__(self):
-        self.super.get_username()
+        return self.user.get_username()
 
 
