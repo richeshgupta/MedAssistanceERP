@@ -4,7 +4,6 @@ from django.utils import timezone
 from party.models import Party_Wholeseller
 
 class Company(models.Model):
-    comp_id = models.IntegerField(primary_key=True)
     comp_name = models.CharField(max_length=20, null=False)
     comp_address = models.CharField(max_length=50)
     comp_GST = models.PositiveIntegerField(null=False)
@@ -15,7 +14,7 @@ class Company(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=35, null=False)
-    comp_id = models.ForeignKey(Company, on_delete=models.CASCADE)
+    comp = models.ForeignKey(Company, on_delete=models.CASCADE)
     purchase_rate = models.FloatField(null=True)
     purchase_sgst = models.FloatField(null=True)
     scheduled_drug = models.BooleanField(default=False)
