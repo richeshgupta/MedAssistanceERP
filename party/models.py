@@ -9,7 +9,7 @@ class Party_Wholeseller(models.Model):
     gstin = models.IntegerField(null=False)
     dl_number = models.PositiveIntegerField(null=False)
     contact = PhoneField(blank=True, help_text='Company_Number')
-    pan_number = models.CharField(max_length=11,null=False)
+    pan_number = models.CharField(max_length=11,null=False,unique=True)
 
     def __str__(self):
         return self.name

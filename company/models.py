@@ -23,7 +23,7 @@ class Product(models.Model):
     sale_sgst = models.FloatField(null=True)
     free = models.IntegerField(null=True)
     mrp = models.FloatField(null=False)
-    party_wholeseller_id=models.ForeignKey(Party_Wholeseller, on_delete=models.CASCADE, null=False)
+    party_wholeseller = models.ForeignKey(Party_Wholeseller, on_delete=models.CASCADE, null=False)
 
     def __str__(self):
         return self.name

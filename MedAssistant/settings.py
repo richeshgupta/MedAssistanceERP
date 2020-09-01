@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'company',
     'party',
     'bill',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +129,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL='login'
+
+# export DJANGO_SETTINGS_MODULE=MedAssistanceERP.settings
