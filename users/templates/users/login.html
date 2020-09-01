@@ -1,12 +1,8 @@
-{% load static %}
-<html>
-    <head>
-        <title>Login</title>
-        <link rel="stylesheet" href="{% static 'users/semantic.min.css' %}">
-    </head>
-    <body>
-        
-        
+{% extends 'users/base.html' %}
+{% block head %}        
+    <title>Login</title>
+{% endblock head %}
+{% block content %}        
         <div class="ui container">
             <div class="column four wide">
                 <h1>Login</h1>
@@ -15,14 +11,11 @@
                         {% csrf_token %}
                         {{form}}
                     
+            
+                        <br /><br />
+                        <input type="submit" class="ui positive button" value='Login'>
+                    </form>
                 </div>
-                <br />
-                <input type="submit" class="ui positive button" value='Login'>
-            </form>
             </div>
         </div>
-
-        <script src="{% static 'users/semantic.min.js' %}" ></script>
-    </body>
-
-</html>
+{% endblock content %}        
