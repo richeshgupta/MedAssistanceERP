@@ -33,4 +33,6 @@ class Batch(models.Model):
     expiry = models.DateField(default=timezone.now,null=False)
     product_id = models.OneToOneField(Product,on_delete=models.SET_DEFAULT,default=0)
     quantity = models.IntegerField(null=False)
+    def __str__(self):
+        return self.batch_number
 
