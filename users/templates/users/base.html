@@ -6,10 +6,40 @@
         <link rel="stylesheet" href="{% static 'users/semantic.min.css' %}">
     </head>
     <body>
-        
-            <div class="ui grid container">
-                <div class="ui row two">
-                    <h1>Hello</h1>
+            <div class="ui menu">
+
+                <div class="item">
+                    <a href="{% url 'login' %}">Home</a>
+                </div>
+                <div class='item'>
+                    <a href="{% url 'test'%}">Purchase</a>
+                </div>
+                <div class='item'>
+                    <a href="{% url 'test'%}">Sale</a>
+                </div>
+                <div class='item'>
+                    <a href="{% url 'test'%}">Reports</a>
+                </div>
+                <div class='item'>
+                    <a href="{% url 'test'%}">Search</a>
+                </div>
+                <div class='item'>
+                    <a href="{% url 'test'%}">GST return</a>
+                </div>
+                <div class='item'>
+                    <a href="{% url 'test'%}">Tools</a>
+                </div>
+                
+                
+                
+                
+                <div class="right menu">
+                    <div class="item">
+                        <a href="{% url 'login' %}">Login</a>
+                    </div>
+                    <div class="item">
+                        <a href="{% url 'login' %}">Super Admin</a>
+                    </div>
                 </div>
             </div>
             

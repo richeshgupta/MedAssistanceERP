@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'company',
     'party',
     'bill',
-    'django_extensions',
+    
 ]
 
 MIDDLEWARE = [
