@@ -1,0 +1,21 @@
+{% load static %}
+<html>
+    <head>
+        {% block head %}
+        {% endblock head %}
+        <link rel="stylesheet" href="{% static 'users/semantic.min.css' %}">
+    </head>
+    <body>
+        
+            <div class="ui grid container">
+                <div class="ui row two">
+                    <h1>Hello</h1>
+                </div>
+            </div>
+            
+       
+
+        <script src="{% static 'users/semantic.min.js' %}" integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw==" crossorigin="anonymous"></script>
+    </body>
+
+</html>
