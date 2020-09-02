@@ -17,38 +17,38 @@
             <div class="ui menu">
 
                 <div class="item">
-                    <a href="{% url 'login' %}">
-                        <div id="tooltip" class="ui medium button" data-tooltip="Home Page" data-position="bottom left">
+                    <a href="{% url 'home' %}">
+                        <div id="tooltip" class="ui red medium button" data-tooltip="Home Page" data-position="bottom left">
                             <i class="home icon"></i>
                         </div>
                     </a>
                 </div>
                 <div class='item'>
-                    <a id="tooltip" data-tooltip="Purchase" data-position="bottom left" href="{% url 'test'%}"><i class="shopping cart icon"></i></a>
+                    <a class='ui teal basic button' id="tooltip" data-tooltip="Purchase" data-position="bottom left" href="{% url 'test' %}"><i class="shopping cart icon"></i></a>
                 </div>
                 <div class='item'>
-                    <a id="tooltip" data-tooltip="Sale" data-position="bottom left" href="{% url 'test'%}"><i class="Rupee sign icon"></i></a>
+                    <a class='ui teal basic button' id="tooltip" data-tooltip="Sale" data-position="bottom left" href="{% url 'test' %}"><i class="Rupee sign icon"></i></a>
                 </div>
                 <div class='item'>
-                    <a id="tooltip" data-tooltip="Report" data-position="bottom left" href="{% url 'test'%}"><i class="chart line icon"></i></a>
+                    <a class='ui teal basic button' id="tooltip" data-tooltip="Report" data-position="bottom left" href="{% url 'test' %}"><i class="chart line icon"></i></a>
                 </div>
                 <div class='item'>
-                    <a id="tooltip" data-tooltip="Search" data-position="bottom left" href="{% url 'test'%}"><i class="search icon"></i></a>
+                    <a class='ui teal basic button' id="tooltip" data-tooltip="Search" data-position="bottom left" href="{% url 'test' %}"><i class="search icon"></i></a>
                 </div>
                 <div class='item'>
-                    <a id="tooltip" data-tooltip="GST Return" data-position="bottom left" href="{% url 'test'%}"><i class="dollar sign icon"></i>
+                    <a class='ui teal basic button' id="tooltip" data-tooltip="GST Return" data-position="bottom left" href="{% url 'test' %}"><i class="dollar sign icon"></i>
                 </div></a>
                 <div class='item'>
-                    <a id="tooltip" data-tooltip="Tools" data-position="bottom left" href="{% url 'test'%}"><i class="cogs icon"></i></a>
+                    <a class='ui teal basic button' id="tooltip" data-tooltip="Tools" data-position="bottom left" href="{% url 'test' %}"><i class="cogs icon"></i></a>
                 </div>
-   
                 
-                <div class="right menu">
+                <div class="ui right menu">
                     <div class="item">
-                        <a href="{% url 'login' %}">Login</a>
+                        <a class="ui positive button" href="{% url 'login' %}">Login</a>
                     </div>
                     <div class="item">
-                        <a href="{% url 'test' %}">Super Admin</a>
+                        <a class="ui primary button" href="{% url 'test' %}">Super Admin</a>
+
                     </div>
                 </div>
             </div>
@@ -58,13 +58,18 @@
             {% endblock content %}
        
         
+
+        <!--Required Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
 
     <script>
         $('#tooltip').popup();
+        {% block script %}
+        {% endblock script %}
     </script>
+    
     </body>
 
 </html>
