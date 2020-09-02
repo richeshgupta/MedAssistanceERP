@@ -3,16 +3,42 @@
     <title>Login</title>
 {% endblock head %}
 {% block content %}        
+       
      <div class="ui container two wide grid raised segment">
            <div class="ui center aligned column grid raised segment">
             <div class="column four wide">
                 <h1>Login</h1>
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="ui red message">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <div class="ui red message">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+             
                 <div class="ui form">
+
                     <form method='post'>
                         {% csrf_token %}
-                        {{form}}
-                    
-            
+
+                            {% for field in form.visible_fields %}
+                                <div class="ui left labeled button">
+                                    <div class="ui basic right pointing label">
+                                        {{field.label_tag}}:
+                                    </div>
+                                    {{field}}
+                                </div>    
+                            
+                            
+                            {% endfor %}
+                            
                         <br /><br />
                         <input type="submit" class="ui positive button" value='Login'>
                     </form>
@@ -21,3 +47,16 @@
         </div>
      </div>
 {% endblock content %}        
+
+{% block script %}
+
+$('.message .close')
+  .on('click', function() {
+    $(this)
+      .closest('.message')
+      .transition('fade')
+    ;
+  })
+;
+
+{% endblock script %}

@@ -45,10 +45,10 @@
                 
                 <div class="right menu">
                     <div class="item">
-                        <a href="{% url 'login' %}">Login</a>
+                        <a class="ui positive button" href="{% url 'login' %}">Login</a>
                     </div>
                     <div class="item">
-                        <a href="{% url 'test' %}">Super Admin</a>
+                        <a class="ui primary button" href="{% url 'test' %}">Super Admin</a>
                     </div>
                 </div>
             </div>
@@ -58,13 +58,18 @@
             {% endblock content %}
        
         
+
+        <!--Required Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
 
     <script>
         $('#tooltip').popup();
+        {% block script %}
+        {% endblock script %}
     </script>
+    
     </body>
 
 </html>
