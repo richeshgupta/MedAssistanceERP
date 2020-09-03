@@ -22,7 +22,7 @@ class Party_Retailer(models.Model):
     state = models.CharField(max_length=20)
     contact = PhoneField(blank=True, help_text='Company_Number')
     doctor = models.CharField(max_length=20,null=False)
-
+    cheque = GenericRelation(Cheque)
     def __str__(self):
         return self.name
 
