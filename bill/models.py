@@ -46,4 +46,4 @@ class Purchase(models.Model):
     tax = ArrayField(models.FloatField(default=0))
     loss = ArrayField(models.BooleanField(default=False))
     sale_rate = ArrayField(models.FloatField(null=True))
-    #name of the party
+    
