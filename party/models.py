@@ -13,6 +13,7 @@ class Party_Wholeseller(models.Model):
     contact = PhoneField(blank=True, help_text='Company_Number')
     pan_number = models.CharField(max_length=11,null=False,unique=True)
     cheque = GenericRelation(Cheque)
+    
     def __str__(self):
         return self.name
 
@@ -23,6 +24,7 @@ class Party_Retailer(models.Model):
     contact = PhoneField(blank=True, help_text='Company_Number')
     doctor = models.CharField(max_length=20,null=False)
     cheque = GenericRelation(Cheque)
+
     def __str__(self):
         return self.name
 

@@ -44,12 +44,9 @@
                 
                 <div class="ui right menu">
                     <div class="item">
-                        <a class="ui positive button" href="{% url 'login' %}">Login</a>
+                        <a class="ui positive button" id="tooltip" data-tooltip="Login"  data-position="bottom right" href="{% url 'login' %}">Login</a>
                     </div>
-                    <div class="item">
-                        <a class="ui primary button" href="{% url 'test' %}">Super Admin</a>
-
-                    </div>
+                  
                 </div>
             </div>
 
@@ -66,9 +63,10 @@
 
     <script>
         $('#tooltip').popup();
+    </script>
         {% block script %}
         {% endblock script %}
-    </script>
+    
     
     </body>
 
