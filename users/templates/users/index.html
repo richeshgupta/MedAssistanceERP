@@ -1,5 +1,15 @@
 {% extends 'users/base.html' %}
+{% load static %}
+
 
 {% block content %}
-    <h1 class='ui centre aligned grid container'>MedAssistance ERP</h1>
+    <div class="ui container">
+        <div class="ui hidden divider"></div>
+        <div class="ui center aligned grid">
+            <div class="ui segment">
+            <h1 class="ui red header center aligned">MedAssistance ERP</h1>
+                <img src="{% static 'img/medassist-logo.png' %}">
+            </div>
+        </div>
+    </div>
 {% endblock %}
