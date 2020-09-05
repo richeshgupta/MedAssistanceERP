@@ -134,6 +134,6 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-LOGIN_REDIRECT_URL='login'
+LOGIN_REDIRECT_URL='home'
 
 # export DJANGO_SETTINGS_MODULE=MedAssistanceERP.settings
