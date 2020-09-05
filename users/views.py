@@ -6,3 +6,5 @@ def home(request):
 def Test(request):
     return render(request,"users/test.html",{})
 
+def Reg(request):
+    return render(request,"users/reg.html",{})
