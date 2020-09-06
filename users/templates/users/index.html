@@ -53,7 +53,12 @@
                                             {{field}}
                                         </div>                                  
                                         <br />
-                                    {% endfor %} 
+                                    {% endfor %}
+
+                                {% if request.GET.next %}
+                                    <input type="hidden" name='next' value="{{request.GET.next}}">
+                                {% endif %}
+                                
                                 <div class="ui hidden divider"></div>
                                 <input type="submit" class="ui fluid positive button" value='Login'>
                             </form>
@@ -64,3 +69,15 @@
     </div>
     {% endif %}
 {% endblock %}
+
+{% block script %}
+<script>
+$('.message .close')
+  .on('click', function() {
+    $(this)
+      .closest('.message')
+      .transition('fade')
+    ;
+  }) ;
+</script>
+{% endblock script %}

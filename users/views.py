@@ -27,7 +27,11 @@ def Signup(request):
             username_object = User.objects.filter(username=instance_username)[0]
             print("Id :",username_object)
             # form2.save()
-            return redirect('home')
+            if 'next' in request.POST:
+                return redirect(request.POST.get('next'))
+            else:
+                return redirect('home')
+
     else:
         form = SignUpForm()
         form2 = User_Extended()
