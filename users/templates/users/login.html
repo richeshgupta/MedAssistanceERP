@@ -3,11 +3,7 @@
     <title>Login</title>
 {% endblock head %}
 {% block content %}        
-<<<<<<< HEAD
-       
-     <div class="ui container grid raised segment">
-           <div class="ui center aligned column grid raised segment">
-=======
+
      {% if request.user.is_authenticated %}
      <div class="ui container two wide grid raised segment">
         <div class="ui center aligned column grid raised segment">
@@ -18,7 +14,6 @@
           
         <div class="ui container teal two wide grid raised segment">
            <div class="ui center aligned column grid raised ">
->>>>>>> 743aef6a796af1d9073222e2b6970119432c9af3
             <div class="column four wide">
                 <h1>Login</h1>
                 {% if form.errors %}
@@ -47,13 +42,8 @@
                                         {{field.label_tag}}
                                     </div>
                                     {{field}}
-                                </div>    
-<<<<<<< HEAD
-=======
-                                
+                                </div>                                  
                                 <br />
->>>>>>> 743aef6a796af1d9073222e2b6970119432c9af3
-                            
                             {% endfor %}
                             
                         <div class="ui hidden divider"></div>
