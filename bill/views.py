@@ -23,4 +23,6 @@ def create_bill_sale(request):
             loss = request.POST.getlist('loss'),
             sale_rate = request.POST.getlist('sale_rate'),
         )
+        # x.save() 
+
         return HttpResponse('')

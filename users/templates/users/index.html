@@ -8,14 +8,6 @@
 {% block content %}
     <div class="ui hidden divider"></div>
 
-    {% if request.user.is_authenticated %}
-        <div class="ui container two wide grid raised segment">
-            <div class="ui center aligned column grid raised segment">
-                <h1 class="ui orange header">You are already Logged In</h1>
-            </div>
-        </div>
-
-    {% else %}
     <div class="ui container">
         <div class="ui relaxed grid">
             <div class="eight wide column">
@@ -23,7 +15,7 @@
                 <img class="ui centered image" src="{% static 'img/medassist-logo.png' %}">
             </div>
 
-            
+            {% if not user.is_authenticated %}
                 <div class="eight wide column">
                     <div class="ui segment">
                         <h1>Login</h1>
@@ -59,8 +51,18 @@
                             </form>
                         </div>
                     </div>
-                </div>  
+                </div>
+                {% else %}
+                <div class="eight wide column">
+                    <div class="ui segment">
+                        <h1 class="ui orange segment">
+                            Choose appropriate actions from menu bar
+                        </h1>
+
+                    </div>
+                </div>
+                {% endif %}  
         </div>
     </div>
-    {% endif %}
+   
 {% endblock %}
