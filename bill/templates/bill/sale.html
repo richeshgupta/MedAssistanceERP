@@ -2,8 +2,211 @@
 {% block head %}        
     <title>Sale</title>
 {% endblock head %}
-{% block content %}        
-     <div class="ui container two wide grid raised segment">
-        
-     </div>
-{% endblock content %}  
+{% block content %}  
+
+<div class="ui container grid raised segment">
+    <div class="ui center aligned column grid raised segment">
+     
+         <h1>Sale</h1>
+         <form class="ui form">
+             {% csrf_token %}
+            <div class=" four fields">
+                <div class="field">
+                    <label>Customer Name</label>
+                    <input name="customer_name" type="text">
+                </div>
+                <div class="field">
+                    <label>Customer Email</label>
+                    <input name="customer_email" type="text">
+                </div>
+                <div class="field">
+                    <label>Mode of Payment</label>
+                    <select class="ui dropdown" name="mode_of_payment">
+                    <option value="">Select</option>
+                    <option value="1">Cash</option>
+                    <option value="2">Card</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Total</label>
+                    <input name="total_bill" type="text">
+                </div>
+            </div>
+            <div class="fields">
+                <div class="eight wide field">
+                    <label>Name</label>
+                    <input name="name" type="text">
+                </div>
+                <div class="field">
+                    <label>Batch No</label>
+                    <input name="batch_no" type="text">
+                </div>
+                <div class="field">
+                    <label>Quantity</label>
+                    <input name="quantity" type="text">
+                </div>
+                <div class="field">
+                    <label>Discount</label>
+                    <input name="discount" type="text">
+                </div>
+                <div class="field">
+                    <label>Deal</label>
+                    <input name="deal" type="text">
+                </div>
+                <div class="field">
+                    <label>Tax</label>
+                    <input name="tax" type="text">
+                </div>
+                <div class="field">
+                    <label>Loss</label>
+                    <input name="loss" type="text">
+                </div>
+                <div class="field">
+                    <label>Sale Rate</label>
+                    <input name="sale_rate" type="text">
+                </div>
+            </div>
+            <div class="ui submit button">Submit</div>
+            <div class="ui button add">Add</div>
+            <div class="ui error message"></div> 
+        </form>
+    </div>
+  
+</div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script>
+        var count = 0;
+        var name=[];
+        $(document).on('click', '.ui.button.add', function() {
+            count++;
+            var template = '<div class="fields">\
+                <div class="eight wide field">\
+                    <label>Name</label>\
+                    <input name="name" type="text">\
+                </div>\
+                <div class="field">\
+                    <label>Batch No</label>\
+                    <input name="batch_no" type="text">\
+                </div>\
+                <div class="field">\
+                    <label>Quantity</label>\
+                    <input name="quantity" type="text">\
+                </div>\
+                <div class="field">\
+                    <label>Discount</label>\
+                    <input name="discount" type="text">\
+                </div>\
+                <div class="field">\
+                    <label>Deal</label>\
+                    <input name="deal" type="text">\
+                </div>\
+                <div class="field">\
+                    <label>Tax</label>\
+                    <input name="tax" type="text">\
+                </div>\
+                <div class="field">\
+                    <label>Loss</label>\
+                    <input name="loss" type="text">\
+                </div>\
+                <div class="field">\
+                    <label>Sale Rate</label>\
+                    <input name="sale_rate" type="text">\
+                </div>\
+                <div class="field">\
+                <div class="ui vertical basic negative animated button">\
+                    <div class="hidden content">Remove</div>\
+                    <div class="visible content">\
+                    <i class="minus icon"></i>\
+                    </div>\
+                </div>\
+                </div>\
+            </div>';
+            
+            $(template).insertBefore('.ui.submit');
+            
+            
+            });
+    
+        $(document).on('click','.ui.vertical.basic.negative.animated.button',function(){
+           $(this).parent('div').parent('div').remove();
+           count--; 
+        });
+        $(document).on('click','.ui.submit.button',function(e){
+            e.preventDefault();
+            var name=[];
+            $("input[name='name']").each(function(){
+                name.push(this.value);
+            });
+
+            var batch_no=[];
+            $("input[name='batch_no']").each(function(){
+                batch_no.push(this.value);
+            });
+
+            var quantity=[];
+            $("input[name='quantity']").each(function(){
+                quantity.push(this.value);
+            });
+
+            var discount=[];
+            $("input[name='discount']").each(function(){
+                discount.push(this.value);
+            });
+
+            var deal=[];
+            $("input[name='deal']").each(function(){
+                deal.push(this.value);
+            });
+
+            var tax=[];
+            $("input[name='tax']").each(function(){
+                tax.push(this.value);
+            });
+
+            var loss=[];
+            $("input[name='loss']").each(function(){
+                loss.push(this.value);
+            });
+
+            var sale_rate=[];
+            $("input[name='sale_rate']").each(function(){
+                sale_rate.push(this.value);
+            });
+
+            $.ajax({
+                type : 'POST',
+                dataType : "json",
+                traditional : true,
+                url : 'create/',
+                data:{
+                    customer_name : document.getElementsByName('customer_name')[0].value ,
+                    customer_email : document.getElementsByName('customer_email')[0].value,
+                    mode_of_payment : document.getElementsByName('mode_of_payment')[0].value,
+                    total_bill : document.getElementsByName('total_bill')[0].value,
+                    name : name,
+                    batch_number : batch_no,
+                    quantity : quantity,
+                    discount : discount,
+                    deal : deal,
+                    tax : tax,
+                    loss : loss,
+                    sale_rate : sale_rate,
+                    csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken]').val()
+                },
+                success:function(){
+                    alert('created bill sale');
+                    
+                },
+                error:function(){
+                    
+                }
+
+            });
+        });
+
+    </script>
+{% endblock content %}<label>Loss</label>\

@@ -1,7 +1,8 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.postgres.fields import ArrayField
-from party.models import Party_Retailer
+from party.models import Party_Retailer,Party_Wholeseller
+
 
 payment = [(1,'Cash'),(2,'Credit')]
 
@@ -36,6 +37,7 @@ class Bill_Wholeseller(models.Model):
 
 class Purchase(models.Model):
     date = models.DateField(default=timezone.now,null=False)
+    party = models.ForeignKey(Party_Wholeseller, on_delete=models.PROTECT, null=False)
     mode_of_payment = models.PositiveSmallIntegerField(choices=payment,default=1)
     total_bill = models.FloatField(null=False)
     name = ArrayField(models.CharField(max_length=35, null=False))
@@ -46,4 +48,4 @@ class Purchase(models.Model):
     tax = ArrayField(models.FloatField(default=0))
     loss = ArrayField(models.BooleanField(default=False))
     sale_rate = ArrayField(models.FloatField(null=True))
-    #name of the party
+    
