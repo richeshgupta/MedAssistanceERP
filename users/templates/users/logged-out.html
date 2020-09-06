@@ -1,0 +1,20 @@
+{% extends 'users/base.html' %}
+{% block content %}
+    
+    <div class="ui container center aligned grid">
+        
+        <div class="ui center algined three wide grid">
+            <div clas="ui hidden divider"></div>
+            <h1 class="ui orange header segment">
+                {% if user.is_authenticated %}
+                    Succesfully Logged Out!
+                {% else %}
+                    You are not logged in!
+                {% endif %}
+            </h1>
+        </div>
+    </div>
+{% endblock content %}
+{% block head %}
+    <title>Logged Out!</title>
+{% endblock head %}
