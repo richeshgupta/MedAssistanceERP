@@ -3,9 +3,22 @@
     <title>Login</title>
 {% endblock head %}
 {% block content %}        
+<<<<<<< HEAD
        
      <div class="ui container grid raised segment">
            <div class="ui center aligned column grid raised segment">
+=======
+     {% if request.user.is_authenticated %}
+     <div class="ui container two wide grid raised segment">
+        <div class="ui center aligned column grid raised segment">
+            <h1 class="ui orange header">You are already Logged In</h1>
+        </div>
+     </div>
+     {% else %}
+          
+        <div class="ui container teal two wide grid raised segment">
+           <div class="ui center aligned column grid raised ">
+>>>>>>> 743aef6a796af1d9073222e2b6970119432c9af3
             <div class="column four wide">
                 <h1>Login</h1>
                 {% if form.errors %}
@@ -22,7 +35,7 @@
                         </div>
                     {% endfor %}
                 {% endif %}
-             
+            
                 <div class="ui form">
 
                     <form method='post'>
@@ -35,16 +48,22 @@
                                     </div>
                                     {{field}}
                                 </div>    
+<<<<<<< HEAD
+=======
+                                
+                                <br />
+>>>>>>> 743aef6a796af1d9073222e2b6970119432c9af3
                             
                             {% endfor %}
                             
-                        <br /><br />
+                        <div class="ui hidden divider"></div>
                         <input type="submit" class="ui positive button" value='Login'>
                     </form>
                 </div>
             </div>
         </div>
-     </div>
+    </div>
+     {% endif %}
 {% endblock content %}        
 
 {% block script %}

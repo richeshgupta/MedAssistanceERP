@@ -1,0 +1,28 @@
+{% extends 'users/base.html' %}
+{% block head %}
+    <title>Register Users</title>
+{% endblock head %}
+
+{% block content %}
+    {% if not request.user.is_authenticated %}
+        <div class="ui container center aligned grid">
+            <div class="ui hidden divider"></div>
+            <div class="ui center aligned orange segment">
+                <h1 class="ui orange header">
+                    Login to register!
+                </h1>
+            </div>
+        </div>
+    {% else %}
+        <div class="ui grid center aligned">
+            <div class="two wide column">
+                <form method='post'>
+                    {% csrf_token %}
+                    {{form}}
+                    <div class="ui hidden divider"></div>
+                        <input type="submit" class="ui positive button" value='Register'>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+{% endblock content %}
