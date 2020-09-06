@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import logout
-from .forms import SignUpForm
+from .forms import SignUpForm,User_Extended
+from django.contrib.auth.models import User
 
 def home(request):
     return render(request,'users/index.html')
@@ -18,10 +19,16 @@ def Logout(request):
 def Signup(request):
     if request.method=='POST':
         form = SignUpForm(request.POST)
-        if form.is_valid():
+        form2 = User_Extended(request.POST)
+        if form.is_valid() and form2.is_valid():
             form.save()
+            instance_username = form.cleaned_data.get('username')
+            username_object = User.objects.filter(username=instance_username)[0]
+            print("Id :",username_object)
+            # form2.save()
             return redirect('login')
     else:
         form = SignUpForm()
-    return render(request,'users/reg.html',{'form':form})
+        form2 = User_Extended()
+    return render(request,'users/reg.html',{'form':form,'form2':form2})
         

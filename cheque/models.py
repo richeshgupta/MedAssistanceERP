@@ -15,8 +15,6 @@ class Cheque(models.Model):
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
-
-    # party = GenericForeignKey('Party_Wholeseller','Party_Retailer')
     amount = models.FloatField(default=0.0)
     def __str__(self):
         return str(self.cheque_num)+" : "+str(self.bank)
