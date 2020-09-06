@@ -3,6 +3,7 @@
     <title>Login</title>
 {% endblock head %}
 {% block content %}        
+
      {% if request.user.is_authenticated %}
      <div class="ui container two wide grid raised segment">
         <div class="ui center aligned column grid raised segment">
@@ -41,10 +42,8 @@
                                         {{field.label_tag}}
                                     </div>
                                     {{field}}
-                                </div>    
-                                
+                                </div>                                  
                                 <br />
-                            
                             {% endfor %}
                             
                         <div class="ui hidden divider"></div>

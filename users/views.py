@@ -22,11 +22,12 @@ def Signup(request):
         form2 = User_Extended(request.POST)
         if form.is_valid() and form2.is_valid():
             form.save()
+
             instance_username = form.cleaned_data.get('username')
             username_object = User.objects.filter(username=instance_username)[0]
             print("Id :",username_object)
             # form2.save()
-            return redirect('login')
+            return redirect('home')
     else:
         form = SignUpForm()
         form2 = User_Extended()
