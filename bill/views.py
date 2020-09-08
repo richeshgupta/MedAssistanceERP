@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from .models import Bill_Retailer
 from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required
 
-@login_required(login_url='/')
+# Create your views here.
 def Sale(request):
     return render(request,"bill/sale.html",{})
+
 
 def create_bill_sale(request):
     if request.method == 'POST':
@@ -23,4 +23,6 @@ def create_bill_sale(request):
             loss = request.POST.getlist('loss'),
             sale_rate = request.POST.getlist('sale_rate'),
         )
+        # x.save()
+
         return HttpResponse('')
