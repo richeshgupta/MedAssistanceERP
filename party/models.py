@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.contenttypes.fields import GenericRelation
-
 from cheque.models import Cheque
 from phone_field import PhoneField
+
 class Party_Wholeseller(models.Model):
     name = models.CharField(max_length=20,null=False)
     address = models.CharField(max_length=50)
