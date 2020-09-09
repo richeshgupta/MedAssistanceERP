@@ -1,13 +1,16 @@
 from django.shortcuts import render
 from .models import Bill_Retailer
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
+from company.models import Product
+from django.core import serializers
+import json
 
 # Create your views here.
 def Sale(request):
     return render(request,"bill/sale.html",{})
 
 
-def create_bill_sale(request):
+def Create_Bill_Sale(request):
     if request.method == 'POST':
         Bill_Retailer.objects.create(
             customer_name = request.POST['customer_name'],
@@ -24,3 +27,12 @@ def create_bill_sale(request):
             sale_rate = request.POST.getlist('sale_rate'),
         )
         return HttpResponse('')
+
+
+def GetMed(request):
+    if request.method=="GET":
+        data=Product.objects.all()
+        qs_json = serializers.serialize('json', data)
+        return HttpResponse(qs_json, content_type='application/json')
+    
+        

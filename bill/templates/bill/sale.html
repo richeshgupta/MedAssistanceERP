@@ -1,6 +1,23 @@
 {% extends 'users/base.html' %}
 {% block head %}        
     <title>Sale</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<style>
+#result {
+   
+    cursor: pointer;
+    overflow-y: auto;
+    box-sizing: border-box;
+    z-index: 1001;
+}
+.link.class:hover{
+    background-color: #f1f1f1;
+}
+</style>
 {% endblock head %}
 {% block content %}  
 
@@ -33,9 +50,11 @@
                 </div>
             </div>
             <div class="fields">
+                <!-- Medcine Name field which is dropdown  -->
                 <div class="eight wide field">
                     <label>Name</label>
-                    <input name="name" type="text">
+                    <input type="text" name="name" id="0" placeholder="Med" class="bbb form-control form-control-lg rounded-1 border-info" />
+                    <ul class="list-group" id="1"></ul>
                 </div>
                 <div class="field">
                     <label>Batch No</label>
@@ -76,137 +95,227 @@
 
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script>
-        var count = 0;
-        var name=[];
-        $(document).on('click', '.ui.button.add', function() {
-            count++;
-            var template = '<div class="fields">\
-                <div class="eight wide field">\
+
+<script>
+    // count keeps track of  the number of Medicine added 
+    var count = 0;
+
+    //med_id keeps track of the id og medicine name field addded the input field
+    var med_id;
+
+    //keeps track of the ul inside the medicine name field
+    var med_ul_id=0;
+
+
+    // add button
+    $(document).on('click', '.ui.button.add', function() {
+        //count is the id of input in med name just for template
+        count+=2;
+        //c is the id of ul in the med name just for template
+        var c=count+1
+        var template = '<div class="fields">\
+            <div class="eight wide field">\
                     <label>Name</label>\
-                    <input name="name" type="text">\
+                    <input type="text" name="name" id='+count+' placeholder="Med" class="form-control form-control-lg rounded-1 border-info" />\
+                    <ul class="list-group" id='+c+'></ul>\
+            </div>\
+            <div class="field">\
+                <label>Batch No</label>\
+                <input name="batch_no" type="text">\
+            </div>\
+            <div class="field">\
+                <label>Quantity</label>\
+                <input name="quantity" type="text">\
+            </div>\
+            <div class="field">\
+                <label>Discount</label>\
+                <input name="discount" type="text">\
+            </div>\
+            <div class="field">\
+                <label>Deal</label>\
+                <input name="deal" type="text">\
+            </div>\
+            <div class="field">\
+                <label>Tax</label>\
+                <input name="tax" type="text">\
+            </div>\
+            <div class="field">\
+                <label>Loss</label>\
+                <input name="loss" type="text">\
+            </div>\
+            <div class="field">\
+                <label>Sale Rate</label>\
+                <input name="sale_rate" type="text">\
+            </div>\
+            <div class="field">\
+            <div class="ui vertical basic negative animated button">\
+                <div class="hidden content">Remove</div>\
+                <div class="visible content">\
+                <i class="minus icon"></i>\
                 </div>\
-                <div class="field">\
-                    <label>Batch No</label>\
-                    <input name="batch_no" type="text">\
-                </div>\
-                <div class="field">\
-                    <label>Quantity</label>\
-                    <input name="quantity" type="text">\
-                </div>\
-                <div class="field">\
-                    <label>Discount</label>\
-                    <input name="discount" type="text">\
-                </div>\
-                <div class="field">\
-                    <label>Deal</label>\
-                    <input name="deal" type="text">\
-                </div>\
-                <div class="field">\
-                    <label>Tax</label>\
-                    <input name="tax" type="text">\
-                </div>\
-                <div class="field">\
-                    <label>Loss</label>\
-                    <input name="loss" type="text">\
-                </div>\
-                <div class="field">\
-                    <label>Sale Rate</label>\
-                    <input name="sale_rate" type="text">\
-                </div>\
-                <div class="field">\
-                <div class="ui vertical basic negative animated button">\
-                    <div class="hidden content">Remove</div>\
-                    <div class="visible content">\
-                    <i class="minus icon"></i>\
-                    </div>\
-                </div>\
-                </div>\
-            </div>';
-            
-            $(template).insertBefore('.ui.submit');
-            
-            
-            });
-    
-        $(document).on('click','.ui.vertical.basic.negative.animated.button',function(){
-           $(this).parent('div').parent('div').remove();
-           count--; 
-        });
-        $(document).on('click','.ui.submit.button',function(e){
-            e.preventDefault();
-            var name=[];
-            $("input[name='name']").each(function(){
-                name.push(this.value);
-            });
+            </div>\
+            </div>\
+        </div>';
 
-            var batch_no=[];
-            $("input[name='batch_no']").each(function(){
-                batch_no.push(this.value);
-            });
 
-            var quantity=[];
-            $("input[name='quantity']").each(function(){
-                quantity.push(this.value);
-            });
+        //adding the template everytime add button is clicked
+        $(template).insertBefore('.ui.submit');
 
-            var discount=[];
-            $("input[name='discount']").each(function(){
-                discount.push(this.value);
-            });
 
-            var deal=[];
-            $("input[name='deal']").each(function(){
-                deal.push(this.value);
-            });
-
-            var tax=[];
-            $("input[name='tax']").each(function(){
-                tax.push(this.value);
-            });
-
-            var loss=[];
-            $("input[name='loss']").each(function(){
-                loss.push(this.value);
-            });
-
-            var sale_rate=[];
-            $("input[name='sale_rate']").each(function(){
-                sale_rate.push(this.value);
-            });
-
+        //fetching data from backend for the med name field added using the add button only on every key stroke
+        $(document).ready(function(){
+        $("input[name='name']").keyup(function(){
+            //setting id of currrent active medicine field
+            med_id=$(this).attr('id');
+            med_ul_id=parseInt(med_id)+1;
+            $('#'+ med_ul_id).html('');
+            var searchField=$(this).val();
+            var expression=new RegExp(searchField,'i');
+            if(searchField!=''){
             $.ajax({
-                type : 'POST',
-                dataType : "json",
-                traditional : true,
-                url : 'create/',
-                data:{
-                    customer_name : document.getElementsByName('customer_name')[0].value ,
-                    customer_email : document.getElementsByName('customer_email')[0].value,
-                    mode_of_payment : document.getElementsByName('mode_of_payment')[0].value,
-                    total_bill : document.getElementsByName('total_bill')[0].value,
-                    name : name,
-                    batch_number : batch_no,
-                    quantity : quantity,
-                    discount : discount,
-                    deal : deal,
-                    tax : tax,
-                    loss : loss,
-                    sale_rate : sale_rate,
-                    csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken]').val()
-                },
-                success:function(){
-                    alert('created bill sale');
-                    
-                },
-                error:function(){
-                    
-                }
+                url: "getMed/",
+                type: "GET",
+                datatype:'json',
+                success: function(response){
+                    $.each(response,function(key,value){
+                        if(value.fields.name.search(expression) != -1)
+                        {
+                            $("#"+ med_ul_id).append('<li class="list-group-item list-group-item-action border">'+value.fields.name+'</li>'); 
+                        }
 
+                    });
+
+                }
             });
+
+            }
+            //when medicine field is empty
+            else{
+                $('#'+ med_ul_id).html('');
+            }
         });
 
-    </script>
-{% endblock content %}<label>Loss</label>\
+        });
+    });
+    
+
+    //remove button for removing the added medicine field
+    $(document).on('click','.ui.vertical.basic.negative.animated.button',function(){
+       $(this).parent('div').parent('div').remove();
+       count-=2; 
+    });
+
+    //submit button
+    $(document).on('click','.ui.submit.button',function(e){
+        e.preventDefault();
+        var name=[];
+        $("input[name='name']").each(function(){
+            name.push(this.value);
+        });
+
+        var batch_no=[];
+        $("input[name='batch_no']").each(function(){
+            batch_no.push(this.value);
+        });
+
+        var quantity=[];
+        $("input[name='quantity']").each(function(){
+            quantity.push(this.value);
+        });
+
+        var discount=[];
+        $("input[name='discount']").each(function(){
+            discount.push(this.value);
+        });
+
+        var deal=[];
+        $("input[name='deal']").each(function(){
+            deal.push(this.value);
+        });
+
+        var tax=[];
+        $("input[name='tax']").each(function(){
+            tax.push(this.value);
+        });
+
+        var loss=[];
+        $("input[name='loss']").each(function(){
+            loss.push(this.value);
+        });
+
+        var sale_rate=[];
+        $("input[name='sale_rate']").each(function(){
+            sale_rate.push(this.value);
+        });
+
+        $.ajax({
+            type : 'POST',
+            dataType : "json",
+            traditional : true,
+            url : 'create/',
+            data:{
+                customer_name : document.getElementsByName('customer_name')[0].value ,
+                customer_email : document.getElementsByName('customer_email')[0].value,
+                mode_of_payment : document.getElementsByName('mode_of_payment')[0].value,
+                total_bill : document.getElementsByName('total_bill')[0].value,
+                name : name,
+                batch_number : batch_no,
+                quantity : quantity,
+                discount : discount,
+                deal : deal,
+                tax : tax,
+                loss : loss,
+                sale_rate : sale_rate,
+                csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken]').val()
+            },
+            success:function(){
+                alert('created bill sale');
+                
+            },
+            error:function(){
+                
+            }
+
+        });
+    });
+
+    //fetching data for the first Medicine Name Field
+    $(document).ready(function(){
+        $("#0").keyup(function(){
+            med_ul_id="1";
+            $('#'+ med_ul_id).html('');
+            var searchField=$(this).val();
+            med_id=$(this).attr('id');  
+            console.log(searchField);
+            var expression=new RegExp(searchField,'i');
+            if(searchField!=''){
+            $.ajax({
+                url: "getMed/",
+                type: "GET",
+                datatype:'json',
+                success: function(response){
+                    $.each(response,function(key,value){
+                        if(value.fields.name.search(expression) != -1)
+                        {
+                            $("#"+ med_ul_id).append('<li class="list-group-item list-group-item-action border">'+value.fields.name+'</li>');
+                        }
+                    });
+
+                }
+            });
+            }
+            else{
+                $('#'+ med_ul_id).html('');
+            }
+        });
+});
+</script>
+<script>
+    //when an option is clicked in the dropdown in medicine name field
+    $(document).on('click','li',function(){
+        $('#'+med_id).val($(this).text());
+        $('#'+ med_ul_id).html('');
+    });
+</script>
+
+{% endblock content %}
