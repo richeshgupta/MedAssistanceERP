@@ -41,7 +41,7 @@
                     <a class='ui teal basic button' id="tooltip" data-tooltip="GST Return" data-position="bottom left" href="{% url 'test' %}"><i class="dollar sign icon"></i>
                 </div></a>
                 <div class='item'>
-                    <a class='ui teal basic button' id="tooltip" data-tooltip="Tools" data-position="bottom left" href="{% url 'test' %}"><i class="cogs icon"></i></a>
+                    <a class='ui teal basic button' id="tooltip" data-tooltip="Tools" data-position="bottom left" href="{% url 'test' %}"><i class="paperclip icon"></i></a>
                 </div>
                 
                 <div class="right item">
@@ -51,6 +51,11 @@
                         <a class="ui positive button" id="tooltip" data-tooltip="Login"  data-position="bottom right" href="{% url 'home' %}">Login</a>
                     {% endif %}
                 </div>
+                {% if request.user.is_authenticated %} 
+                    <div class="item">
+                        <a class="ui  button" id="tooltip" data-tooltip="Settings"  data-position="bottom right" href="{% url 'settings' %}"><i class="cogs icon"></i></a>
+                    </div>
+                {% endif %}
             </div>
 
 

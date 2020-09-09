@@ -5,5 +5,4 @@ urlpatterns = [
     path('sale/',Sale,name='sale'),
     path('sale/create/',Create_Bill_Sale),
     path('sale/getMed/',GetMed),
-
 ]

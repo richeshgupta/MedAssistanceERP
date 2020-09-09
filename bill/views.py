@@ -4,10 +4,13 @@ from django.http import HttpResponse,JsonResponse
 from company.models import Product
 from django.core import serializers
 import json
+from django.contrib.auth.decorators import login_required
 
-# Create your views here.
+
+@login_required(login_url='/')
 def Sale(request):
     return render(request,"bill/sale.html",{})
+
 
 
 def Create_Bill_Sale(request):
@@ -34,5 +37,3 @@ def GetMed(request):
         data=Product.objects.all()
         qs_json = serializers.serialize('json', data)
         return HttpResponse(qs_json, content_type='application/json')
-    
-        

@@ -20,6 +20,8 @@ class Bill_Retailer(models.Model):
     tax = ArrayField(models.FloatField(default=0))
     loss = ArrayField(models.BooleanField(default=False))
     sale_rate = ArrayField(models.FloatField(null=True))
+    def __str__(self):
+        return str(self.date) + " : " + self.customer_name
 
 class Bill_Wholeseller(models.Model):
     date = models.DateField(default=timezone.now,null=False)
@@ -34,7 +36,12 @@ class Bill_Wholeseller(models.Model):
     tax = ArrayField(models.FloatField(default=0))
     loss = ArrayField(models.BooleanField(default=False))
     sale_rate = ArrayField(models.FloatField(null=True))
+    def __str__(self):
+        return str(self.date) + " : " + self.customer
 
+
+# to do
+# in purchase -> __str__ try to implement Name of the party
 class Purchase(models.Model):
     date = models.DateField(default=timezone.now,null=False)
     party = models.ForeignKey(Party_Wholeseller, on_delete=models.PROTECT, null=False)
@@ -49,3 +56,5 @@ class Purchase(models.Model):
     loss = ArrayField(models.BooleanField(default=False))
     sale_rate = ArrayField(models.FloatField(null=True))
     
+    def __str__(self):
+        return str(self.date)
