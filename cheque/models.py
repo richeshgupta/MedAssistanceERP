@@ -20,7 +20,7 @@ class Cheque(models.Model):
     cheque_num = models.CharField(max_length=15,null=False,unique=True)
     bank = models.CharField(choices=bank_list, max_length=40, null=False)
     date_issued = models.DateField(default=timezone.now, null=False)
-    date_for_assigned = models.DateField(default=(timezone.now() + timedelta(days=30)))
+    date_for_assigned = models.DateField(default=timezone.now)
     amount = models.FloatField(default=0.0)
     party_wholeseller = models.ForeignKey(to='party.Party_Wholeseller', on_delete=models.PROTECT)
 
