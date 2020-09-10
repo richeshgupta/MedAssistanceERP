@@ -11,8 +11,6 @@ from django.contrib.auth.decorators import login_required
 def Sale(request):
     return render(request,"bill/sale.html",{})
 
-
-
 def Create_Bill_Sale(request):
     if request.method == 'POST':
         Bill_Retailer.objects.create(
