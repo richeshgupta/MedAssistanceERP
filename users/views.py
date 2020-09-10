@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import logout
 from .forms import SignUpForm,User_Extended
 from django.contrib.auth.models import User
+from .models import user_extended
+
 
 def home(request):
     return render(request,'users/index.html')
@@ -14,19 +16,25 @@ def Reg(request):
 
 def Logout(request):
     logout(request)
-    return render(request,"users/logged-out.html",{})
+    return redirect('home')
 
 def Signup(request):
     if request.method=='POST':
         form = SignUpForm(request.POST)
-        form2 = User_Extended(request.POST)
-        if form.is_valid() and form2.is_valid():
+        
+        if form.is_valid():
             form.save()
-
-            instance_username = form.cleaned_data.get('username')
-            username_object = User.objects.filter(username=instance_username)[0]
-            print("Id :",username_object)
-            # form2.save()
+            access_level=request.POST.get('access_level')
+            phone = request.POST.get('phone')
+            address = request.POST.get('address')
+            db = user_extended()
+            form_username = form.cleaned_data.get('username')
+            xuser = User.objects.get(username=form_username)
+            db.user = xuser
+            db.access_level = access_level
+            db.mobile = phone
+            db.address = address
+            db.save()
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
             else:
@@ -37,9 +45,11 @@ def Signup(request):
         form2 = User_Extended()
     return render(request,'users/reg.html',{'form':form,'form2':form2})
 
-
-def Tools(request):
-    return render(request,'users/tools.html',{})
+    context = {'form':form,}
+    return render(request,'users/reg.html',context)
         
 def Settings(request):
     return render(request,"users/settings.html",{})
+
+def Tools(request):
+    return render(request,'users/tools.html',{})
