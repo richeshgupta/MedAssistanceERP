@@ -12,4 +12,4 @@ class SignUpForm(UserCreationForm):
 class User_Extended(forms.ModelForm):
     class Meta:
         model = user_extended
-        fields = ['user','access_level','address','mobile']
+        fields = ['access_level','address','mobile']
