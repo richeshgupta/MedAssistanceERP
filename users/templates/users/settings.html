@@ -1,1 +1,32 @@
 {% extends 'users/base.html' %}
+{% block head %}
+    <title>Settings</title>
+{% endblock head %}
+{% block content %}
+   <div class="ui grid center aligned ">
+        <div class="ten wide column segment">
+            <h1 class="ui orange segment header">
+                Settings
+            </h1>
+            <div class="ui hidden divider"></div>
+            <div class="ui grid">
+                <button class="circular ui icon button" data-tooltip="Back"  data-position="bottom right" id="tooltip">
+                    <a href="{{request.META.HTTP_REFERER|escape}}"><i class="angle left icon"></i></a>
+                </button>
+            </div>
+            <div class="ui hidden divider"></div>
+            
+        </div>
+    </div>
+    <div class="ui grid center aligned">
+        <div class=" two wide row">
+            <div class="eight wide column">
+                <h2>Form</h2>
+                    <div class="ui form positive segment">
+                        
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+

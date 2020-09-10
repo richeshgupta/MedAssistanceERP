@@ -21,7 +21,7 @@
 {% endblock head %}
 {% block content %}  
 
-<div class="ui container grid raised segment">
+<div class="ui two wide column grid  raised segment">
     <div class="ui center aligned column grid raised segment">
      
          <h1>Sale</h1>
@@ -49,9 +49,11 @@
                     <input name="total_bill" type="text">
                 </div>
             </div>
+            <div class="ui hidden divider"></div>
+            <div class="ui hidden divider"></div>
             <div class="fields">
                 <!-- Medcine Name field which is dropdown  -->
-                <div class="eight wide field">
+                <div class="five wide field">
                     <label>Name</label>
                     <input type="text" autocomplete="off" name="name" id="0" placeholder="Med" class="bbb form-control form-control-lg rounded-1 border-info" />
                     <ul class="list-group" id="1"></ul>
@@ -208,6 +210,7 @@
     //submit button
     $(document).on('click','.ui.submit.button',function(e){
         e.preventDefault();
+
         var name=[];
         $("input[name='name']").each(function(){
             name.push(this.value);
