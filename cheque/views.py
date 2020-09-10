@@ -9,8 +9,7 @@ def Cheque(request):
 def Create_Cheque(request):
     if reuqest.method == 'POST':
         Cheque.objects.create(
-            cheque_num = request.POST['cheque_number'],
             bank = request.POST['bank_name'],
-            
+            cheque_num = request.POST['cheque_number'],
 
         )

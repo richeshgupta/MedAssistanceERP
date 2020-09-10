@@ -36,6 +36,10 @@ def Signup(request):
         form = SignUpForm()
         form2 = User_Extended()
     return render(request,'users/reg.html',{'form':form,'form2':form2})
+
+
+def Tools(request):
+    return render(request,'users/tools.html',{})
         
 def Settings(request):
     return render(request,"users/settings.html",{})
