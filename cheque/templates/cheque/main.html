@@ -1,9 +1,9 @@
 {% extends 'users/base.html' %}
 
 {% block content %}
-<div class="ui container">
+<!-- <div class="ui container">
     <div class="grid">
-        <form class="ui form">
+        <form class="ui form" action="" method="post">
             {% csrf_token %}
             <h2 class="ui dividing header">Cheque Details</h2>
             <div class="field">
@@ -65,7 +65,7 @@
             <div class="three fields">
                 <div class="field">
                     <label>Month Issued</label>
-                    <select class="ui fluid search dropdown" name="month">
+                    <select class="ui fluid search dropdown" name="issued_month">
                     <option value="">Select</option>
                     <option value="01">January</option>
                     <option value="02">February</option>
@@ -83,11 +83,11 @@
                 </div>
                 <div class="three wide field">
                     <label>Year</label>
-                    <input type="text" name="year" placeholder="Year(YYYY)">
+                    <input type="text" name="issued_year" placeholder="Year(YYYY)">
                 </div>
                 <div class="two wide field">
                     <label>Date</label>
-                    <input type="text" name="date" placeholder="Date(DD)">
+                    <input type="text" name="issued_date" placeholder="Date(DD)">
                 </div>
             </div>
 
@@ -95,7 +95,7 @@
             <div class="three fields">
                 <div class="field">
                     <label>Month Assigned</label>
-                    <select class="ui fluid search dropdown" name="month">
+                    <select class="ui fluid search dropdown" name="assigned_month">
                     <option value="">Select</option>
                     <option value="01">January</option>
                     <option value="02">February</option>
@@ -113,11 +113,11 @@
                 </div>
                 <div class="three wide field">
                     <label>Year</label>
-                    <input type="text" name="year" placeholder="Year(YYYY)">
+                    <input type="text" name="assigned_year" placeholder="Year(YYYY)">
                 </div>
                 <div class="two wide field">
                     <label>Date</label>
-                    <input type="text" name="date" placeholder="Date(DD)">
+                    <input type="text" name="assigned_date" placeholder="Date(DD)">
                 </div>
             </div>
 
@@ -125,11 +125,23 @@
                 <label>Amount</label>
                 <input type="text" name="amount" placeholder="Amount">
             </div>
+
+            <div class="field">
+                <label></label>
+            </div>
             <div class="ui hidden divider"></div>
-            <div class="ui positive button" href="">Submit</div>
+            <div class="ui positive button" href="" type='submit' value='submit'>Submit</div>
         </form>
     </div>
-</div>
+</div> -->
+
+<h1>Custom Django Form</h1>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type='submit'>Submit</button>
+</form>
+
 
 {% endblock content %}
 
