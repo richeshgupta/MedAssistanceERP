@@ -27,14 +27,18 @@ def Signup(request):
             access_level=request.POST.get('access_level')
             phone = request.POST.get('phone')
             address = request.POST.get('address')
-            db = user_extended()
-            form_username = form.cleaned_data.get('username')
-            xuser = User.objects.get(username=form_username)
-            db.user = xuser
+            db = user_extended()    # DB object
+            form_username = form.cleaned_data.get('username') #Catching form1's username
+            xuser = User.objects.get(username=form_username) #searching the user
+            # Initialising the fields
+            db.user = xuser 
             db.access_level = access_level
             db.mobile = phone
             db.address = address
+            #saving all the changes in User_Extended model
             db.save()
+
+            #redirection when there's queued route
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
             else:
@@ -42,9 +46,7 @@ def Signup(request):
 
     else:
         form = SignUpForm()
-        form2 = User_Extended()
-    return render(request,'users/reg.html',{'form':form,'form2':form2})
-
+        
     context = {'form':form,}
     return render(request,'users/reg.html',context)
         
