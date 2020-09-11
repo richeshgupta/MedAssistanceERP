@@ -4,6 +4,11 @@ from .forms import SignUpForm,User_Extended
 from django.contrib.auth.models import User
 from .models import user_extended
 
+# todo 
+# - Add Errors in frontend
+# - 
+
+
 
 def home(request):
     return render(request,'users/index.html')
@@ -46,7 +51,6 @@ def Signup(request):
 
     else:
         form = SignUpForm()
-        
     context = {'form':form,}
     return render(request,'users/reg.html',context)
         
