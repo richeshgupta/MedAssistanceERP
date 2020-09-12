@@ -11,5 +11,6 @@ urlpatterns = [
     path('logout/',Logout,name='logout'),
     path('tools/',Tools,name='tools'),
     path('settings/',Settings,name='settings'),
+    path('manage_staff/',Manage_Staff,name='manage_staff'),
     ]
 

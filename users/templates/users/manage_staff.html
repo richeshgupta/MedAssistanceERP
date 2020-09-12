@@ -1,0 +1,64 @@
+{% extends 'users/base.html' %}
+{% block head %}
+    <title>Manage Staff</title>
+{% endblock head%}
+
+{% block content %}
+<div class="ui hidden divider"></div>
+<div class="ui container">
+<div class='ui huge centered main header orange segment'>Manage Staff</div>
+</div>
+<div class="ui hidden divider"></div>
+<div class="ui hidden divider"></div><div class="ui hidden divider"></div>
+<div class="ui container">
+    <div class="ui three column grid">
+        <div class="column">
+            <div class="ui card">
+                <div class="content">
+                    <div class="center aligned header">Add Staff</div>
+                    <div class="center aligned description">
+                        <p>Adding New Staff is done from here. Also you can subsequently define the permission of the staff</p>
+                    </div>
+                </div>
+                <div class="extra content">
+                    <div class="center aligned">
+                        <a class="ui positive button" href="{% url 'register' %}">Add Staff</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="ui card">
+                <div class="content">
+                    <div class="center aligned header">Editing Permissions</div>
+                    <div class="center aligned description">
+                        <p>Editing Permissions of the staff is done from here. Staff won't be able to access some features.</p>
+                    </div>
+                </div>
+                <div class="extra content">
+                    <div class="center aligned">
+                        <a class="ui orange button" href="{% url 'home' %}">Edit Permissions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="ui card">
+                <div class="content">
+                    <div class="center aligned header">Deleting Staff</div>
+                    <div class="center aligned description">
+                        <p>Deleting a Staff member account is done through here. All the Changes that user did will still persist.</p>
+                    </div>
+                </div>
+                <div class="extra content">
+                    <div class="center aligned">
+                        <a class="ui red button" href="{% url 'home' %}">Delete staff </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -59,3 +59,5 @@ def Settings(request):
 def Tools(request):
     return render(request,'users/tools.html',{})
 
+def Manage_Staff(request):
+    return render(request,"users/manage_staff.html",{})
