@@ -12,5 +12,7 @@ def Cheque(request):
             form.save()
         else:
             return redirect('cheque')
+    else:
+        form = ChequeForm()
     return render(request,"cheque/main.html",{'form':form})
     

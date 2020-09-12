@@ -12,3 +12,4 @@ urlpatterns = [
     path('tools/',Tools,name='tools'),
     path('settings/',Settings,name='settings'),
     ]
+

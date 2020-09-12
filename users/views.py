@@ -4,10 +4,9 @@ from .forms import SignUpForm,User_Extended
 from django.contrib.auth.models import User
 from .models import user_extended
 
-# todo 
-# - Add Errors in frontend
-# - 
-
+# Error 404 modules
+# from django.shortcuts import render_to_response
+# from django.template import RequestContext
 
 
 def home(request):
@@ -59,3 +58,4 @@ def Settings(request):
 
 def Tools(request):
     return render(request,'users/tools.html',{})
+
