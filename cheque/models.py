@@ -16,8 +16,8 @@ bank_list = [('Allahabad Bank','Allahabad Bank'),('Andhra Bank','Andhra Bank'),(
 
 
 class Cheque(models.Model):
-    cheque_num = models.CharField(max_length=15,null=False,unique=True)
     bank = models.CharField(choices=bank_list, max_length=40, null=False)
+    cheque_num = models.CharField(verbose_name='Cheque Number',max_length=15,null=False,unique=True)
     date_issued = models.DateField(default=timezone.now, null=False)
     date_for_assigned = models.DateField(default=timezone.now)
     amount = models.FloatField(default=0.0)
