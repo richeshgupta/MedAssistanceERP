@@ -1,15 +1,16 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import *
 from django.contrib.auth.decorators import login_required
+from .forms import ChequeForm
 
 @login_required(login_url='/')
 def Cheque(request):
-    return render(request,"cheque/main.html",{})
-
-def Create_Cheque(request):
-    if reuqest.method == 'POST':
-        Cheque.objects.create(
-            bank = request.POST['bank_name'],
-            cheque_num = request.POST['cheque_number'],
-
-        )
+    if request.method == 'POST':
+        form = ChequeForm(request.POST)
+        print(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            return redirect('cheque')
+    return render(request,"cheque/main.html",{'form':form})
+    

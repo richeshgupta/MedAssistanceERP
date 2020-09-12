@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'party',
     'bill',
     'cheque',
+    'semanticuiforms',
     
 ]
 
