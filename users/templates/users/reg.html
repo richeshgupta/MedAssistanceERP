@@ -3,8 +3,7 @@
     <title>Register Users</title>
     
 {% endblock head %}
-<!-- TODO -->
-<!-- Error of Reg form is still to implement  -->
+
 {% block content %}
     {% if not request.user.is_authenticated %}
         <div class="ui container center aligned grid">
@@ -16,14 +15,30 @@
             </div>
         </div>
     {% else %}
+
         <div class="ui hidden divider"></div>
         <div class="ui  grid center aligned" id="form">
             <div class="ui five wide column center aligned segment ">
                 <div class="three wide column grid ">
+                    
                     <h1 class="ui orange header segment">
                         Register your staff!
                     </h1>
                 </div>
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="ui red message">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <div class="ui red message">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endif %}
                 <div class="ui hidden divider"></div>
                 <div class="ui form segment">
                     <form method='post'>
