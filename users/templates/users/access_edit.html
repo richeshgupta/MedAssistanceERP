@@ -1,4 +1,11 @@
  {% extends 'users/base.html' %}
+ {% block head %}
+ <title>Edit Permission of {{user}}</title>
+ {% endblock head %}
  {% block content %}
- {{form}}
+ <form method="POST">
+     {% csrf_token %}
+    {{form}}
+    <input type="submit" class="ui positive button" value='Submit'>
+ </form>
  {% endblock content %}

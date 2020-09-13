@@ -70,6 +70,10 @@ def Edit_Permission(request):
 
 def Access_Edit(request,user_id):
     user = user_extended.objects.get(user = user_id)
-    
-
-    return render(request,"users/access_edit.html",{'user_id':user_id})
+    if(request.method!='POST'):
+        form = User_Extended_Form(instance=user)
+    else:
+        form = User_Extended_Form(request.POST,instance=user)
+        form.save()
+    context = {'form':form,'user':user}
+    return render(request,"users/access_edit.html",context)
