@@ -1,0 +1,37 @@
+ {% extends 'users/base.html' %}
+
+ {% block head %}
+    <title>Edit Staff Permissions</title>
+ {% endblock head %}
+
+ {% block content %}
+            <div class="ui hidden divider"></div>
+        <div class="ui container">
+        <div class='ui huge centered main header orange segment'>Manage Staff</div>
+        </div>
+        <div class="ui hidden divider"></div>
+        <div class="ui hidden divider"></div><div class="ui hidden divider"></div>
+        <div class="ui container">
+            <div class="ui three column grid">
+                
+                {% for user in users %}
+                        <div class="column">
+                            <div class="ui card">
+                                <div class="content">
+                                    <div class="center aligned header">{{user.username}}</div>
+                                    
+                                </div>
+                                <div class="extra content">
+                                    <div class="center aligned">
+                                        <a class="ui positive button" href="{% url 'access_edit' user.id %}">Edit Permission</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                {% endfor %}
+                
+
+               
+            </div>
+        </div>
+ {% endblock content %}

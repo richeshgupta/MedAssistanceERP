@@ -1,8 +1,10 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import logout
-from .forms import SignUpForm,User_Extended
+from .forms import SignUpForm,User_Extended_Form
 from django.contrib.auth.models import User
 from .models import user_extended
+
+from django.views.generic import UpdateView
 
 # Error 404 modules
 # from django.shortcuts import render_to_response
@@ -61,3 +63,13 @@ def Tools(request):
 
 def Manage_Staff(request):
     return render(request,"users/manage_staff.html",{})
+
+def Edit_Permission(request):
+    users = User.objects.all()
+    return render(request,"users/edit_permission.html",{'users':users})
+
+def Access_Edit(request,user_id):
+    user = user_extended.objects.get(user = user_id)
+    
+
+    return render(request,"users/access_edit.html",{'user_id':user_id})

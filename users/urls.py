@@ -12,5 +12,7 @@ urlpatterns = [
     path('tools/',Tools,name='tools'),
     path('settings/',Settings,name='settings'),
     path('manage_staff/',Manage_Staff,name='manage_staff'),
+    path('edit_permission/',Edit_Permission,name='edit_permission'),
+    path('access_edit/<int:user_id>',Access_Edit,name='access_edit'),
     ]
 
