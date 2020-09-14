@@ -54,26 +54,30 @@
                                     <br />
                                     <div class="ui hidden divider"></div>
                         {% endfor %}
+                        
                         <h3 class="ui red header">Access Level :</h3>
                         <div class="ui selection dropdown">
-                                <input type="hidden" name="access_level">
+                                <input type="hidden" name="access_level" required />
                                 <i class="dropdown icon"></i>
                                 <div class="default text">Access_level</div>
                                 <div class="menu">
-                                <div class="item" data-value="1">Basic</div>
-                                <div class="item" data-value="2">Intermediate</div>
-                                <div class="item" data-value="3">Admin</div>
+                                    <div class="item" data-value="1">Basic</div>
+                                    <div class="item" data-value="2">Intermediate</div>
+                                    <div class="item" data-value="3">Admin</div>
                                 </div>
-                          </div>
+                        </div>
+
                           <div class="ui hidden divider"></div>
                           <h4 class="ui teal header">Phone :</h4>
+
                           <div class="ui input">
-                            <input type="text" placeholder="Phone Number" name='phone'>
-                        </div>
+                            <input type="text" placeholder="Phone Number" name='phone' required />
+                          </div>
+
                         <div class="ui hidden divider"></div>
                         <div class="field">
                             <label>Address</label>
-                            <textarea rows="2" name="address"></textarea>
+                            <textarea rows="2" name="address" required></textarea>
                           </div>
 
                         <div class="ui hidden divider"></div>
@@ -87,7 +91,13 @@
 {% block script %}
 <script>
  $('.ui.dropdown')
-  .dropdown()
-;
+  .dropdown();
+
+$('.ui.form').form({
+    fields:{
+        access_level:'empty'
+    }
+});
+
 </script>
 {% endblock script %}
