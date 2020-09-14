@@ -55,6 +55,7 @@ def Signup(request):
     context = {'form':form,}
     return render(request,'users/reg.html',context)
         
+
 def Settings(request):
     return render(request,"users/settings.html",{})
 
@@ -69,7 +70,8 @@ def Edit_Permission(request):
     return render(request,"users/edit_permission.html",{'users':users})
 
 def Access_Edit(request,user_id):
-    user = user_extended.objects.get(user = user_id)
+    user = user_extended.objects.get(user=user_id)
+    print(user)
     if(request.method!='POST'):
         form = User_Extended_Form(instance=user)
     else:
