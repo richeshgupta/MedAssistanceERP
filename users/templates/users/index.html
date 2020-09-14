@@ -2,7 +2,17 @@
 {% load static %}
 {% block head %}
     <title>Home</title>
-    
+    <style>
+        .logout{
+            margin-top: 100px !important;
+        }
+        .container{
+            margin-top: 100px !important;
+        }
+        .login{
+            margin-top: 50px !important;
+        }
+    </style>
 {% endblock head %}
 
 {% block content %}
@@ -17,7 +27,7 @@
 
             {% if not user.is_authenticated %}
                 <div class="eight wide column">
-                    <div class="ui segment">
+                    <div class="ui segment login">
                         <h1 class="ui red header">Login</h1>
                         <div class="ui hidden divider"></div>
                         {% if form.errors %}
@@ -61,10 +71,10 @@
                 </div>
                 {% else %}
                 <div class="eight wide column">
-                    <div class="ui segment">
-                        <h1 class="ui orange segment">
-                            Choose appropriate actions from menu bar
-                        </h1>
+                    <div class="ui segment logout">
+                        <h2 class='ui centered header'>
+                            You are already logged in!
+                        </h2>
 
                     </div>
                 </div>
