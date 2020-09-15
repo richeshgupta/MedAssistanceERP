@@ -1,23 +1,6 @@
 {% extends 'users/base.html' %}
 {% block head %}        
     <title>Sale</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-<style>
-#result {
-   
-    cursor: pointer;
-    overflow-y: auto;
-    box-sizing: border-box;
-    z-index: 1001;
-}
-.link.class:hover{
-    background-color: #f1f1f1;
-}
-</style>
 {% endblock head %}
 {% block content %}  
 
@@ -55,8 +38,14 @@
                 <!-- Medcine Name field which is dropdown  -->
                 <div class="five wide field">
                     <label>Name</label>
-                    <input type="text" autocomplete="off" name="name" id="0" placeholder="Med" class="bbb form-control form-control-lg rounded-1 border-info" />
-                    <ul class="list-group" id="1"></ul>
+                    <div id="0" class="ui fluid selection dropdown">
+                        <input type="hidden" name="name" >
+                        <div class="text">Choose..</div>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <div class="item" data-value="select">Choose..</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="field">
                     <label>Batch No</label>
@@ -112,14 +101,19 @@
     // add button
     $(document).on('click', '.ui.button.add', function() {
         //count is the id of input in med name just for template
-        count+=2;
+        count+=1;
         //c is the id of ul in the med name just for template
-        var c=count+1
         var template = '<div class="fields">\
-            <div class="eight wide field">\
+            <div class="five wide field">\
                     <label>Name</label>\
-                    <input type="text" name="name" id='+count+' placeholder="Med" class="form-control form-control-lg rounded-1 border-info" />\
-                    <ul class="list-group" id='+c+'></ul>\
+                    <div id='+count+' class="ui fluid selection dropdown">\
+                        <input type="hidden" name="name">\
+                        <div class="text">Choose..</div>\
+                        <i class="dropdown icon"></i>\
+                        <div class="menu">\
+                            <div class="item" data-value="select">Choose..</div>\
+                        </div>\
+                    </div>\
             </div>\
             <div class="field">\
                 <label>Batch No</label>\
@@ -166,36 +160,24 @@
 
         //fetching data from backend for the med name field added using the add button only on every key stroke
         $(document).ready(function(){
-        $("input[name='name']").keyup(function(){
+        $(".ui.fluid.selection.dropdown").hover(function(){
             //setting id of currrent active medicine field
             med_id=$(this).attr('id');
-            med_ul_id=parseInt(med_id)+1;
-            $('#'+ med_ul_id).html('');
-            var searchField=$(this).val();
-            var expression=new RegExp(searchField,'i');
-            if(searchField!=''){
+            $('#'+med_id+' .menu').html('<div class="item" data-value="select">Choose..</div>');
             $.ajax({
                 url: "getMed/",
                 type: "GET",
                 datatype:'json',
                 success: function(response){
                     $.each(response,function(key,value){
-                        if(value.fields.name.search(expression) != -1)
-                        {
-                            $("#"+ med_ul_id).append('<li class="list-group-item list-group-item-action border">'+value.fields.name+'</li>'); 
-                        }
-
+                        $('#'+med_id).dropdown({'set value':'something'});
+                        $('#'+ med_id+' .menu').append('<div class="item" data-value='+value.fields.name+'>'+value.fields.name+'</div>');
                     });
+                    $('#'+med_id).dropdown('refresh');
 
                 }
+                });
             });
-
-            }
-            //when medicine field is empty
-            else{
-                $('#'+ med_ul_id).html('');
-            }
-        });
 
         });
     });
@@ -204,7 +186,7 @@
     //remove button for removing the added medicine field
     $(document).on('click','.ui.vertical.basic.negative.animated.button',function(){
        $(this).parent('div').parent('div').remove();
-       count-=2; 
+       count-=1; 
     });
 
     //submit button
@@ -284,41 +266,26 @@
 
     //fetching data for the first Medicine Name Field
     $(document).ready(function(){
-        $("#0").keyup(function(){
-            med_ul_id="1";
-            $('#'+ med_ul_id).html('');
-            var searchField=$(this).val();
-            med_id=$(this).attr('id');  
-            console.log(searchField);
-            var expression=new RegExp(searchField,'i');
-            if(searchField!=''){
+        $(".ui.fluid.selection.dropdown").hover(function(){
+            //setting id of currrent active medicine field
+            med_id="0";
+            $('#0 .menu').html('<div class="item" data-value="select">Choose..</div>');
             $.ajax({
                 url: "getMed/",
                 type: "GET",
                 datatype:'json',
                 success: function(response){
                     $.each(response,function(key,value){
-                        if(value.fields.name.search(expression) != -1)
-                        {
-                            $("#"+ med_ul_id).append('<li class="list-group-item list-group-item-action border">'+value.fields.name+'</li>');
-                        }
+                        $('#0').dropdown({'set value':'something'});
+                        $('#0 .menu').append('<div class="item" data-value='+value.fields.name+'>'+value.fields.name+'</div>');
                     });
+                    $('#0').dropdown('refresh');
 
                 }
+                });
             });
-            }
-            else{
-                $('#'+ med_ul_id).html('');
-            }
+
         });
-});
-</script>
-<script>
-    //when an option is clicked in the dropdown in medicine name field
-    $(document).on('click','li',function(){
-        $('#'+med_id).val($(this).text());
-        $('#'+ med_ul_id).html('');
-    });
 </script>
 
 {% endblock content %}
