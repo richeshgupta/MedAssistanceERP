@@ -9,6 +9,12 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ['first_name','last_name','username','password1','password2']
 
+        widgets = {
+            'first_name' : forms.TextInput(attrs={'placeholder':'First Name'}),
+            'last_name' : forms.TextInput(attrs={'placeholder':'Last Name'}),
+            'username' : forms.TextInput(attrs={'placeholder':'Username'}),
+        }
+
 class User_Extended_Form(forms.ModelForm):
     class Meta:
         model = user_extended

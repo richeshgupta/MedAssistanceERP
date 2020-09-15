@@ -17,7 +17,8 @@
     {% else %}
 
         <div class="ui hidden divider"></div>
-        <div class="ui  grid center aligned" id="form">
+
+        <!-- <div class="ui  grid center aligned" id="form">
             <div class="ui five wide column center aligned segment ">
                 <div class="three wide column grid ">
                     
@@ -78,14 +79,77 @@
                         <div class="field">
                             <label>Address</label>
                             <textarea rows="2" name="address" required></textarea>
-                          </div>
+                        </div>
 
                         <div class="ui hidden divider"></div>
                             <input type="submit" class="ui positive button" value='Register'>
                     </form>
                 </div>
             </div>
+        </div> -->
+
+        <div class="ui grid centered aligned">
+            <div class="ui eight wide column centered aligned">
+                <h1 class="ui header">
+                    Register your staff!
+                </h1>
+
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="ui red message">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <div class="ui red message">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <div class="ui hidden divider"></div>
+                <form method="post" class="ui form">
+                    {% csrf_token %}
+                    {% for field in form.visible_fields %}
+                        <div class="field">
+                            <h4 class="ui left floated header">{{field.label_tag}}</h4>
+                            {{field}}
+                        </div>
+                        <br>    
+                    {% endfor %}
+                    
+
+                    <div class="fields">
+                        <div class="nine wide field">
+                            <h4 class="ui header">Access Level</h4>
+                            <select name="access_level" class="ui fluid dropdown" required>
+                                <option value="">Access Level</option>
+                                <option value="1">Basic</option>
+                                <option value="2">Intermediate</option>
+                                <option value="3">Admin</option>
+                            </select>
+                        </div>
+                        <div class="seven wide field">
+                            <h4 class="ui header">Phone :</h4>
+                            <div class="field">
+                                <input type="text" placeholder="Phone Number" name='phone' required />
+                            </div>
+                        </div>     
+                    </div>
+                    <br>
+                    <div class="field">
+                        <h4>Address</h4>
+                        <textarea rows="2" name="address" required></textarea>
+                    </div>
+
+                    <div class="ui hidden divider"></div>
+                    <input type="submit" class="ui positive large button" value='Register'>
+                </form>
+            </div>
         </div>
+
     {% endif %}
 {% endblock content %}
 {% block script %}
