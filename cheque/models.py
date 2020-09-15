@@ -20,8 +20,8 @@ class Cheque(models.Model):
     cheque_num = models.CharField(verbose_name='Cheque Number',max_length=15,null=False,unique=True)
     date_issued = models.DateField(default=timezone.now, null=False)
     date_for_assigned = models.DateField(default=timezone.now)
-    amount = models.FloatField(default=0.0)
-    party_wholeseller = models.ForeignKey(to='party.Party_Wholeseller', on_delete=models.PROTECT)
+    amount = models.FloatField()
+    party_wholeseller = models.ForeignKey(verbose_name='Name of Wholeseller Party', to='party.Party_Wholeseller', on_delete=models.PROTECT)
 
     def __str__(self):
         return str(self.cheque_num)+" : "+str(self.bank)
