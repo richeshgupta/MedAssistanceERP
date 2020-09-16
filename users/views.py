@@ -48,7 +48,7 @@ def Signup(request):
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
             else:
-                return redirect('home')
+                return redirect('register')
 
     else:
         form = SignUpForm()
@@ -69,13 +69,51 @@ def Edit_Permission(request):
     users = User.objects.all()
     return render(request,"users/edit_permission.html",{'users':users})
 
+
+def ErrorPage(request,error):
+    if len(error)<1:
+        error = "No Thrown error"
+    return render(request,"users/error.html",{'error':error})
+
+
 def Access_Edit(request,user_id):
-    user = user_extended.objects.get(user=user_id)
-    print(user)
-    if(request.method!='POST'):
-        form = User_Extended_Form(instance=user)
-    else:
-        form = User_Extended_Form(request.POST,instance=user)
-        form.save()
-    context = {'form':form,'user':user}
-    return render(request,"users/access_edit.html",context)
+    try:
+        xuser = user_extended.objects.get(user=user_id)
+        if(request.method=='GET'):
+            form = User_Extended_Form(instance=xuser)
+        else:
+            form = User_Extended_Form(request.POST,instance=xuser)
+            form.save()
+            form = User_Extended_Form
+        context = {'form':form,'user':xuser}
+        return render(request,"users/access_edit.html",context)
+    except:
+        print("HERE\n\n")
+        try:
+            super_user = User.objects.get(pk=user_id)
+        except:
+            return ErrorPage(request,"No User with this id")
+        user_extended.objects.create(user=super_user)
+        
+        return Access_Edit(request,user_id)
+        
+    
+    return render(request,"users/access_edit.html",{})
+    
+    
+def User_List_Del(request):
+    users = User.objects.all()
+    return render(request,"users/user-list-del.html",{'users':users})
+    
+def Delete_Staff(request,user_id):
+    try:
+        extended_user = user_extended.objects.get(user=user_id)
+    except:
+        return ErrorPage(request,"No user with this id, in extended model")
+    try:
+        User_object = User.objects.get(pk=user_id)
+    except:
+        return ErrorPage(request,"No user with this id, in User model")
+    extended_user.delete()
+    User_object.delete()
+    return redirect('manage_staff')

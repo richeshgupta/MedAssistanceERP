@@ -1,0 +1,47 @@
+{% extends 'users/base.html' %}
+
+{% block head %}
+   <title>Edit Staff Permissions</title>
+{% endblock head %}
+
+{% block content %}
+           <div class="ui hidden divider"></div>
+       <div class="ui container">
+       <div class='ui huge centered main header red segment'>Manage Staff</div>
+       </div>
+       <div class="ui hidden divider"></div>
+       <div class="ui hidden divider"></div><div class="ui hidden divider"></div>
+       <div class="ui container">
+           <div class="ui three column grid">
+               
+               {% if users|length > 1 %}
+                {% for user in users %}
+                    {% if not user.is_staff %}
+                        <div class="column">
+                            <div class="ui card">
+                                <div class="content">
+                                    <div class="center aligned header">{{user.username}}</div>
+                                    
+                                </div>
+                                <div class="extra content">
+                                    <div class="center aligned">
+                                        <a class="ui negative button" href="{% url 'delete_staff' user.id %}">Delete Staff</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+               {% else %}
+                    <div class="column">
+                        <div class="ui orange header segment">
+                            There's no extra user to delete.
+                        </div>
+                    </div>
+                {% endif %}
+               
+
+              
+           </div>
+       </div>
+{% endblock content %}

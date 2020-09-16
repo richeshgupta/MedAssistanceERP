@@ -1,0 +1,17 @@
+{% extends 'users/base.html' %}
+{% block head %}
+    <title>Some Error Occurred. Kindly contact the support</title>
+{% endblock head %}
+{% block content %}
+<div class="ui container">
+    <div class="ui red segment header">Error Occured!</div>
+    <div class="ui hidden divider"></div>
+    <div class="two wide column segment">
+    <h1>Error : </h1><h2>{{error}}</h2>
+
+        <div class="ui hidden divider"></div>
+        <strong>Contact Support</strong>
+    
+    </div>
+</div>
+{% endblock content %}
