@@ -38,7 +38,7 @@
                 <!-- Medcine Name field which is dropdown  -->
                 <div class="five wide field">
                     <label>Name</label>
-                    <div id="0" class="ui fluid selection dropdown">
+                    <div id="0" class="ui fluid search selection dropdown">
                         <input type="hidden" name="name" >
                         <div class="text">Choose..</div>
                         <i class="dropdown icon"></i>
@@ -49,7 +49,14 @@
                 </div>
                 <div class="field">
                     <label>Batch No</label>
-                    <input name="batch_no" type="text">
+                    <div id="1" class="ui fluid selection dropdown">
+                        <input type="hidden" name="batch_no" >
+                        <div class="text">Choose..</div>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <div class="item" data-value="select">Choose..</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="field">
                     <label>Quantity</label>
@@ -73,7 +80,7 @@
                 </div>
                 <div class="field">
                     <label>Sale Rate</label>
-                    <input name="sale_rate" type="text">
+                    <input id ="2" name="sale_rate" type="text">
                 </div>
             </div>
             <div class="ui positive submit button">Submit</div>
@@ -95,18 +102,21 @@
     var med_id;
 
     //keeps track of the ul inside the medicine name field
-    var med_ul_id=0;
+    var c=0;
+    var d=0
 
 
     // add button
     $(document).on('click', '.ui.button.add', function() {
         //count is the id of input in med name just for template
-        count+=1;
+        count+=3;
+        c=count+1;
+        d=c+1
         //c is the id of ul in the med name just for template
         var template = '<div class="fields">\
             <div class="five wide field">\
                     <label>Name</label>\
-                    <div id='+count+' class="ui fluid selection dropdown">\
+                    <div id='+count+' class="ui fluid search selection dropdown">\
                         <input type="hidden" name="name">\
                         <div class="text">Choose..</div>\
                         <i class="dropdown icon"></i>\
@@ -117,7 +127,14 @@
             </div>\
             <div class="field">\
                 <label>Batch No</label>\
-                <input name="batch_no" type="text">\
+                <div id='+c+' class="ui fluid selection dropdown">\
+                    <input type="hidden" name="batch_no" >\
+                    <div class="text">Choose..</div>\
+                    <i class="dropdown icon"></i>\
+                    <div class="menu">\
+                        <div class="item" data-value="select">Choose..</div>\
+                    </div>\
+                </div>\
             </div>\
             <div class="field">\
                 <label>Quantity</label>\
@@ -141,7 +158,7 @@
             </div>\
             <div class="field">\
                 <label>Sale Rate</label>\
-                <input name="sale_rate" type="text">\
+                <input id='+d+' name="sale_rate" type="text">\
             </div>\
             <div class="field">\
             <div class="ui vertical basic negative animated button">\
@@ -160,20 +177,48 @@
 
         //fetching data from backend for the med name field added using the add button only on every key stroke
         $(document).ready(function(){
-        $(".ui.fluid.selection.dropdown").hover(function(){
+        $(".ui.fluid.search.selection.dropdown").hover(function(){
             //setting id of currrent active medicine field
             med_id=$(this).attr('id');
+            med_batch_id=String(Number(med_id)+1);
+            med_sale_rate_id=String(Number(med_batch_id)+1);
             $('#'+med_id+' .menu').html('<div class="item" data-value="select">Choose..</div>');
             $.ajax({
-                url: "getMed/",
+                url: "getMedName/",
                 type: "GET",
                 datatype:'json',
                 success: function(response){
                     $.each(response,function(key,value){
-                        $('#'+med_id).dropdown({'set value':'something'});
-                        $('#'+ med_id+' .menu').append('<div class="item" data-value='+value.fields.name+'>'+value.fields.name+'</div>');
+                        $('#'+med_id+' .menu').append('<div class="item" data-value='+value.fields.name+'>'+value.fields.name+'</div>');
                     });
-                    $('#'+med_id).dropdown('refresh');
+                    $('#'+med_id).dropdown();
+                    $('#'+med_id + ' .item').click(function(){
+                        med_name=$(this).data("value");
+                        $('#'+med_batch_id+' .menu').html('<div class="item" data-value="select">Choose..</div>');
+                        $.ajax({
+                            url: "getMedBatch/",
+                            type: "GET",
+                            datatype:'json',
+                            data:{medName:med_name},
+                            success: function(response){
+                                $.each(response,function(key,value){
+                                    $('#'+med_batch_id+' .menu').append('<div class="item" data-value='+value.fields.batch_number+'>'+value.fields.batch_number+'</div>');
+                                });
+                                $('#'+med_batch_id).dropdown();
+                            }
+                        });
+                        $.ajax({
+                            url: "getMedSaleRate/",
+                            type: "GET",
+                            datatype:'json',
+                            data:{medName:med_name},
+                            success: function(response){
+                                $("#"+med_sale_rate_id).val(response);
+                                
+                            }
+                        });
+
+                    });
 
                 }
                 });
@@ -263,7 +308,6 @@
 
         });
     });
-
     //fetching data for the first Medicine Name Field
     $(document).ready(function(){
         $(".ui.fluid.selection.dropdown").hover(function(){
@@ -271,21 +315,45 @@
             med_id="0";
             $('#0 .menu').html('<div class="item" data-value="select">Choose..</div>');
             $.ajax({
-                url: "getMed/",
+                url: "getMedName/",
                 type: "GET",
                 datatype:'json',
                 success: function(response){
                     $.each(response,function(key,value){
-                        $('#0').dropdown({'set value':'something'});
                         $('#0 .menu').append('<div class="item" data-value='+value.fields.name+'>'+value.fields.name+'</div>');
                     });
-                    $('#0').dropdown('refresh');
+                    $('#0').dropdown();
+                    $('#0 .item').click(function(){
+                        med_name=$(this).data("value");
+                        $('#1 .menu').html('<div class="item" data-value="select">Choose..</div>');
+                        $.ajax({
+                            url: "getMedBatch/",
+                            type: "GET",
+                            datatype:'json',
+                            data:{medName:med_name},
+                            success: function(response){
+                                $.each(response,function(key,value){
+                                    $('#1 .menu').append('<div class="item" data-value='+value.fields.batch_number+'>'+value.fields.batch_number+'</div>');
+                                });
+                                $('#1').dropdown();
+                            }
+                        });
+                        $.ajax({
+                            url: "getMedSaleRate/",
+                            type: "GET",
+                            datatype:'json',
+                            data:{medName:med_name},
+                            success: function(response){
+                                $("#2").val(response);
+                                
+                            }
+                        });
 
+                    });
                 }
-                });
             });
-
         });
+    });    
 </script>
 
 {% endblock content %}
