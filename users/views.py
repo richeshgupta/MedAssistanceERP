@@ -88,8 +88,11 @@ def Access_Edit(request,user_id):
         context = {'form':form,'user':xuser}
         return render(request,"users/access_edit.html",context)
     except:
-        print("HERE")
-        super_user = User.objects.get(pk=user_id)
+        print("HERE\n\n")
+        try:
+            super_user = User.objects.get(pk=user_id)
+        except:
+            return ErrorPage(request,"No User with this id")
         user_extended.objects.create(user=super_user)
         
         return Access_Edit(request,user_id)
