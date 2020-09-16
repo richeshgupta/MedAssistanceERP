@@ -69,16 +69,7 @@ def Edit_Permission(request):
     users = User.objects.all()
     return render(request,"users/edit_permission.html",{'users':users})
 
-# def Access_Edit(request,user_id):
-#     user = user_extended.objects.get(user=user_id)
-#     print(user)
-#     if(request.method!='POST'):
-#         form = User_Extended_Form(instance=user)
-#     else:
-#         form = User_Extended_Form(request.POST,instance=user)
-#         form.save()
-#     context = {'form':form,'user':user}
-#     return render(request,"users/access_edit.html",context)
+
 def ErrorPage(request,error):
     if len(error)<1:
         error = "No Thrown error"
@@ -91,11 +82,15 @@ def Access_Edit(request,user_id):
             form = User_Extended_Form(instance=xuser)
         else:
             form = User_Extended_Form(request.POST,instance=xuser)
+            form.save()
+            form = User_Extended_Form
         context = {'form':form,'user':xuser}
         return render(request,"users/access_edit.html",context)
     except:
+        print("HERE")
         super_user = User.objects.get(pk=user_id)
         user_extended.objects.create(user=super_user)
+        
         return Access_Edit(request,user_id)
         
     
