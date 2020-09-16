@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 
 # 1 - Basic, 2 - Intermediate, 3 - Admin (see docs) for better understanding of access_level
-access_level = [(1,'basic'),(2,'Intermediate'),(3,'Admin')]
+access_level = [(1,'Basic'),(2,'Intermediate'),(3,'Admin')]
 
 class user_extended(models.Model):
     access_level = access_level = models.PositiveSmallIntegerField(choices=access_level,default=1,verbose_name="Staff Level",null=False)

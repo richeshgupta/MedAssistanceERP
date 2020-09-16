@@ -48,7 +48,7 @@ def Signup(request):
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
             else:
-                return redirect('home')
+                return redirect('register')
 
     else:
         form = SignUpForm()
@@ -69,13 +69,34 @@ def Edit_Permission(request):
     users = User.objects.all()
     return render(request,"users/edit_permission.html",{'users':users})
 
+# def Access_Edit(request,user_id):
+#     user = user_extended.objects.get(user=user_id)
+#     print(user)
+#     if(request.method!='POST'):
+#         form = User_Extended_Form(instance=user)
+#     else:
+#         form = User_Extended_Form(request.POST,instance=user)
+#         form.save()
+#     context = {'form':form,'user':user}
+#     return render(request,"users/access_edit.html",context)
+def ErrorPage(request,error):
+    if len(error)<1:
+        error = "No Thrown error"
+    return render(request,"users/error.html",{'error':error})
+
 def Access_Edit(request,user_id):
-    user = user_extended.objects.get(user=user_id)
-    print(user)
-    if(request.method!='POST'):
-        form = User_Extended_Form(instance=user)
-    else:
-        form = User_Extended_Form(request.POST,instance=user)
-        form.save()
-    context = {'form':form,'user':user}
-    return render(request,"users/access_edit.html",context)
+    try:
+        xuser = user_extended.objects.get(user=user_id)
+        if(request.method=='GET'):
+            form = User_Extended_Form(instance=xuser)
+        else:
+            form = User_Extended_Form(request.POST,instance=xuser)
+        context = {'form':form,'user':xuser}
+        return render(request,"users/access_edit.html",context)
+    except:
+        error = "No user found with this id"
+        return ErrorPage(request,error)
+    
+    return render(request,"users/access_edit.html",{})
+    # print(user)
+    
