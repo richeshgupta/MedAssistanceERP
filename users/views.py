@@ -75,6 +75,7 @@ def ErrorPage(request,error):
         error = "No Thrown error"
     return render(request,"users/error.html",{'error':error})
 
+
 def Access_Edit(request,user_id):
     try:
         xuser = user_extended.objects.get(user=user_id)
@@ -95,5 +96,21 @@ def Access_Edit(request,user_id):
         
     
     return render(request,"users/access_edit.html",{})
-    # print(user)
     
+    
+def User_List_Del(request):
+    users = User.objects.all()
+    return render(request,"users/user-list-del.html",{'users':users})
+    
+def Delete_Staff(request,user_id):
+    try:
+        extended_user = user_extended.objects.get(user=user_id)
+    except:
+        return ErrorPage(request,"No user with this id, in extended model")
+    try:
+        User_object = User.objects.get(pk=user_id)
+    except:
+        return ErrorPage(request,"No user with this id, in User model")
+    extended_user.delete()
+    User_object.delete()
+    return redirect('manage_staff')
