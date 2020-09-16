@@ -6,7 +6,7 @@
         .logout{
             margin-top: 100px !important;
         }
-        .container{
+        .main{
             margin-top: 100px !important;
         }
         .login{
@@ -18,7 +18,7 @@
 {% block content %}
     <div class="ui hidden divider"></div>
 
-    <div class="ui container">
+    <div class="ui container main">
         <div class="ui relaxed grid">
             <div class="eight wide column">
                 <h1 class="ui red center aligned header">MedAssistance ERP</h1>
@@ -26,51 +26,7 @@
             </div>
 
             {% if not user.is_authenticated %}
-                <!-- <div class="eight wide column">
-                    <div class="ui segment login">
-                        <h1 class="ui red header">Login</h1>
-                        <div class="ui hidden divider"></div>
-                        {% if form.errors %}
-                            {% for field in form %}
-                                {% for error in field.errors %}
-                                    <div class="ui red message">
-                                        <strong>{{ error|escape }}</strong>
-                                    </div>
-                                {% endfor %}
-                            {% endfor %}
-                            {% for error in form.non_field_errors %}
-                                <div class="ui red message">
-                                    <strong>{{ error|escape }}</strong>
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-                    
-                        <div class="ui form">
-                            <form method='post'>
-                                {% csrf_token %}
-                                    {% for field in form.visible_fields %}
-                                        <div class="ui left labeled button">
-                                            <div class="ui basic right pointing label">
-                                                {{field.label_tag}}
-                                            </div>
-                                            {{field}}
-                                        </div>                                  
-                                        <br />
-                                    {% endfor %}
-
-                                {% if request.GET.next %}
-                                    <input type="hidden" name='next' value="{{request.GET.next}}">
-                                {% endif %}
-                                
-                                <div class="ui hidden divider"></div>
-                                <input type="submit" class="ui fluid positive button" value='Login'>
-                            </form>
-                        </div>
-                    </div>
-                </div> -->
-
                 <div class="eight wide column login">
-
                     {% if form.errors %}
                         {% for field in form %}
                             {% for error in field.errors %}
@@ -112,6 +68,7 @@
 
                     </div>
                 </div>
+                
             {% endif %}  
         </div>
     </div>
