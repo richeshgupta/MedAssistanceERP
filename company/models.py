@@ -29,9 +29,9 @@ class Product(models.Model):
         return str(self.id)
 
 class Batch(models.Model):
-    batch_number = models.CharField(max_length=10)
+    batch_number = models.CharField(verbose_name='Batch Number', max_length=10, null=False)
     expiry = models.DateField(default=timezone.now,null=False)
-    product_id = models.ForeignKey(Product,on_delete=models.SET_DEFAULT,default=0)
+    product = models.ForeignKey(Product,on_delete=models.SET_DEFAULT,default=None)
     quantity = models.IntegerField(null=False)
     def __str__(self):
         return self.batch_number

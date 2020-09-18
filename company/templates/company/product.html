@@ -1,5 +1,35 @@
 {% extends 'users/base.html' %}
 
 {% block content %}
-<h1>Product Form</h1>
+<div class="ui container">
+    <div class="grid">
+        <div class="ui form">
+            <h2 class="ui centered dividing header">Product Details</h2>
+            <div class="ui hidden divider"></div>
+            <form  method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="field">
+                        <h5 class='ui header'>{{ field.label_tag }}</h5>
+                        {{ field }}
+                        <br><br>
+                    </div>
+                {% endfor %}
+                <input type='submit' class='ui positive button'></input>
+                <a class="ui right floated primary animated button" href="{% url 'batch' %}">
+                    <div class="visible content">Batch</div>
+                    <div class="hidden content">
+                        <i class="archive icon"></i>
+                    </div>
+                </a>
+                <a class="ui right floated animated button" href="{% url 'product' %}">
+                    <div class="visible content">Product</div>
+                    <div class="hidden content">
+                        <i class="pills icon"></i>
+                    </div>
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock content %}

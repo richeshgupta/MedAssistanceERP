@@ -19,7 +19,35 @@ def Company(request):
     return render(request,'company/company.html',context)
 
 def Product(request):
-    return render(request,'company/product.html')
+    form = productForm()
+    if request.method == 'POST':
+        form = productForm()
+        if form.is_valid():
+            form.save()
+            if 'next' in request.POST:
+                return redirect(request.POST.get('next'))
+            else:
+                return redirect('home')
+        else:
+            return render('product')
+    else:
+        form = productForm()
+    context = {'form':form}
+    return render(request,'company/product.html',context)
 
 def Batch(request):
-    return render(request,'company/batch.html')
+    form = batchForm()
+    if request.method == 'POST':
+        form = batchForm(request.POST)
+        if form.is_valid():
+            form.save()
+            if 'next' in request.POST:
+                return redirect(request.POST.get('next'))
+            else:
+                return redirect('home')
+        else:
+            return render('batch')
+    else:
+        form = batchForm()
+    context = {'form':form}
+    return render(request,'company/batch.html',context)
