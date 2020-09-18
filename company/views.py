@@ -10,7 +10,7 @@ def Company(request):
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
             else:
-                return redirect('home')
+                return redirect('company')
         else:
             return render('company')
     else:
@@ -21,15 +21,15 @@ def Company(request):
 def Product(request):
     form = productForm()
     if request.method == 'POST':
-        form = productForm()
+        form = productForm(request.POST)
         if form.is_valid():
             form.save()
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
             else:
-                return redirect('home')
+                return redirect('product')
         else:
-            return render('product')
+            return redirect('product')
     else:
         form = productForm()
     context = {'form':form}
@@ -44,9 +44,9 @@ def Batch(request):
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
             else:
-                return redirect('home')
+                return redirect('batch')
         else:
-            return render('batch')
+            return redirect('batch')
     else:
         form = batchForm()
     context = {'form':form}
