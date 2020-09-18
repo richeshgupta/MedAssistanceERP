@@ -5,23 +5,24 @@
 {% block content %}  
 
 <div class="ui two wide column grid  raised segment">
-    <div class="ui center aligned column grid raised segment">
+    <div class="ui inverted center aligned column grid raised segment">
      
          <h1>Sale</h1>
-         <form class="ui form">
+         <div class="ui inverted segment">
+         <div class="ui inverted form">
              {% csrf_token %}
             <div class=" four fields">
                 <div class="field">
                     <label>Customer Name</label>
-                    <input name="customer_name" type="text" autocomplete="off">
+                    <input name="customer_name" type="text" autocomplete="off" class="ui input focus" placeholder="Customer Name">
                 </div>
                 <div class="field">
                     <label>Customer Email</label>
-                    <input name="customer_email" type="text">
+                    <input name="customer_email" type="text" class="ui input focus" placeholder="Customer Email">>
                 </div>
                 <div class="field">
                     <label>Mode of Payment</label>
-                    <select class="ui dropdown" name="mode_of_payment">
+                    <select class="ui dropdown" name="mode_of_payment" class="ui input focus">
                     <option value="">Select</option>
                     <option value="1">Cash</option>
                     <option value="2">Card</option>
@@ -29,7 +30,7 @@
                 </div>
                 <div class="field">
                     <label>Total</label>
-                    <input name="total_bill" type="text">
+                    <input name="total_bill" type="text" class="ui input focus" placeholder="Total Price">
                 </div>
             </div>
             <div class="ui hidden divider"></div>
@@ -39,54 +40,64 @@
                 <div class="five wide field">
                     <label>Name</label>
                     <div id="0" class="ui fluid search selection dropdown">
-                        <input type="hidden" name="name" >
+                        <input type="hidden" name="name" class="ui input focus">
                         <div class="text">Choose..</div>
                         <i class="dropdown icon"></i>
                         <div class="menu">
-                            <div class="item" data-value="select">Choose..</div>
+                            
                         </div>
                     </div>
                 </div>
                 <div class="field">
-                    <label>Batch No</label>
+                    <label>Batch</label>
                     <div id="1" class="ui fluid selection dropdown">
-                        <input type="hidden" name="batch_no" >
+                        <input type="hidden" name="batch_no" class="ui input focus">
                         <div class="text">Choose..</div>
                         <i class="dropdown icon"></i>
                         <div class="menu">
-                            <div class="item" data-value="select">Choose..</div>
+                            
                         </div>
                     </div>
                 </div>
                 <div class="field">
                     <label>Quantity</label>
-                    <input name="quantity" type="text">
+                    <input name="quantity" type="text" class="ui input focus" placeholder="Quantity">
                 </div>
                 <div class="field">
                     <label>Discount</label>
-                    <input name="discount" type="text">
+                    <input name="discount" type="text" class="ui input focus" placeholder="Discount">
                 </div>
                 <div class="field">
                     <label>Deal</label>
-                    <input name="deal" type="text">
+                    <input name="deal" type="text" class="ui input focus" placeholder="Deal">
                 </div>
                 <div class="field">
                     <label>Tax</label>
-                    <input name="tax" type="text">
+                    <input name="tax" type="text" class="ui input focus" placeholder="Tax">
                 </div>
                 <div class="field">
                     <label>Loss</label>
-                    <input name="loss" type="text">
+                    <input name="loss" type="text" class="ui input focus" placeholder="Loss">
                 </div>
                 <div class="field">
                     <label>Sale Rate</label>
-                    <input id ="2" name="sale_rate" type="text">
+                    <input id ="2" name="sale_rate" type="text" class="ui input focus" placeholder="Sale Rate">
+                </div>
+                <div class="field">
+                    <div class=" ui black header">Remove</div>
+                    <div class="ui  vertical basic black animated button">
+                        <div class="hidden content ">Remove</div>
+                        <div class="visible content">
+                        <i class="minus icon"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="ui positive submit button">Submit</div>
             <div class="ui button add">Add</div>
             <div class="ui error message"></div> 
-        </form>
+        </div>
+    </div>
     </div>
   
 </div>
@@ -117,51 +128,50 @@
             <div class="five wide field">\
                     <label>Name</label>\
                     <div id='+count+' class="ui fluid search selection dropdown">\
-                        <input type="hidden" name="name">\
+                        <input type="hidden" name="name" class="ui input focus">\
                         <div class="text">Choose..</div>\
                         <i class="dropdown icon"></i>\
                         <div class="menu">\
-                            <div class="item" data-value="select">Choose..</div>\
                         </div>\
                     </div>\
             </div>\
             <div class="field">\
-                <label>Batch No</label>\
+                <label>Batch</label>\
                 <div id='+c+' class="ui fluid selection dropdown">\
-                    <input type="hidden" name="batch_no" >\
+                    <input type="hidden" name="batch_no" class="ui input focus" >\
                     <div class="text">Choose..</div>\
                     <i class="dropdown icon"></i>\
                     <div class="menu">\
-                        <div class="item" data-value="select">Choose..</div>\
                     </div>\
                 </div>\
             </div>\
             <div class="field">\
                 <label>Quantity</label>\
-                <input name="quantity" type="text">\
+                <input name="quantity" type="text" class="ui input focus" placeholder="Quantity">\
             </div>\
             <div class="field">\
                 <label>Discount</label>\
-                <input name="discount" type="text">\
+                <input name="discount" type="text" class="ui input focus" placeholder="Discount">\
             </div>\
             <div class="field">\
                 <label>Deal</label>\
-                <input name="deal" type="text">\
+                <input name="deal" type="text" class="ui input focus" placeholder="Deal">\
             </div>\
             <div class="field">\
                 <label>Tax</label>\
-                <input name="tax" type="text">\
+                <input name="tax" type="text" class="ui input focus" placeholder="Tax">\
             </div>\
             <div class="field">\
                 <label>Loss</label>\
-                <input name="loss" type="text">\
+                <input name="loss" type="text" class="ui input focus" placeholder="Loss">\
             </div>\
             <div class="field">\
                 <label>Sale Rate</label>\
-                <input id='+d+' name="sale_rate" type="text">\
+                <input id='+d+' name="sale_rate" type="text" class="ui input focus" placeholder="Sale Rate">\
             </div>\
             <div class="field">\
-            <div class="ui vertical basic negative animated button">\
+            <label>Remove</label>\
+            <div class="ui  vertical basic negative animated button">\
                 <div class="hidden content">Remove</div>\
                 <div class="visible content">\
                 <i class="minus icon"></i>\
@@ -177,12 +187,12 @@
 
         //fetching data from backend for the med name field added using the add button only on every key stroke
         $(document).ready(function(){
-        $(".ui.fluid.search.selection.dropdown").hover(function(){
+        $(".ui.fluid.search.selection.dropdown").dblclick(function(){
             //setting id of currrent active medicine field
             med_id=$(this).attr('id');
             med_batch_id=String(Number(med_id)+1);
             med_sale_rate_id=String(Number(med_batch_id)+1);
-            $('#'+med_id+' .menu').html('<div class="item" data-value="select">Choose..</div>');
+            $('#'+med_id+' .menu').html('');
             $.ajax({
                 url: "getMedName/",
                 type: "GET",
@@ -194,7 +204,7 @@
                     $('#'+med_id).dropdown();
                     $('#'+med_id + ' .item').click(function(){
                         med_name=$(this).data("value");
-                        $('#'+med_batch_id+' .menu').html('<div class="item" data-value="select">Choose..</div>');
+                        $('#'+med_batch_id+' .menu').html('');
                         $.ajax({
                             url: "getMedBatch/",
                             type: "GET",
@@ -310,10 +320,10 @@
     });
     //fetching data for the first Medicine Name Field
     $(document).ready(function(){
-        $(".ui.fluid.selection.dropdown").hover(function(){
+        $(".ui.fluid.search.selection.dropdown").dblclick(function(){
             //setting id of currrent active medicine field
             med_id="0";
-            $('#0 .menu').html('<div class="item" data-value="select">Choose..</div>');
+            $('#0 .menu').html('');
             $.ajax({
                 url: "getMedName/",
                 type: "GET",
@@ -325,7 +335,7 @@
                     $('#0').dropdown();
                     $('#0 .item').click(function(){
                         med_name=$(this).data("value");
-                        $('#1 .menu').html('<div class="item" data-value="select">Choose..</div>');
+                        $('#1 .menu').html('');
                         $.ajax({
                             url: "getMedBatch/",
                             type: "GET",

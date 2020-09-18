@@ -53,6 +53,5 @@ def GetMedSaleRate(request):
         cursor = connection.cursor()
         cursor.execute("SELECT sale_rate FROM company_product WHERE name = %s", [medName])
         row = cursor.fetchone()
-        print(row[0])
         return HttpResponse(row[0])
 
