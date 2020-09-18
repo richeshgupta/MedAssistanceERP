@@ -22,5 +22,6 @@ urlpatterns = [
     path('',include('bill.urls')),
     path('bill/',include('bill.urls')),
     path('',include('cheque.urls')),
+    path('',include('company.urls')),
 
 ]

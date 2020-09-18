@@ -4,10 +4,10 @@ from django.utils import timezone
 from party.models import Party_Wholeseller
 
 class Company(models.Model):
-    comp_name = models.CharField(max_length=20, null=False)
-    comp_address = models.CharField(max_length=50)
-    comp_GST = models.PositiveIntegerField(null=False)
-    contact = PhoneField(blank=True, help_text='Company_Number')
+    comp_name = models.CharField(verbose_name='Company Name', max_length=20, null=False)
+    comp_address = models.CharField(verbose_name='Company Address', max_length=50)
+    comp_GST = models.PositiveIntegerField(verbose_name='GST', null=False)
+    contact = models.CharField(blank=True,max_length = 15,null=False)
 
     def __str__(self):
         return self.comp_name

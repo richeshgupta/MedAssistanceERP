@@ -15,7 +15,6 @@ def Cheque(request):
                 return redirect(request.POST.get('next'))
             else:
                 return redirect('home')
-
         else:
             return redirect('cheque')
     else:
