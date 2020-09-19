@@ -6,6 +6,8 @@ from .models import user_extended
 
 from django.views.generic import UpdateView
 
+from .custom_decorator import  is_admin_access
+
 # Error 404 modules
 # from django.shortcuts import render_to_response
 # from django.template import RequestContext
@@ -24,6 +26,7 @@ def Logout(request):
     logout(request)
     return redirect('home')
 
+@is_admin_access
 def Signup(request):
     if request.method=='POST':
         form = SignUpForm(request.POST)
@@ -72,7 +75,7 @@ def Edit_Permission(request):
 
 def ErrorPage(request,error):
     if len(error)<1:
-        error = "No Thrown error"
+        error = "No Valid Thrown error"
     return render(request,"users/error.html",{'error':error})
 
 

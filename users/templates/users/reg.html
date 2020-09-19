@@ -85,7 +85,7 @@
         </div> -->
 
         <div class="ui grid centered aligned">
-            <div class="ui eight wide column centered aligned">
+            <div class="ui eight wide column centered aligned positive segment">
                 <h1 class="ui header">
                     Register your staff!
                 </h1>
@@ -98,6 +98,7 @@
                             </div>
                         {% endfor %}
                     {% endfor %}
+                    
                     {% for error in form.non_field_errors %}
                         <div class="ui red message">
                             <strong>{{ error|escape }}</strong>
