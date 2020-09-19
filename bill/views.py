@@ -21,6 +21,7 @@ def Create_Bill_Sale(request):
             mode_of_payment = request.POST['mode_of_payment'],
             total_bill = request.POST['total_bill'],
             name = request.POST.getlist('name'),
+            company = request.POST.getlist('company'),
             batch_number = request.POST.getlist('batch_number'),
             quantity = request.POST.getlist('quantity'),
             discount = request.POST.getlist('discount'),
@@ -34,24 +35,49 @@ def Create_Bill_Sale(request):
 
 def GetMedName(request):
     if request.method=="GET":
-        data=Product.objects.all()
-        qs_json = serializers.serialize('json', data)
-        return HttpResponse(qs_json, content_type='application/json')
+        cursor = connection.cursor()
+        cursor.execute("SELECT name FROM company_product")
+        data= cursor.fetchall()
+        b=[]
+        [b.append(a[0]) for a in data if a[0] not in b]
+        return HttpResponse(json.dumps(b), content_type='application/json')
+
+def GetMedCompany(request):
+    if request.method=="GET":
+        medName=request.GET['medName']
+        cursor = connection.cursor()
+        cursor.execute("SELECT company_id FROM company_product where name=%s",[medName])
+        data= cursor.fetchall()
+        b=[a[0] for a in data]
+        d=[]
+        for a in b:
+            cursor.execute("SELECT comp_name FROM company_company where id=%s",[a])
+            d.append(cursor.fetchone()[0])
+        return HttpResponse(json.dumps(d), content_type='application/json')
 
 def GetMedBatch(request):
     if request.method=="GET":
         medName=request.GET['medName']
-        p=Product.objects.filter(name=medName)
-        batch=Batch.objects.filter(product_id=p[0])
-        qs_json = serializers.serialize('json', batch)
-        return HttpResponse(qs_json, content_type='application/json')
+        medCompany=request.GET['medCompany']
+        cursor = connection.cursor()
+        cursor.execute("SELECT id FROM company_company where comp_name=%s",[medCompany])
+        medCompany=cursor.fetchone()[0]
+        cursor.execute("SELECT id FROM company_product where name=%s and company_id=%s",[medName,medCompany])
+        pro_id=cursor.fetchall()[0]
+        cursor.execute("SELECT batch_number FROM company_batch where product_id=%s",[pro_id])
+        temp_batches=cursor.fetchall()
+        batches=[a[0] for a in temp_batches]
+        return HttpResponse(json.dumps(batches), content_type='application/json')
 
 
 def GetMedSaleRate(request):
     if request.method=="GET":
         medName=request.GET['medName']
+        medCompany=request.GET['medCompany']
         cursor = connection.cursor()
-        cursor.execute("SELECT sale_rate FROM company_product WHERE name = %s", [medName])
-        row = cursor.fetchone()
-        return HttpResponse(row[0])
+        cursor.execute("SELECT id FROM company_company where comp_name=%s",[medCompany])
+        medCompany=cursor.fetchone()[0]
+        cursor.execute("SELECT * FROM company_product where name=%s and company_id=%s",[medName,medCompany])
+        return HttpResponse(cursor.fetchone()[6])
+
 
