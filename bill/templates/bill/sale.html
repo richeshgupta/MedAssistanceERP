@@ -22,11 +22,15 @@
                 </div>
                 <div class="field">
                     <label>Mode of Payment</label>
-                    <select class="ui dropdown" name="mode_of_payment" class="ui input focus">
-                    <option value="">Select</option>
-                    <option value="1">Cash</option>
-                    <option value="2">Card</option>
-                    </select>
+                    <div  class="ui fluid search selection dropdown paymentMode">
+                        <input type="hidden" name="mode_of_payment" class="ui input focus">
+                        <div class="text">Choose..</div>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <div class="item" data-value="1">Cash</div>
+                            <div class="item" data-value="2">Card</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="field">
                     <label>Total</label>
@@ -39,7 +43,7 @@
                 <!-- Medcine Name field which is dropdown  -->
                 <div class="five wide field">
                     <label>Name</label>
-                    <div id="0" class="ui fluid search selection dropdown">
+                    <div id="0" class="ui fluid search selection dropdown medname">
                         <input type="hidden" name="name" class="ui input focus">
                         <div class="text">Choose..</div>
                         <i class="dropdown icon"></i>
@@ -49,8 +53,19 @@
                     </div>
                 </div>
                 <div class="field">
-                    <label>Batch</label>
+                    <label>Company</label>
                     <div id="1" class="ui fluid selection dropdown">
+                        <input type="hidden" name="company" class="ui input focus">
+                        <div class="text">Choose..</div>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Batch</label>
+                    <div id="2" class="ui fluid selection dropdown">
                         <input type="hidden" name="batch_no" class="ui input focus">
                         <div class="text">Choose..</div>
                         <i class="dropdown icon"></i>
@@ -75,18 +90,24 @@
                     <label>Tax</label>
                     <input name="tax" type="text" class="ui input focus" placeholder="Tax">
                 </div>
-                <div class="field">
+                <div class="two wide field">
                     <label>Loss</label>
-                    <input name="loss" type="text" class="ui input focus" placeholder="Loss">
+                    <div  class="ui fluid search selection dropdown loss">
+                        <input type="hidden" name="loss" class="ui input focus">
+                        <div class="text">Choose..</div>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <div class="item" data-value="True">True</div>
+                            <div class="item" data-value="False">False</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="field">
                     <label>Sale Rate</label>
-                    <input id ="2" name="sale_rate" type="text" class="ui input focus" placeholder="Sale Rate">
+                    <input id ="3" name="sale_rate" type="text" class="ui input focus" placeholder="Sale Rate">
                 </div>
                 <div class="field">
-                    <div class=" ui black header">Remove</div>
-                    <div class="ui  vertical basic black animated button">
-                        <div class="hidden content ">Remove</div>
+                    <div class="ui  vertical disabled basic black animated button">
                         <div class="visible content">
                         <i class="minus icon"></i>
                         </div>
@@ -106,6 +127,9 @@
 
 
 <script>
+    $('.paymentMode').dropdown();
+    $('.loss').dropdown()
+
     // count keeps track of  the number of Medicine added 
     var count = 0;
 
@@ -120,14 +144,16 @@
     // add button
     $(document).on('click', '.ui.button.add', function() {
         //count is the id of input in med name just for template
-        count+=3;
+        count+=4;
         c=count+1;
-        d=c+1
+        b=c+1;
+        s=b+1;
+
         //c is the id of ul in the med name just for template
         var template = '<div class="fields">\
             <div class="five wide field">\
                     <label>Name</label>\
-                    <div id='+count+' class="ui fluid search selection dropdown">\
+                    <div id='+count+' class="ui fluid search selection dropdown medname">\
                         <input type="hidden" name="name" class="ui input focus">\
                         <div class="text">Choose..</div>\
                         <i class="dropdown icon"></i>\
@@ -136,8 +162,18 @@
                     </div>\
             </div>\
             <div class="field">\
+                    <label>Company</label>\
+                    <div id='+c+' class="ui fluid selection dropdown">\
+                        <input type="hidden" name="company" class="ui input focus">\
+                        <div class="text">Choose..</div>\
+                        <i class="dropdown icon"></i>\
+                        <div class="menu">\
+                        </div>\
+                    </div>\
+            </div>\
+            <div class="field">\
                 <label>Batch</label>\
-                <div id='+c+' class="ui fluid selection dropdown">\
+                <div id='+b+' class="ui fluid selection dropdown">\
                     <input type="hidden" name="batch_no" class="ui input focus" >\
                     <div class="text">Choose..</div>\
                     <i class="dropdown icon"></i>\
@@ -161,13 +197,21 @@
                 <label>Tax</label>\
                 <input name="tax" type="text" class="ui input focus" placeholder="Tax">\
             </div>\
-            <div class="field">\
+            <div class=" two wide field">\
                 <label>Loss</label>\
-                <input name="loss" type="text" class="ui input focus" placeholder="Loss">\
+                <div  class="ui fluid search selection dropdown loss">\
+                        <input type="hidden" name="loss" class="ui input focus">\
+                        <div class="text">Choose..</div>\
+                        <i class="dropdown icon"></i>\
+                        <div class="menu">\
+                            <div class="item" data-value="True">True</div>\
+                            <div class="item" data-value="False">False</div>\
+                        </div>\
+                </div>\
             </div>\
             <div class="field">\
                 <label>Sale Rate</label>\
-                <input id='+d+' name="sale_rate" type="text" class="ui input focus" placeholder="Sale Rate">\
+                <input id='+s+' name="sale_rate" type="text" class="ui input focus" placeholder="Sale Rate">\
             </div>\
             <div class="field">\
             <label>Remove</label>\
@@ -183,14 +227,15 @@
 
         //adding the template everytime add button is clicked
         $(template).insertBefore('.ui.submit');
-
+        $('.loss').dropdown()
 
         //fetching data from backend for the med name field added using the add button only on every key stroke
         $(document).ready(function(){
-        $(".ui.fluid.search.selection.dropdown").dblclick(function(){
+        $(".medname").click(function(){
             //setting id of currrent active medicine field
             med_id=$(this).attr('id');
-            med_batch_id=String(Number(med_id)+1);
+            med_company_id=String(Number(med_id)+1);
+            med_batch_id=String(Number(med_company_id)+1);
             med_sale_rate_id=String(Number(med_batch_id)+1);
             $('#'+med_id+' .menu').html('');
             $.ajax({
@@ -199,32 +244,47 @@
                 datatype:'json',
                 success: function(response){
                     $.each(response,function(key,value){
-                        $('#'+med_id+' .menu').append('<div class="item" data-value='+value.fields.name+'>'+value.fields.name+'</div>');
+                        $('#'+med_id+' .menu').append('<div class="item" data-value='+value+'>'+value+'</div>');
                     });
                     $('#'+med_id).dropdown();
                     $('#'+med_id + ' .item').click(function(){
                         med_name=$(this).data("value");
-                        $('#'+med_batch_id+' .menu').html('');
+                        $('#'+med_company_id+' .menu').html('');
                         $.ajax({
-                            url: "getMedBatch/",
+                            url: "getMedCompany/",
                             type: "GET",
                             datatype:'json',
                             data:{medName:med_name},
                             success: function(response){
                                 $.each(response,function(key,value){
-                                    $('#'+med_batch_id+' .menu').append('<div class="item" data-value='+value.fields.batch_number+'>'+value.fields.batch_number+'</div>');
+                                    $('#'+med_company_id+' .menu').append('<div class="item" data-value='+value+'>'+value+'</div>');
                                 });
-                                $('#'+med_batch_id).dropdown();
-                            }
-                        });
-                        $.ajax({
-                            url: "getMedSaleRate/",
-                            type: "GET",
-                            datatype:'json',
-                            data:{medName:med_name},
-                            success: function(response){
-                                $("#"+med_sale_rate_id).val(response);
-                                
+                                $('#'+med_company_id).dropdown();
+                                $('#'+med_company_id+' .item').click(function(){
+                                    med_company=$(this).data("value");
+                                    $('#'+med_batch_id+' .menu').html('');
+                                    $.ajax({
+                                        url: "getMedBatch/",
+                                        type: "GET",
+                                        datatype:'json',
+                                        data:{medName:med_name,medCompany:med_company},
+                                        success: function(response){
+                                            $.each(response,function(key,value){
+                                                $('#'+med_batch_id+' .menu').append('<div class="item" data-value='+value+'>'+value+'</div>');
+                                            });
+                                            $('#'+med_batch_id).dropdown();
+                                        }
+                                    });
+                                    $.ajax({
+                                        url: "getMedSaleRate/",
+                                        type: "GET",
+                                        datatype:'json',
+                                        data:{medName:med_name,medCompany:med_company},
+                                        success: function(response){
+                                           $("#"+med_sale_rate_id).val(response);
+                                        }
+                                    });
+                                });
                             }
                         });
 
@@ -252,7 +312,10 @@
         $("input[name='name']").each(function(){
             name.push(this.value);
         });
-
+        var company=[];
+        $("input[name='company']").each(function(){
+            company.push(this.value);
+        });
         var batch_no=[];
         $("input[name='batch_no']").each(function(){
             batch_no.push(this.value);
@@ -287,7 +350,6 @@
         $("input[name='sale_rate']").each(function(){
             sale_rate.push(this.value);
         });
-
         $.ajax({
             type : 'POST',
             dataType : "json",
@@ -299,6 +361,7 @@
                 mode_of_payment : document.getElementsByName('mode_of_payment')[0].value,
                 total_bill : document.getElementsByName('total_bill')[0].value,
                 name : name,
+                company:company,
                 batch_number : batch_no,
                 quantity : quantity,
                 discount : discount,
@@ -320,7 +383,7 @@
     });
     //fetching data for the first Medicine Name Field
     $(document).ready(function(){
-        $(".ui.fluid.search.selection.dropdown").dblclick(function(){
+        $(".medname").click(function(){
             //setting id of currrent active medicine field
             med_id="0";
             $('#0 .menu').html('');
@@ -330,40 +393,56 @@
                 datatype:'json',
                 success: function(response){
                     $.each(response,function(key,value){
-                        $('#0 .menu').append('<div class="item" data-value='+value.fields.name+'>'+value.fields.name+'</div>');
+                        $('#0 .menu').append('<div class="item" data-value='+value+'>'+value+'</div>');
                     });
                     $('#0').dropdown();
                     $('#0 .item').click(function(){
                         med_name=$(this).data("value");
                         $('#1 .menu').html('');
                         $.ajax({
-                            url: "getMedBatch/",
+                            url: "getMedCompany/",
                             type: "GET",
                             datatype:'json',
                             data:{medName:med_name},
                             success: function(response){
                                 $.each(response,function(key,value){
-                                    $('#1 .menu').append('<div class="item" data-value='+value.fields.batch_number+'>'+value.fields.batch_number+'</div>');
+                                    $('#1 .menu').append('<div class="item" data-value='+value+'>'+value+'</div>');
                                 });
                                 $('#1').dropdown();
+                                $('#1 .item').click(function(){
+                                    med_company=$(this).data("value");
+                                    $('#2 .menu').html('');
+                                    $.ajax({
+                                        url: "getMedBatch/",
+                                        type: "GET",
+                                        datatype:'json',
+                                        data:{medName:med_name,medCompany:med_company},
+                                        success: function(response){
+                                            $.each(response,function(key,value){
+                                                $('#2 .menu').append('<div class="item" data-value='+value+'>'+value+'</div>');
+                                            });
+                                            $('#2').dropdown();
+                                        }
+                                    });
+                                    $.ajax({
+                                        url: "getMedSaleRate/",
+                                        type: "GET",
+                                        datatype:'json',
+                                        data:{medName:med_name,medCompany:med_company},
+                                        success: function(response){
+                                           $("#3").val(response);
+                                        }
+                                    });
+                                });
                             }
                         });
-                        $.ajax({
-                            url: "getMedSaleRate/",
-                            type: "GET",
-                            datatype:'json',
-                            data:{medName:med_name},
-                            success: function(response){
-                                $("#2").val(response);
-                                
-                            }
-                        });
-
                     });
                 }
             });
         });
-    });    
+    });  
+
+
 </script>
 
 {% endblock content %}
