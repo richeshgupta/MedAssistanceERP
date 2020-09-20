@@ -14,7 +14,7 @@ def is_admin_access(func):
                     return render(request,"users/error.html",{'error':"You don't have access to this page"})
                 return func(request,*args,**kwargs)
             except:
-                msg = "Some Error Occured, May be Your access Level is not updated, Kindly Contact Admin"
+                msg = "Some Error Occured, Maybe Your access Level is not updated, Kindly Contact Admin"
                 return render(request,"users/error.html",{'error':msg})
 
         else:
@@ -32,7 +32,7 @@ def is_intermediate_access(func):
                     return render(request,"users/error.html",{'error':"You don't have access to this page"})
                 return func(request,*args,**kwargs)
             except:
-                msg = "Some Error Occured, May be Your access Level is not updated, Kindly Contact Admin"
+                msg = "Some Error Occured, Maybe Your access Level is not updated, Kindly Contact Admin"
                 return render(request,"users/error.html",{'error':msg})
 
         else:
