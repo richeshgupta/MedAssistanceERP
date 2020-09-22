@@ -11,7 +11,7 @@ from django.db import connection
 
 @login_required(login_url='/')
 def Sale(request):
-    return render(request,"bill/sale.html",{})
+    return render(request,"bill/sale2.html",{})
 
 def Create_Bill_Sale(request):
     if request.method == 'POST':

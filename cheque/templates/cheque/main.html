@@ -11,11 +11,20 @@
             <form  method="post">
                 {% csrf_token %}
                 {% for field in form %}
-                    <div class="field">
-                        <label>{{ field.label_tag }}</label>
-                        {{ field }}
-                    </div>
+                <div class="field">
+                    <label>{{ field.label_tag }}</label>
+                    {{ field }}
+                </div>
                 {% endfor %}
+
+                <!-- <div class="field">
+                    <label class='ui right floated medium header'>{{ form.cheque_num.label_tag }}</label>
+                    {{ form.cheque_num }}
+                </div>
+                <div class="field">
+                    <label>{{ form.bank.label_tag }}</label>
+                    {{ form.bank }}
+                </div> -->
                 <input type='submit' class='ui positive button'></input>
             </form>
         </div>

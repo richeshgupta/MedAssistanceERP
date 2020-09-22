@@ -1,0 +1,67 @@
+{% extends 'users/base.html' %}
+
+{% block head %}
+    <style>
+        html, body{
+            overflow-x: hidden;
+        }
+    </style>
+{% endblock head %}
+
+{% block content %}
+<br><br>
+        <table class="ui stripped table">
+            <thead>
+                <tr>
+                    <th class='ui center aligned small header'>Product Name</th>
+                    <th class='ui center aligned small header'>Company</th>
+                    <th class='ui center aligned small header'>Batch</th>
+                    <th class='ui center aligned small header'>Quantity</th>
+                    <th class='ui center aligned small header'>Discount</th>
+                    <th class='ui center aligned small header'>Deal</th>
+                    <th class='ui center aligned small header'>Tax</th>
+                    <th class='ui center aligned small header'>Sale Rate</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style='width:13vw'>
+                        <div class="ui fluid search selection dropdown medname input">
+                            <input name="name">
+                            <i class="dropdown icon"></i>
+                        </div>
+                    </td>
+                    <td style='width:12vw'>
+                        <div class="ui fluid selection dropdown input">
+                            <input>
+                            <i class="dropdown icon"></i>
+                        </div>
+                    </td>
+                    <td style='width:10vw'>
+                        <div class="ui fluid selection dropdown input">
+                            <input>
+                            <i class="dropdown icon"></i>
+                        </div>
+                    </td>
+                    <td style='width:-20vw !important'>
+                        <div class="ui input">
+                            <input placeholder="Quantity">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="ui input"><input placeholder="Discount"></div>
+                    </td>
+                    <td>
+                        <div class="ui input"><input placeholder="Deal"></div>
+                    </td>
+                    <td>
+                        <div class="ui input"><input placeholder="Tax"></div>
+                    </td>
+                    <td>
+                        <div class="ui input"><input placeholder="Sale Rate"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+{% endblock content %}
