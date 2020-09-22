@@ -3,8 +3,8 @@
 - Adding Employees to DB ( with different level of access)
     - Levels Of access
         * Basic * - Only adding Entries of sale and Parties
-        * Intermediate * - Basic + Edit operations + Delete operations
-        * Admin * - Intermediate + Adding Accounts
+        * Intermediate * - Basic + Edit operations 
+        * Admin * - Intermediate + Adding Accounts + Deleting Accounts
 - When medicines are about to be exhausted, Alert is issued.
 - Inventory Management
 - Barcode support

@@ -4,14 +4,12 @@
 {% endblock head %}
 {% block content %}
 <div class="ui container">
-    <div class="ui red segment header">Error Occured!</div>
-    <div class="ui hidden divider"></div>
-    <div class="two wide column segment">
-    <h2 class="ui red header segment"><u>Error : {{error}}</h2></u>
-
+    <div class="ui red segment header">
+        <h1>Error Occured!</h1>
         <div class="ui hidden divider"></div>
-        <strong>Contact Support</strong>
-    
+        <u><h3>{{error}}</h3>  </u>
+        <div class="ui hidden divider"></div>
+        <u><h4 class="ui orange header">Contact Support</h4></u>
     </div>
 </div>
 {% endblock content %}

@@ -21,10 +21,45 @@
     <div class="ui grid center aligned">
         <div class=" two wide row">
             <div class="eight wide column">
-                <h2>Form</h2>
+                
                     <div class="ui form positive segment">
-                        
-                </div>
+                        <h1 class="ui orange header">Change Password</h1> 
+                        <div class="ui hidden divider"></div>  
+
+                       
+                        <div class="ui form">
+                            <form method="post">
+                                {% csrf_token %}
+                                
+                                <div class="ui hidden divider"></div>  
+                                <div class="ui labeled input">
+                                    <div class="ui label">
+                                        Current
+                                      </div>
+                                    <input type="password" name="cur_pass" placeholder="Current Password" required>
+                                </div>
+                                <br />
+                                <div class="ui hidden divider"></div>  
+                                <div class="ui labeled input">
+                                    <div class="ui label">
+                                      Password
+                                    </div>
+                                    <input type="password" name="pass1" placeholder="Password" required>
+                                </div>
+                                <br />
+                                <div class="ui hidden divider"></div>  
+                                <div class="ui labeled input">
+                                    <div class="ui label">
+                                    Confirmation
+                                    </div>
+                                    <input type="password" name="pass2" placeholder="Password Confirmation" required>
+                                </div>
+                                <div class="ui hidden divider"></div>  
+                                <input type="submit" class="ui positive large button" value='Change'>
+                            </form>
+                        </div>
+
+                    </div>
             </div>
         </div>
     </div>

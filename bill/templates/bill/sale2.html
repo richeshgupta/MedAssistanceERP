@@ -6,6 +6,7 @@
             overflow-x: hidden;
         }
     </style>
+    <title>Sale - Billing </title>
 {% endblock head %}
 
 {% block content %}
@@ -57,7 +58,7 @@
                     </td>
                     <td style='width:-20vw !important'>
                         <div class="ui input">
-                            <input name="quantity" placeholder="Quantity">
+                            <input name="quantity" placeholder="Quantity" autocomplete="off">
                         </div>
                     </td>
                     <td>
@@ -85,7 +86,7 @@
                 // +4 is done for because sale_rate id of last row is +3 of medname id
                 count+=4;
 
-                //for companp id
+                //for company id
                 c=count+1;
 
                 // for batch_no id

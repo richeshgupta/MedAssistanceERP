@@ -4,13 +4,10 @@ from .forms import SignUpForm,User_Extended_Form
 from django.contrib.auth.models import User
 from .models import user_extended
 
-from django.views.generic import UpdateView
+#decorators
+from .custom_decorator import  *
+from django.contrib.auth.decorators import login_required
 
-from .custom_decorator import  is_admin_access
-
-# Error 404 modules
-# from django.shortcuts import render_to_response
-# from django.template import RequestContext
 
 
 def home(request):
@@ -19,6 +16,8 @@ def home(request):
 def Test(request):
     return render(request,"users/test.html",{})
 
+@login_required(login_url='home')
+@is_admin_access
 def Reg(request):
     return render(request,"users/reg.html",{})
 
@@ -26,6 +25,8 @@ def Logout(request):
     logout(request)
     return redirect('home')
 
+
+@login_required(login_url='home')
 @is_admin_access
 def Signup(request):
     if request.method=='POST':
@@ -59,15 +60,40 @@ def Signup(request):
     return render(request,'users/reg.html',context)
         
 
+from django.contrib.auth.hashers import make_password, check_password
+@login_required(login_url="home")
 def Settings(request):
+    if request.method=="POST":
+        curr_user = User.objects.get(username__exact=request.user.username)
+        hashed_pass = curr_user.password
+        curr_passwd = request.POST.get('cur_pass')
+        passw1 = request.POST.get('pass1')
+        passw2 = request.POST.get('pass2')
+        if check_password(curr_passwd,hashed_pass):
+            if passw1!=passw2 or len(passw1)<8:
+                return  ErrorPage(request,"Passwords Do not match or Length of password is less than 8 char")
+            else:
+                new_hashed_pass = make_password(passw1)
+                curr_user.password = new_hashed_pass
+                curr_user.save()
+                Logout(request)
+        else:
+            return ErrorPage(request,"Current Password don't match with stored password")
+
+
+        
     return render(request,"users/settings.html",{})
 
 def Tools(request):
     return render(request,'users/tools.html',{})
 
+@login_required
+@is_intermediate_access
 def Manage_Staff(request):
     return render(request,"users/manage_staff.html",{})
 
+@login_required(login_url='home')
+@is_intermediate_access
 def Edit_Permission(request):
     users = User.objects.all()
     return render(request,"users/edit_permission.html",{'users':users})
@@ -78,7 +104,8 @@ def ErrorPage(request,error):
         error = "No Valid Thrown error"
     return render(request,"users/error.html",{'error':error})
 
-
+@login_required(login_url='home')
+@is_intermediate_access
 def Access_Edit(request,user_id):
     try:
         xuser = user_extended.objects.get(user=user_id)
@@ -102,12 +129,16 @@ def Access_Edit(request,user_id):
         
     
     return render(request,"users/access_edit.html",{})
-    
-    
+
+
+@login_required(login_url='home')  
+@is_admin_access
 def User_List_Del(request):
     users = User.objects.all()
     return render(request,"users/user-list-del.html",{'users':users})
-    
+
+@login_required(login_url='home')
+@is_admin_access    
 def Delete_Staff(request,user_id):
     try:
         extended_user = user_extended.objects.get(user=user_id)

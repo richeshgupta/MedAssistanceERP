@@ -28,7 +28,7 @@ def is_intermediate_access(func):
         if not request.user.is_anonymous:
             try:
                 xuser = user_extended.objects.get(user=request.user)
-                if xuser.access_level != 2 and xuser!=None:
+                if xuser.access_level < 2 and xuser!=None:
                     return render(request,"users/error.html",{'error':"You don't have access to this page"})
                 return func(request,*args,**kwargs)
             except:
