@@ -26,42 +26,343 @@
             <tbody>
                 <tr>
                     <td style='width:13vw'>
-                        <div class="ui fluid search selection dropdown medname input">
-                            <input name="name">
+                        <div id="0" class="ui fluid search selection dropdown medname">
+                            <input type="hidden" name="name" >
+                            <div class="text">Choose..</div>
                             <i class="dropdown icon"></i>
+                            <div class="menu">
+
+                            </div>
                         </div>
                     </td>
                     <td style='width:12vw'>
-                        <div class="ui fluid selection dropdown input">
-                            <input>
+                        <div id="1" class="ui fluid selection dropdown input">
+                            <input name="company">
+                            <div class="text">Choose..</div>
                             <i class="dropdown icon"></i>
+                            <div class="menu">
+
+                            </div>
                         </div>
                     </td>
                     <td style='width:10vw'>
-                        <div class="ui fluid selection dropdown input">
-                            <input>
+                        <div id="2" class="ui fluid selection dropdown input">
+                            <input name="batch_no">
+                            <div class="text">Choose..</div>
                             <i class="dropdown icon"></i>
+                            <div class="menu">
+
+                            </div>
                         </div>
                     </td>
                     <td style='width:-20vw !important'>
                         <div class="ui input">
-                            <input placeholder="Quantity">
+                            <input name="quantity" placeholder="Quantity">
                         </div>
                     </td>
                     <td>
-                        <div class="ui input"><input placeholder="Discount"></div>
+                        <div class="ui input"><input name="discount" placeholder="Discount"></div>
                     </td>
                     <td>
-                        <div class="ui input"><input placeholder="Deal"></div>
+                        <div class="ui input"><input name="deal" placeholder="Deal"></div>
                     </td>
                     <td>
-                        <div class="ui input"><input placeholder="Tax"></div>
+                        <div class="ui input"><input name="tax" placeholder="Tax"></div>
                     </td>
                     <td>
-                        <div class="ui input"><input placeholder="Sale Rate"></div>
+                        <div class="ui input"><input id ="3" name="sale_rate" placeholder="Sale Rate"></div>
                     </td>
                 </tr>
             </tbody>
         </table>
+        <div class="ui button add">Add</div>
 
+        <script>
+            // count is id of latest medname added 
+            var count = 0;
+            // add button
+            $(document).on('click', '.ui.button.add', function() {
+                // +4 is done for because sale_rate id of last row is +3 of medname id
+                count+=4;
+
+                //for companp id
+                c=count+1;
+
+                // for batch_no id
+                b=c+1;
+
+                //for sale rate id
+                s=b+1;
+        
+                //c is the id of ul in the med name just for template
+                var template = '<tr>\
+                    <td style="width:13vw">\
+                        <div id='+ count +' class="ui fluid search selection dropdown medname ">\
+                            <input type="hidden" name="name">\
+                            <div class="text">Choose..</div>\
+                            <i class="dropdown icon"></i>\
+                            <div class="menu">\
+                            </div>\
+                        </div>\
+                    </td>\
+                    <td style="width:12vw">\
+                        <div id='+ c +' class="ui fluid selection dropdown input">\
+                            <input name="company">\
+                            <div class="text">Choose..</div>\
+                            <i class="dropdown icon"></i>\
+                            <div class="menu">\
+                            </div>\
+                        </div>\
+                    </td>\
+                    <td style="width:10vw">\
+                        <div id='+ b + ' class="ui fluid selection dropdown input">\
+                            <input name="batch_no">\
+                            <div class="text">Choose..</div>\
+                            <i class="dropdown icon"></i>\
+                            <div class="menu">\
+                            </div>\
+                        </div>\
+                    </td>\
+                    <td style="width:-20vw !important">\
+                        <div class="ui input">\
+                            <input name="quantity" placeholder="Quantity">\
+                        </div>\
+                    </td>\
+                    <td>\
+                        <div class="ui input"><input name="discount" placeholder="Discount"></div>\
+                    </td>\
+                    <td>\
+                        <div class="ui input"><input name="deal" placeholder="Deal"></div>\
+                    </td>\
+                    <td>\
+                        <div class="ui input"><input name="tax" placeholder="Tax"></div>\
+                    </td>\
+                    <td>\
+                        <div class="ui input"><input id ='+ s +' name="sale_rate" placeholder="Sale Rate"></div>\
+                    </td>\
+                </tr>';
+        
+        
+                //adding the template everytime add button is clicked
+                $(template).appendTo('tbody');
+        
+                //fetching data from backend for the med name field added using the add button only on every key stroke
+                $(document).ready(function(){
+                $(".medname").click(function(){
+                    //setting id of currrent active medicine field
+                    med_id=$(this).attr('id');
+                    med_company_id=String(Number(med_id)+1);
+                    med_batch_id=String(Number(med_company_id)+1);
+                    med_sale_rate_id=String(Number(med_batch_id)+1);
+                    $('#'+med_id+' .menu').html('');
+                    $.ajax({
+                        url: "getMedName/",
+                        type: "GET",
+                        datatype:'json',
+                        success: function(response){
+                            $('#'+med_id+' .menu').html('');
+                            $.each(response,function(key,value){
+                                $('#'+med_id+' .menu').append('<div class="item" data-value='+value+'>'+value+'</div>');
+                            });
+                            $('#'+med_id).dropdown();
+                            $('#'+med_id + ' .item').click(function(){
+                                med_name=$(this).data("value");
+                                $('#'+med_company_id+' .menu').html('');
+                                $.ajax({
+                                    url: "getMedCompany/",
+                                    type: "GET",
+                                    datatype:'json',
+                                    data:{medName:med_name},
+                                    success: function(response){
+                                        $('#'+med_company_id+' .menu').html('');
+                                        $.each(response,function(key,value){
+                                            $('#'+med_company_id+' .menu').append('<div class="item" data-value='+value+'>'+value+'</div>');
+                                        });
+                                        $('#'+med_company_id).dropdown();
+                                        $('#'+med_company_id+' .item').click(function(){
+                                            med_company=$(this).data("value");
+                                            $('#'+med_batch_id+' .menu').html('');
+                                            $.ajax({
+                                                url: "getMedBatch/",
+                                                type: "GET",
+                                                datatype:'json',
+                                                data:{medName:med_name,medCompany:med_company},
+                                                success: function(response){
+                                                    $('#'+med_batch_id+' .menu').html('');
+                                                    $.each(response,function(key,value){
+                                                        $('#'+med_batch_id+' .menu').append('<div class="item" data-value='+value+'>'+value+'</div>');
+                                                    });
+                                                    $('#'+med_batch_id).dropdown();
+                                                }
+                                            });
+                                            $.ajax({
+                                                url: "getMedSaleRate/",
+                                                type: "GET",
+                                                datatype:'json',
+                                                data:{medName:med_name,medCompany:med_company},
+                                                success: function(response){
+                                                   $("#"+med_sale_rate_id).val(response);
+                                                }
+                                            });
+                                        });
+                                    }
+                                });
+        
+                            });
+        
+                        }
+                        });
+                    });
+        
+                });
+            });
+            
+            
+        
+            // //submit button
+            // $(document).on('click','.ui.submit.button',function(e){
+            //     e.preventDefault();
+        
+            //     var name=[];
+            //     $("input[name='name']").each(function(){
+            //         name.push(this.value);
+            //     });
+            //     var company=[];
+            //     $("input[name='company']").each(function(){
+            //         company.push(this.value);
+            //     });
+            //     var batch_no=[];
+            //     $("input[name='batch_no']").each(function(){
+            //         batch_no.push(this.value);
+            //     });
+        
+            //     var quantity=[];
+            //     $("input[name='quantity']").each(function(){
+            //         quantity.push(this.value);
+            //     });
+        
+            //     var discount=[];
+            //     $("input[name='discount']").each(function(){
+            //         discount.push(this.value);
+            //     });
+        
+            //     var deal=[];
+            //     $("input[name='deal']").each(function(){
+            //         deal.push(this.value);
+            //     });
+        
+            //     var tax=[];
+            //     $("input[name='tax']").each(function(){
+            //         tax.push(this.value);
+            //     });
+        
+            //     var loss=[];
+            //     $("input[name='loss']").each(function(){
+            //         loss.push(this.value);
+            //     });
+        
+            //     var sale_rate=[];
+            //     $("input[name='sale_rate']").each(function(){
+            //         sale_rate.push(this.value);
+            //     });
+            //     $.ajax({
+            //         type : 'POST',
+            //         dataType : "json",
+            //         traditional : true,
+            //         url : 'create/',
+            //         data:{
+            //             customer_name : document.getElementsByName('customer_name')[0].value ,
+            //             customer_email : document.getElementsByName('customer_email')[0].value,
+            //             mode_of_payment : document.getElementsByName('mode_of_payment')[0].value,
+            //             total_bill : document.getElementsByName('total_bill')[0].value,
+            //             name : name,
+            //             company:company,
+            //             batch_number : batch_no,
+            //             quantity : quantity,
+            //             discount : discount,
+            //             deal : deal,
+            //             tax : tax,
+            //             loss : loss,
+            //             sale_rate : sale_rate,
+            //             csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken]').val()
+            //         },
+            //         success:function(){
+            //             alert('created bill sale');
+                        
+            //         },
+            //         error:function(){
+                        
+            //         }
+        
+            //     });
+            // });
+
+
+
+            //fetching data for the first Medicine Name Field
+            $(document).ready(function(){
+                $(".medname").click(function(){
+                    //setting id of currrent active medicine field
+                    med_id="0";
+                    $('#0 .menu').html('');
+                    $.ajax({
+                        url: "getMedName/",
+                        type: "GET",
+                        datatype:'json',
+                        success: function(response){
+                            $('#0 .menu').html('');
+                            $.each(response,function(key,value){
+                                $('#0 .menu').append('<div class="item" data-value='+value+'>'+value+'</div>');
+                            });
+                            $('#0').dropdown(); 
+                            $('#0 .item').click(function(){
+                                med_name=$(this).data("value");
+                                $('#1 .menu').html('');
+                                $.ajax({
+                                    url: "getMedCompany/",
+                                    type: "GET",
+                                    datatype:'json',
+                                    data:{medName:med_name},
+                                    success: function(response){
+                                        $('#1 .menu').html('');
+                                        $.each(response,function(key,value){
+                                            $('#1 .menu').append('<div class="item" data-value='+value+'>'+value+'</div>');
+                                        });
+                                        $('#1').dropdown();
+                                        $('#1 .item').click(function(){
+                                            med_company=$(this).data("value");
+                                            $('#2 .menu').html('');
+                                            $.ajax({
+                                                url: "getMedBatch/",
+                                                type: "GET",
+                                                datatype:'json',
+                                                data:{medName:med_name,medCompany:med_company},
+                                                success: function(response){
+                                                    $.each(response,function(key,value){
+                                                        $('#2 .menu').html('');
+                                                        $('#2 .menu').append('<div class="item" data-value='+value+'>'+value+'</div>');
+                                                    });
+                                                    $('#2').dropdown();
+                                                }
+                                            });
+                                            $.ajax({
+                                                url: "getMedSaleRate/",
+                                                type: "GET",
+                                                datatype:'json',
+                                                data:{medName:med_name,medCompany:med_company},
+                                                success: function(response){
+                                                   $("#3").val(response);
+                                                }
+                                            });
+                                        });
+                                    }
+                                });
+                            });
+                        }
+                    });
+                });
+            });  
+        
+        
+        </script>
 {% endblock content %}
