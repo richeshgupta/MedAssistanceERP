@@ -77,6 +77,7 @@ def Settings(request):
                 curr_user.password = new_hashed_pass
                 curr_user.save()
                 Logout(request)
+                return redirect('home')
         else:
             return ErrorPage(request,"Current Password don't match with stored password")
 
