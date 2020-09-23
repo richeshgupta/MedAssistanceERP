@@ -3,9 +3,12 @@
     <title>Settings</title>
 {% endblock head %}
 {% block content %}
+    <h1>
+        Welcome, {{request.user.username}}
+    </h1>
    <div class="ui grid center aligned ">
         <div class="ten wide column segment">
-            <h1 class="ui orange segment header">
+            <h1 class="ui header">
                 Settings
             </h1>
             <div class="ui hidden divider"></div>
@@ -22,7 +25,7 @@
         <div class=" two wide row">
             <div class="eight wide column">
                 
-                    <div class="ui form positive segment">
+                    <div class="ui positive segment">
                         <h1 class="ui orange header">Change Password</h1> 
                         <div class="ui hidden divider"></div>  
 
@@ -40,25 +43,27 @@
                                 </div>
                                 <br />
                                 <div class="ui hidden divider"></div>  
+                                <div class="ui hidden divider"></div>  
                                 <div class="ui labeled input">
-                                    <div class="ui label">
-                                      Password
+                                    <div class="ui label">New Password</div>
+                                    <div class="ui left icon input">
+                                        <i class="lock icon"></i>
+                                        <input type="password" name="pass1" placeholder="Password" required>
                                     </div>
-                                    <input type="password" name="pass1" placeholder="Password" required>
                                 </div>
                                 <br />
                                 <div class="ui hidden divider"></div>  
                                 <div class="ui labeled input">
-                                    <div class="ui label">
-                                    Confirmation
+                                    <div class="ui label">Confirm Password</div>
+                                    <div class="ui left icon input">
+                                        <i class="lock icon"></i>
+                                        <input type="password" name="pass2" placeholder="Password Confirmation" required>
                                     </div>
-                                    <input type="password" name="pass2" placeholder="Password Confirmation" required>
                                 </div>
                                 <div class="ui hidden divider"></div>  
                                 <input type="submit" class="ui positive large button" value='Change'>
                             </form>
                         </div>
-
                     </div>
             </div>
         </div>

@@ -5,6 +5,12 @@
         html, body{
             overflow-x: hidden;
         }
+        .input input {
+            border-top-style: hidden !important;
+            border-right-style: hidden !important;
+            border-left-style: hidden !important;
+            border-bottom-style: groove !important;
+        }
     </style>
     <title>Sale - Billing </title>
 {% endblock head %}
@@ -56,9 +62,9 @@
                             </div>
                         </div>
                     </td>
-                    <td style='width:-20vw !important'>
+                    <td>
                         <div class="ui input">
-                            <input name="quantity" placeholder="Quantity" autocomplete="off">
+                            <input class='no-outline' name="quantity" placeholder="Quantity" autocomplete="off">
                         </div>
                     </td>
                     <td>
@@ -76,9 +82,13 @@
                 </tr>
             </tbody>
         </table>
-        <div class="ui button add">Add</div>
+        <br><br>
+        <div class="ui center aligned grid">
+            <div class="ui positive large button submit" style="padding:10px 30px">Submit</div>
+            <div class="ui primary large button add" style="padding:10px 30px">Add</div>
+        </div>
 
-        <script>
+<script>
             // count is id of latest medname added 
             var count = 0;
             // add button
@@ -124,7 +134,7 @@
                             </div>\
                         </div>\
                     </td>\
-                    <td style="width:-20vw !important">\
+                    <td>\
                         <div class="ui input">\
                             <input name="quantity" placeholder="Quantity">\
                         </div>\
@@ -140,6 +150,9 @@
                     </td>\
                     <td>\
                         <div class="ui input"><input id ='+ s +' name="sale_rate" placeholder="Sale Rate"></div>\
+                    </td>\
+                    <td>\
+                        <i class="close icon"></i>\
                     </td>\
                 </tr>';
         
@@ -364,6 +377,9 @@
                 });
             });  
         
-        
-        </script>
+    $(document).on('click','.close.icon',function(){
+        $(this).parent('tr').parent('td').remove();
+        count-=1; 
+    });
+</script>
 {% endblock content %}

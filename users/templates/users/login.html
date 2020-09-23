@@ -30,10 +30,16 @@
                         </div>
                     {% endfor %}
                 {% endif %}
-            
-                <div class="ui form">
 
-                    <form method='post'>
+                    <form method='post' class="ui large form">
+                        <div class="ui stacked segment">
+                            <div class="field">
+                                <div class="ui left icon input">
+                                    <i class="user icon"></i>
+                                    <input name="email" placeholder="E-mail address" type="text" />
+                                </div>
+                            </div>
+                        </div>
                         {% csrf_token %}
 
                             {% for field in form.visible_fields %}
@@ -47,9 +53,8 @@
                             {% endfor %}
                             
                         <div class="ui hidden divider"></div>
-                        <input type="submit" class="ui positive button" value='Login'>
+                        <input type="submit" class="ui positive button" value='Hello'>
                     </form>
-                </div>
             </div>
         </div>
     </div>

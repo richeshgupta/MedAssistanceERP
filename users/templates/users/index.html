@@ -45,12 +45,26 @@
                     <form method='post' class="ui large form">
                         {% csrf_token %}
                         <div class="field">
-                            {% for field in form.visible_fields %}
+                            <div class="ui left icon input">
+                                <i class="user icon"></i>
+                                <!-- <input name="username" placeholder="{{ form.username.label_tag }}" type="username" /> -->
+                                <!-- <label class='ui medium header' aria-placeholder="username"> -->
+                                {{ form.username }}
+                                </label>
+                            </div>
+                            
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                              <i class="lock icon"></i>
+                              <!-- <input name="password" placeholder="{{ form.password.label_tag }}" type="password" /> -->
+                              {{ form.password }}
+                            </div>
+                        </div>
+                        <!-- {% for field in form.visible_fields %}
                                 <h3>{{ field.label_tag }}</h3>
                                 {{ field }}
-                            {% endfor %}
-                        </div>
-
+                            {% endfor %} -->
                         {% if request.GET.next %}
                             <input type="hidden" name='next' value="{{request.GET.next}}">
                         {% endif %}
