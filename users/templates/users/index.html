@@ -1,5 +1,6 @@
 {% extends 'users/base.html' %}
 {% load static %}
+{% load placeholder %}
 {% block head %}
     <title>Home</title>
     <style>
@@ -49,7 +50,7 @@
                                 <i class="user icon"></i>
                                 <!-- <input name="username" placeholder="{{ form.username.label_tag }}" type="username" /> -->
                                 <!-- <label class='ui medium header' aria-placeholder="username"> -->
-                                {{ form.username }}
+                                {{ form.username | placeholder:'Username' }}
                                 </label>
                             </div>
                             
@@ -58,7 +59,7 @@
                             <div class="ui left icon input">
                               <i class="lock icon"></i>
                               <!-- <input name="password" placeholder="{{ form.password.label_tag }}" type="password" /> -->
-                              {{ form.password }}
+                              {{ form.password | placeholder:'Password' }}
                             </div>
                         </div>
                         <!-- {% for field in form.visible_fields %}
