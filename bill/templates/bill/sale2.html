@@ -16,7 +16,43 @@
 {% endblock head %}
 
 {% block content %}
-<br><br>
+<h3 class="ui center small aligned icon header">
+    <i class=" circular clipboard icon"></i>
+    <div style="font-size: x-large;">
+    Sale
+    </div>
+</h3>
+<br>
+<div class="ui equal width form">
+    {% csrf_token %}
+   <div class="fields">
+       <div class="field">
+           <div class="ui center aligned small header">Customer Name</div>
+           <input name="customer_name" type="text" autocomplete="off" class="ui input focus" placeholder="Customer Name">
+       </div>
+       <div class="field">
+           <div class="ui center aligned small header">Customer Email</div>
+           <input name="customer_email" type="text" class="ui input focus" placeholder="Customer Email">
+       </div>
+       <div class="field">
+           <div class="ui center aligned small header">Mode of Payment</div>
+           <div  class="ui fluid search selection dropdown paymentMode">
+               <input type="hidden" name="mode_of_payment" class="ui input focus">
+               <div class="text">Choose..</div>
+               <i class="dropdown icon"></i>
+               <div class="menu">
+                   <div class="item" data-value="1">Cash</div>
+                   <div class="item" data-value="2">Card</div>
+               </div>
+           </div>
+       </div>
+       <div class="field">
+           <div class="ui center aligned small header">Total</div>
+           <input name="total_bill" type="text" class="ui input focus" placeholder="Total Price">
+       </div>
+   </div>
+</div>
+<br>
         <table class="ui stripped table">
             <thead>
                 <tr>
@@ -89,6 +125,7 @@
         </div>
 
 <script>
+    $('.paymentMode').dropdown();
             // count is id of latest medname added 
             var count = 0;
             // add button
@@ -233,83 +270,84 @@
             
             
         
-            // //submit button
-            // $(document).on('click','.ui.submit.button',function(e){
-            //     e.preventDefault();
+            //submit button
+            $(document).on('click','.ui.submit.button',function(e){
+                e.preventDefault();
         
-            //     var name=[];
-            //     $("input[name='name']").each(function(){
-            //         name.push(this.value);
-            //     });
-            //     var company=[];
-            //     $("input[name='company']").each(function(){
-            //         company.push(this.value);
-            //     });
-            //     var batch_no=[];
-            //     $("input[name='batch_no']").each(function(){
-            //         batch_no.push(this.value);
-            //     });
+                var name=[];
+                $("input[name='name']").each(function(){
+                    name.push(this.value);
+                });
+                var company=[];
+                $("input[name='company']").each(function(){
+                    company.push(this.value);
+                });
+                var batch_no=[];
+                $("input[name='batch_no']").each(function(){
+                    batch_no.push(this.value);
+                });
         
-            //     var quantity=[];
-            //     $("input[name='quantity']").each(function(){
-            //         quantity.push(this.value);
-            //     });
+                var quantity=[];
+                $("input[name='quantity']").each(function(){
+                    quantity.push(this.value);
+                });
         
-            //     var discount=[];
-            //     $("input[name='discount']").each(function(){
-            //         discount.push(this.value);
-            //     });
+                var discount=[];
+                $("input[name='discount']").each(function(){
+                    discount.push(this.value);
+                });
         
-            //     var deal=[];
-            //     $("input[name='deal']").each(function(){
-            //         deal.push(this.value);
-            //     });
+                var deal=[];
+                $("input[name='deal']").each(function(){
+                    deal.push(this.value);
+                });
         
-            //     var tax=[];
-            //     $("input[name='tax']").each(function(){
-            //         tax.push(this.value);
-            //     });
+                var tax=[];
+                $("input[name='tax']").each(function(){
+                    tax.push(this.value);
+                });
         
-            //     var loss=[];
-            //     $("input[name='loss']").each(function(){
-            //         loss.push(this.value);
-            //     });
+                var loss=[];
+                //needs to computed
+                $("input[name='loss']").each(function(){
+                    loss.push('True');
+                });
         
-            //     var sale_rate=[];
-            //     $("input[name='sale_rate']").each(function(){
-            //         sale_rate.push(this.value);
-            //     });
-            //     $.ajax({
-            //         type : 'POST',
-            //         dataType : "json",
-            //         traditional : true,
-            //         url : 'create/',
-            //         data:{
-            //             customer_name : document.getElementsByName('customer_name')[0].value ,
-            //             customer_email : document.getElementsByName('customer_email')[0].value,
-            //             mode_of_payment : document.getElementsByName('mode_of_payment')[0].value,
-            //             total_bill : document.getElementsByName('total_bill')[0].value,
-            //             name : name,
-            //             company:company,
-            //             batch_number : batch_no,
-            //             quantity : quantity,
-            //             discount : discount,
-            //             deal : deal,
-            //             tax : tax,
-            //             loss : loss,
-            //             sale_rate : sale_rate,
-            //             csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken]').val()
-            //         },
-            //         success:function(){
-            //             alert('created bill sale');
+                var sale_rate=[];
+                $("input[name='sale_rate']").each(function(){
+                    sale_rate.push(this.value);
+                });
+                $.ajax({
+                    type : 'POST',
+                    dataType : "json",
+                    traditional : true,
+                    url : 'create/',
+                    data:{
+                        customer_name : document.getElementsByName('customer_name')[0].value ,
+                        customer_email : document.getElementsByName('customer_email')[0].value,
+                        mode_of_payment : document.getElementsByName('mode_of_payment')[0].value,
+                        total_bill : document.getElementsByName('total_bill')[0].value,
+                        name : name,
+                        company:company,
+                        batch_number : batch_no,
+                        quantity : quantity,
+                        discount : discount,
+                        deal : deal,
+                        tax : tax,
+                        loss : loss,
+                        sale_rate : sale_rate,
+                        csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken]').val()
+                    },
+                    success:function(){
+                        alert('created bill sale');
                         
-            //         },
-            //         error:function(){
+                    },
+                    error:function(){
                         
-            //         }
+                    }
         
-            //     });
-            // });
+                });
+            });
 
 
 
@@ -352,8 +390,8 @@
                                                 datatype:'json',
                                                 data:{medName:med_name,medCompany:med_company},
                                                 success: function(response){
+                                                    $('#2 .menu').html('');
                                                     $.each(response,function(key,value){
-                                                        $('#2 .menu').html('');
                                                         $('#2 .menu').append('<div class="item" data-value='+value+'>'+value+'</div>');
                                                     });
                                                     $('#2').dropdown();
@@ -376,9 +414,9 @@
                     });
                 });
             });  
-        
+    // remove row    
     $(document).on('click','.close.icon',function(){
-        $(this).parent('tr').parent('td').remove();
+        $(this).parent('td').parent('tr').remove();
         count-=1; 
     });
 </script>
