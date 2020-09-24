@@ -64,26 +64,27 @@ from django.contrib.auth.hashers import make_password, check_password
 @login_required(login_url="home")
 def Settings(request):
     if request.method=="POST":
-        curr_user = User.objects.get(username__exact=request.user.username)
-        hashed_pass = curr_user.password
-        curr_passwd = request.POST.get('cur_pass')
-        passw1 = request.POST.get('pass1')
-        passw2 = request.POST.get('pass2')
-        if check_password(curr_passwd,hashed_pass):
-            if passw1!=passw2 or len(passw1)<8:
+        curr_user = User.objects.get(username__exact=request.user.username) #fetching requesting user from db
+        hashed_pass = curr_user.password #gets db password in hashed form
+        curr_passwd = request.POST.get('cur_pass') # gets password from frontend
+        passw1 = request.POST.get('pass1') #getting password 1
+        passw2 = request.POST.get('pass2') #getting password 1
+        if check_password(curr_passwd,hashed_pass): #checking if the frontend curr_pass and db curr_pass are equal
+            if passw1!=passw2 or len(passw1)<8: #if both new password match
                 return  ErrorPage(request,"Passwords Do not match or Length of password is less than 8 char")
             else:
-                new_hashed_pass = make_password(passw1)
-                curr_user.password = new_hashed_pass
-                curr_user.save()
-                Logout(request)
-                return redirect('home')
+                new_hashed_pass = make_password(passw1) #hashing the password with little bit of Salting (who likes blande)
+                curr_user.password = new_hashed_pass #storing it to db object
+                curr_user.save() #saving it
+                Logout(request) #logging out current session
+                
         else:
-            return ErrorPage(request,"Current Password don't match with stored password")
+            return ErrorPage(request,"Current Password don't match with stored password") #if something happens Error page redirection
+
 
 
         
-    return render(request,"users/settings.html",{})
+    return render(request,"users/settings.html",{}) #if get req. sent only this get executed
 
 def Tools(request):
     return render(request,'users/tools.html',{})
@@ -92,6 +93,9 @@ def Tools(request):
 @is_intermediate_access
 def Manage_Staff(request):
     return render(request,"users/manage_staff.html",{})
+
+
+
 
 @login_required(login_url='home')
 @is_intermediate_access
@@ -104,6 +108,9 @@ def ErrorPage(request,error):
     if len(error)<1:
         error = "No Valid Thrown error"
     return render(request,"users/error.html",{'error':error})
+
+
+
 
 @login_required(login_url='home')
 @is_intermediate_access
@@ -137,6 +144,8 @@ def Access_Edit(request,user_id):
 def User_List_Del(request):
     users = User.objects.all()
     return render(request,"users/user-list-del.html",{'users':users})
+
+
 
 @login_required(login_url='home')
 @is_admin_access    
