@@ -128,7 +128,6 @@
 
 <script>
     $('.paymentMode').dropdown();
-    $('.loss').dropdown()
 
     // count keeps track of  the number of Medicine added 
     var count = 0;
@@ -199,7 +198,7 @@
             </div>\
             <div class=" two wide field">\
                 <label>Loss</label>\
-                <div  class="ui fluid search selection dropdown loss">\
+                   <div  class="ui fluid search selection dropdown loss">\
                         <input type="hidden" name="loss" class="ui input focus">\
                         <div class="text">Choose..</div>\
                         <i class="dropdown icon"></i>\
@@ -207,7 +206,7 @@
                             <div class="item" data-value="True">True</div>\
                             <div class="item" data-value="False">False</div>\
                         </div>\
-                </div>\
+                    </div>\
             </div>\
             <div class="field">\
                 <label>Sale Rate</label>\
@@ -227,7 +226,7 @@
 
         //adding the template everytime add button is clicked
         $(template).insertBefore('.ui.submit');
-        $('.loss').dropdown()
+
 
         //fetching data from backend for the med name field added using the add button only on every key stroke
         $(document).ready(function(){
@@ -342,7 +341,7 @@
         });
 
         var loss=[];
-        $("input[name='loss']").each(function(){
+        $("select[name='loss']").each(function(){
             loss.push(this.value);
         });
 

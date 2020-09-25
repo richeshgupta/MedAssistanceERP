@@ -79,8 +79,8 @@
                         </div>
                     </td>
                     <td style='width:12vw'>
-                        <div id="1" class="ui fluid selection dropdown input">
-                            <input name="company">
+                        <div id="1" class="ui fluid selection dropdown ">
+                            <input type="hidden"  name="company">
                             <div class="text">Choose..</div>
                             <i class="dropdown icon"></i>
                             <div class="menu">
@@ -89,8 +89,8 @@
                         </div>
                     </td>
                     <td style='width:10vw'>
-                        <div id="2" class="ui fluid selection dropdown input">
-                            <input name="batch_no">
+                        <div id="2" class="ui fluid selection dropdown ">
+                            <input type="hidden"  name="batch_no">
                             <div class="text">Choose..</div>
                             <i class="dropdown icon"></i>
                             <div class="menu">
@@ -127,14 +127,20 @@
 <script>
     $('.paymentMode').dropdown();
             // count is id of latest medname added 
-            var count = 0;
+            var n = 0;
+
+            //number of rows right now
+            var count =0;
+
+
             // add button
             $(document).on('click', '.ui.button.add', function() {
                 // +4 is done for because sale_rate id of last row is +3 of medname id
-                count+=4;
+                count+=1;
+                n+=4;
 
                 //for company id
-                c=count+1;
+                c=n+1;
 
                 // for batch_no id
                 b=c+1;
@@ -145,7 +151,7 @@
                 //c is the id of ul in the med name just for template
                 var template = '<tr>\
                     <td style="width:13vw">\
-                        <div id='+ count +' class="ui fluid search selection dropdown medname ">\
+                        <div id='+ n +' class="ui fluid search selection dropdown medname ">\
                             <input type="hidden" name="name">\
                             <div class="text">Choose..</div>\
                             <i class="dropdown icon"></i>\
@@ -154,8 +160,8 @@
                         </div>\
                     </td>\
                     <td style="width:12vw">\
-                        <div id='+ c +' class="ui fluid selection dropdown input">\
-                            <input name="company">\
+                        <div id='+ c +' class="ui fluid selection dropdown ">\
+                            <input type="hidden"  name="company">\
                             <div class="text">Choose..</div>\
                             <i class="dropdown icon"></i>\
                             <div class="menu">\
@@ -163,8 +169,8 @@
                         </div>\
                     </td>\
                     <td style="width:10vw">\
-                        <div id='+ b + ' class="ui fluid selection dropdown input">\
-                            <input name="batch_no">\
+                        <div id='+ b + ' class="ui fluid selection dropdown ">\
+                            <input type="hidden"  name="batch_no">\
                             <div class="text">Choose..</div>\
                             <i class="dropdown icon"></i>\
                             <div class="menu">\
@@ -306,12 +312,17 @@
                 $("input[name='tax']").each(function(){
                     tax.push(this.value);
                 });
-        
-                var loss=[];
+
+
                 //needs to computed
-                $("input[name='loss']").each(function(){
+                var loss=[];
+                var i;
+                for(i=0;i<=count;i++)
+                {
                     loss.push('True');
-                });
+                }
+                
+                
         
                 var sale_rate=[];
                 $("input[name='sale_rate']").each(function(){
@@ -418,6 +429,7 @@
     $(document).on('click','.close.icon',function(){
         $(this).parent('td').parent('tr').remove();
         count-=1; 
+        n-=1;
     });
 </script>
 {% endblock content %}
