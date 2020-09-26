@@ -3,7 +3,7 @@ from django.contrib.auth import logout
 from .forms import SignUpForm,User_Extended_Form
 from django.contrib.auth.models import User
 from .models import user_extended
-
+from django.http import HttpResponseRedirect
 #decorators
 from .custom_decorator import  *
 from django.contrib.auth.decorators import login_required
@@ -161,3 +161,8 @@ def Delete_Staff(request,user_id):
     extended_user.delete()
     User_object.delete()
     return redirect('manage_staff')
+
+
+@login_required(login_url='home')
+def Super_Admin(request):
+    return HttpResponseRedirect('admin/')
