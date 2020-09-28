@@ -107,7 +107,7 @@
                 {% endif %}
                 
                 <div class="ui hidden divider"></div>
-                <form method="post" class="ui form">
+                <form method="post" class="ui form" novalidate>
                     {% csrf_token %}
                     {% for field in form.visible_fields %}
                         <div class="field">
@@ -131,14 +131,14 @@
                         <div class="seven wide field">
                             <h4 class="ui header">Phone :</h4>
                             <div class="field">
-                                <input type="text" placeholder="Phone Number" name='phone' required />
+                                <input type="text" placeholder="Phone Number" name='phone'  />
                             </div>
                         </div>     
                     </div>
                     <br>
                     <div class="field">
                         <h4>Address</h4>
-                        <textarea rows="2" name="address" required></textarea>
+                        <textarea rows="2" name="address"></textarea>
                     </div>
 
                     <div class="ui hidden divider"></div>
