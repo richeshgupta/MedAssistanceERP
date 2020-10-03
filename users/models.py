@@ -20,3 +20,6 @@ class user_extended(models.Model):
         return self.user.get_username()
 
 
+
+
+

@@ -1,0 +1,41 @@
+{% extends 'users/base.html' %}
+{% block head %}
+    <title>Product Page</title>
+{% endblock head %}
+{% block content %}
+    <div class="ui container">
+        <div class="ui form">
+            <h1>Product Page</h1>
+
+            <div class="ui hidden divider"></div>
+            <label>Medicine Name :</label>
+            <hr />
+            <input name="medName" type="text" />
+            <div class="ui hidden divider"></div>
+            <label>Company :</label>
+            <hr />
+
+            <div id="0" class="ui fluid search selection dropdown compname">
+                <input type="hidden" name="name" >
+                <div class="text">Choose..</div>
+                <i class="dropdown icon"></i>
+                <div class="menu">
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+    <!-- AJAX request -->
+    <script>
+        $(document).ready(()=>{
+            $('.compname').click(()=>{
+                
+            });
+        });
+    </script>
+{% endblock content %}
