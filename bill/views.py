@@ -7,12 +7,13 @@ import json
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.db import connection
-
+from users.views import ErrorPage
 
 @login_required(login_url='/')
 def Sale(request):
     return render(request,"bill/sale2.html",{})
 
+@login_required(login_url='home')
 def Create_Bill_Sale(request):
     if request.method == 'POST':
         Bill_Retailer.objects.create(
@@ -31,6 +32,8 @@ def Create_Bill_Sale(request):
             sale_rate = request.POST.getlist('sale_rate'),
         )
         return HttpResponse('')
+    else:
+        return ErrorPage(request,"Only POST allowed")
 
 
 def GetMedName(request):
@@ -41,6 +44,9 @@ def GetMedName(request):
         b=[]
         [b.append(a[0]) for a in data if a[0] not in b]
         return HttpResponse(json.dumps(b), content_type='application/json')
+    else:
+        return ErrorPage(request,"Only GET allowed")
+
 
 def GetMedCompany(request):
     if request.method=="GET":
@@ -54,6 +60,8 @@ def GetMedCompany(request):
             cursor.execute("SELECT comp_name FROM company_company where id=%s",[a])
             d.append(cursor.fetchone()[0])
         return HttpResponse(json.dumps(d), content_type='application/json')
+    else:
+        return ErrorPage(request,"Only GET allowed")
 
 def GetMedBatch(request):
     if request.method=="GET":
@@ -68,6 +76,8 @@ def GetMedBatch(request):
         temp_batches=cursor.fetchall()
         batches=[a[0] for a in temp_batches]
         return HttpResponse(json.dumps(batches), content_type='application/json')
+    else:
+        return ErrorPage(request,"Only GET allowed")
 
 
 def GetMedSaleRate(request):
@@ -79,5 +89,7 @@ def GetMedSaleRate(request):
         medCompany=cursor.fetchone()[0]
         cursor.execute("SELECT * FROM company_product where name=%s and company_id=%s",[medName,medCompany])
         return HttpResponse(cursor.fetchone()[6])
+    else:
+        return ErrorPage(request,"Only GET allowed")
 
 

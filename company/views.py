@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect
 from .forms import *
+from users.custom_decorator import *
+from django.contrib.auth.decorators import login_required
 
+
+@login_required(login_url='home')
 def Company(request):
     form = companyForm()
     if request.method == 'POST':
@@ -18,6 +22,7 @@ def Company(request):
     context = {'form':form}
     return render(request,'company/company.html',context)
 
+@login_required(login_url='home')
 def Product(request):
     form = productForm()
     if request.method == 'POST':
@@ -35,6 +40,8 @@ def Product(request):
     context = {'form':form}
     return render(request,'company/product.html',context)
 
+
+@login_required(login_url='home')
 def Batch(request):
     form = batchForm()
     if request.method == 'POST':
@@ -51,3 +58,8 @@ def Batch(request):
         form = batchForm()
     context = {'form':form}
     return render(request,'company/batch.html',context)
+
+@login_required(login_url='home')
+def Product2(request):
+    context={}
+    return render(request,"company/product2.html",context)

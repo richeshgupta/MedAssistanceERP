@@ -328,6 +328,8 @@
                 $("input[name='sale_rate']").each(function(){
                     sale_rate.push(this.value);
                 });
+
+                
                 $.ajax({
                     type : 'POST',
                     dataType : "json",
