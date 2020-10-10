@@ -311,23 +311,33 @@
                 $("input[name='tax']").each(function(){
                     tax.push(this.value);
                 });
-
-
-                //needs to computed
-                var loss=[];
-                var i;
-                for(i=0;i<=count;i++)
-                {
-                    loss.push('True');
-                }
                 
-                
-        
+                  
                 var sale_rate=[];
                 $("input[name='sale_rate']").each(function(){
                     sale_rate.push(this.value);
                 });
 
+
+                //loss
+                var loss=[];
+                $.ajax({
+                    url: "computeloss/",
+                    type: "GET",
+                    traditional : true,
+                    datatype:'json',
+
+                    //synchronous
+                    async: false,
+                    data:{medName : name , medCompany : company , batch_no : batch_no , sale_rate : sale_rate},
+                    success: function(response){
+                        $.each(response,function(key,value){
+                            loss.push(value);
+                        });
+                    }
+                });
+    
+                
                 
                 $.ajax({
                     type : 'POST',

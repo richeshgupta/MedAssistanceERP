@@ -81,15 +81,39 @@ def GetMedBatch(request):
 
 
 def GetMedSaleRate(request):
-    if request.method=="GET":
-        medName=request.GET['medName']
-        medCompany=request.GET['medCompany']
+    if request.method == "GET":
+        medName = request.GET['medName']
+        medCompany = request.GET['medCompany']
         cursor = connection.cursor()
         cursor.execute("SELECT id FROM company_company where comp_name=%s",[medCompany])
-        medCompany=cursor.fetchone()[0]
+        medCompany = cursor.fetchone()[0]
         cursor.execute("SELECT * FROM company_product where name=%s and company_id=%s",[medName,medCompany])
-        return HttpResponse(cursor.fetchone()[6])
+        return HttpResponse(cursor.fetchone()[5])
     else:
         return ErrorPage(request,"Only GET allowed")
 
 
+
+def ComputeLoss(request):
+    if request.method == "GET":
+        medName = request.GET.getlist('medName')
+        medCompany = request.GET.getlist('medCompany')
+        batch_no = request.GET.getlist('batch_no')
+        sale_rate = request.GET.getlist('sale_rate')
+        cursor = connection.cursor()
+        loss=[]
+        i=0
+        l=len(medName)
+        while(i<l):
+            cursor.execute("SELECT id FROM company_company where comp_name=%s",[medCompany[i]])
+            medCompanyID = cursor.fetchone()[0]
+            cursor.execute("SELECT id FROM company_product where name=%s and company_id=%s",[medName[i],medCompanyID])
+            medProductID = cursor.fetchone()[0]
+            cursor.execute("SELECT * FROM company_batch where product_id=%s and batch_number=%s",[medProductID,batch_no[i]])
+            purchase_rate=cursor.fetchone()[5]
+            if(float(purchase_rate) < float(sale_rate[i])):
+                loss.append('False')
+            else:
+                loss.append('True')
+            i+=1
+        return HttpResponse(json.dumps(loss), content_type='application/json')
