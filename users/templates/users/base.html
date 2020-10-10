@@ -27,15 +27,37 @@
     </head>
 
     <body>
+      <h1>Path : {{request.path}}</h1>
         <div class="ui secondary pointing menu">
             <div class="ui container">
-                <a class="active item" href="{% url 'home' %}">Home</a>
-                <a class='item' href="{% url 'test' %}">Purchase</a>
+
+
+                {% if request.path == '/' %}
+                  <a class="active item" href="{% url 'home' %}">Home</a>  
+                {% else %}
+                  <a class="item" href="{% url 'home' %}">Home</a>  
+                {% endif %}
+                
+                {% if request.path == '/bill/sale/' %}
+                  <a class="active item" href="{% url 'sale' %}">Sale</a>
+                {% else %}
                 <a class="item" href="{% url 'sale' %}">Sale</a>
+                {% endif %}
+                
                 <a class="item" href="{% url 'test' %}">Report</a>
                 <a class="item" href="{% url 'test' %}">Search</a>
                 <a class="item" href="{% url 'test' %}">GST Return</a>
-                <a class="item" href="{% url 'tools' %}">Tools</a>
+
+                {% if request.path == '/tools/' %}
+                  <a class="active item" href="{% url 'tools' %}">Tools</a>
+                {% else %}
+                  <a class="item" href="{% url 'tools' %}">Tools</a>
+                {% endif %}
+
+
+
+
+
                 <div class="right item">
                     {% if request.user.is_authenticated %} 
                         <a class="ui negative button" href="{% url 'logout' %}">Logout</a>
