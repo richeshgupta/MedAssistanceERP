@@ -243,6 +243,7 @@
                                         $('#'+med_company_id+' .item').click(function(){
                                             med_company=$(this).data("value");
                                             $('#'+med_batch_id+' .menu').html('');
+
                                             $.ajax({
                                                 url: "getMedBatch/",
                                                 type: "GET",
@@ -256,6 +257,7 @@
                                                     $('#'+med_batch_id).dropdown();
                                                 }
                                             });
+
                                             $.ajax({
                                                 url: "getMedSaleRate&Tax/",
                                                 type: "GET",
@@ -269,6 +271,9 @@
                                                    $("#"+med_sale_rate_id).val(response[0]);
                                                 }
                                             });
+
+                                          
+
                                         });
                                     }
                                 });

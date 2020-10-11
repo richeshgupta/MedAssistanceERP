@@ -116,3 +116,25 @@ def ComputeLoss(request):
                 loss.append('True')
             i+=1
         return HttpResponse(json.dumps(loss), content_type='application/json')
+
+
+# Getting quantity
+# this method is to be called on every time batch is edited.
+def GetQuantity(request):
+    if request.method=="GET":
+        medName = request.GET.getlist('medName')    # Getting all MedName from client
+        compname = request.GET.getlist('medCompany')
+        batch_no = request.GET.getlist('batch_no')
+        cursor = connection.cursor()
+        cursor.execute("select id from company_company where comp_name=%s",[compname])
+        comp_id = cursor.fetchone()[0]
+        cursor.execute('select id from company_product where name=%s and company_id=%d ',[medName,comp_id])
+        med_id = cursor.fetchone()[0]
+        cursor.execute('select quantity from company_batch where product_id=%d',[med_id])
+        quan = cursor.fetchall()[0]
+        print(quan)
+        return HttpResponse(json.dumps(quan),content_type="application/json")
+
+
+
+

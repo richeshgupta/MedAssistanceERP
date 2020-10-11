@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import Sale,Create_Bill_Sale,GetMedName,GetMedBatch,GetMedSaleRateANDtax,GetMedCompany,ComputeLoss
+from .views import *
 
 urlpatterns = [
     path('sale/',Sale,name='sale'),
@@ -9,4 +9,5 @@ urlpatterns = [
     path('sale/getMedBatch/',GetMedBatch),
     path('sale/getMedSaleRate&Tax/',GetMedSaleRateANDtax),
     path('sale/computeloss/',ComputeLoss),
+    path('sale/getquantity/',GetQuantity),
 ]
