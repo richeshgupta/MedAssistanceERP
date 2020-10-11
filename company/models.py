@@ -6,7 +6,7 @@ from party.models import Party_Wholeseller
 class Company(models.Model):
     comp_name = models.CharField(verbose_name='Company Name', max_length=20, null=False)
     comp_address = models.CharField(verbose_name='Company Address', max_length=50)
-    comp_GST = models.PositiveIntegerField(verbose_name='GST', null=False)
+    comp_gst = models.PositiveIntegerField(verbose_name='GST', null=False)
     contact = models.CharField(blank=True,max_length = 15,null=False)
 
     def __str__(self):
@@ -15,12 +15,12 @@ class Company(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=35, null=False)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    scheduled_Drug = models.BooleanField(default=False)
-    unit_of_Packing = models.CharField(max_length=15)    #Unit of packing has units in char e.g. 10*1TAB or 10*10CAP {(Number of Tab in each strip,no.of strips)}
-    sale_Rate = models.FloatField(null=True)
-    GST = models.FloatField(null=True)
+    scheduled_drug = models.BooleanField(default=False)
+    unit_of_packing = models.CharField(max_length=15)    #Unit of packing has units in char e.g. 10*1TAB or 10*10CAP {(Number of Tab in each strip,no.of strips)}
+    sale_rate = models.FloatField(null=True)
+    gst = models.FloatField(null=True)
     free = models.IntegerField(null=True)
-    party_Wholeseller = models.ForeignKey(Party_Wholeseller, on_delete=models.CASCADE, null=False)
+    party_wholeseller = models.ForeignKey(Party_Wholeseller, on_delete=models.CASCADE, null=False)
 
     def __str__(self):
         return str(self.name)
@@ -31,7 +31,7 @@ class Batch(models.Model):
     product = models.ForeignKey(Product,on_delete=models.SET_DEFAULT,default=None)
     quantity = models.IntegerField(null=False)
     mrp = models.FloatField(null=False, verbose_name='MRP')
-    purchase_Rate = models.FloatField(null=True)
+    purchase_rate = models.FloatField(null=True)
     def __str__(self):
         return self.batch_number
 
