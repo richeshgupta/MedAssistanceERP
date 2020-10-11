@@ -9,8 +9,8 @@ class Party_Wholeseller(models.Model):
     address = models.CharField(max_length=50)
     city = models.CharField(max_length=10)
     state = models.CharField(max_length=20)
-    gstin = models.IntegerField(null=False)
-    dl_number = models.PositiveIntegerField(null=False)
+    gstin = models.CharField(null=False,verbose_name="GST Number",max_length=20)
+    dl_number = models.CharField(null=False,max_length=10)
     contact = PhoneField(blank=True, help_text='Company_Number')
     pan_number = models.CharField(max_length=11,null=False,unique=True)
     cheque = GenericRelation(Cheque)
@@ -18,15 +18,5 @@ class Party_Wholeseller(models.Model):
     def __str__(self):
         return self.name
 
-# class Party_Retailer(models.Model):
-#     name = models.CharField(max_length=20,null=False)
-#     city = models.CharField(max_length=10)
-#     state = models.CharField(max_length=20)
-#     contact = PhoneField(blank=True, help_text='Company_Number')
-#     doctor = models.CharField(max_length=20,null=False)
-#     cheque = GenericRelation(Cheque)
-
-#     def __str__(self):
-#         return self.name
 
 

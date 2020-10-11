@@ -6,7 +6,7 @@ from party.models import Party_Wholeseller
 class Company(models.Model):
     comp_name = models.CharField(verbose_name='Company Name', max_length=20, null=False)
     comp_address = models.CharField(verbose_name='Company Address', max_length=50)
-    comp_gst = models.PositiveIntegerField(verbose_name='GST', null=False)
+    comp_gst = models.PositiveIntegerField(verbose_name='GST Number', null=False)
     contact = models.CharField(blank=True,max_length = 15,null=False)
 
     def __str__(self):
