@@ -110,10 +110,10 @@
                         <div class="ui input"><input name="deal" placeholder="Deal"></div>
                     </td>
                     <td>
-                        <div class="ui input"><input name="tax" placeholder="Tax"></div>
+                        <div class="ui input"><input id ="3" name="tax" placeholder="Tax"></div>
                     </td>
                     <td>
-                        <div class="ui input"><input id ="3" name="sale_rate" placeholder="Sale Rate"></div>
+                        <div class="ui input"><input id ="4" name="sale_rate" placeholder="Sale Rate"></div>
                     </td>
                 </tr>
             </tbody>
@@ -137,7 +137,7 @@
             $(document).on('click', '.ui.button.add', function() {
                 // +4 is done for because sale_rate id of last row is +3 of medname id
                 count+=1;
-                n+=4;
+                n+=5;
 
                 //for company id
                 c=n+1;
@@ -145,8 +145,11 @@
                 // for batch_no id
                 b=c+1;
 
+                //for tax
+                t=b+1
+
                 //for sale rate id
-                s=b+1;
+                s=t+1;
         
                 //c is the id of ul in the med name just for template
                 var template = '<tr>\
@@ -189,7 +192,7 @@
                         <div class="ui input"><input name="deal" placeholder="Deal"></div>\
                     </td>\
                     <td>\
-                        <div class="ui input"><input name="tax" placeholder="Tax"></div>\
+                        <div class="ui input"><input id ='+ t +' name="tax" placeholder="Tax"></div>\
                     </td>\
                     <td>\
                         <div class="ui input"><input id ='+ s +' name="sale_rate" placeholder="Sale Rate"></div>\
@@ -210,7 +213,8 @@
                     med_id=$(this).attr('id');
                     med_company_id=String(Number(med_id)+1);
                     med_batch_id=String(Number(med_company_id)+1);
-                    med_sale_rate_id=String(Number(med_batch_id)+1);
+                    med_tax_id=String(Number(med_batch_id)+1);
+                    med_sale_rate_id=String(Number(med_tax_id)+1);
                     $('#'+med_id+' .menu').html('');
                     $.ajax({
                         url: "getMedName/",
@@ -253,12 +257,16 @@
                                                 }
                                             });
                                             $.ajax({
-                                                url: "getMedSaleRate/",
+                                                url: "getMedSaleRate&Tax/",
                                                 type: "GET",
                                                 datatype:'json',
                                                 data:{medName:med_name,medCompany:med_company},
                                                 success: function(response){
-                                                   $("#"+med_sale_rate_id).val(response);
+                                                    //tax
+                                                    $("#"+med_tax_id).val(response[1]);
+
+                                                    //sale rate
+                                                   $("#"+med_sale_rate_id).val(response[0]);
                                                 }
                                             });
                                         });
@@ -420,12 +428,18 @@
                                                 }
                                             });
                                             $.ajax({
-                                                url: "getMedSaleRate/",
+                                                url: "getMedSaleRate&Tax/",
                                                 type: "GET",
                                                 datatype:'json',
                                                 data:{medName:med_name,medCompany:med_company},
                                                 success: function(response){
-                                                   $("#3").val(response);
+                                                    // tax
+                                                    $("#3").val(response[1]);
+
+
+                                                    // sale rate
+                                                   $("#4").val(response[0]);
+                                                   
                                                 }
                                             });
                                         });
