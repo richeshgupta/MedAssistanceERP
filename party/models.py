@@ -18,15 +18,15 @@ class Party_Wholeseller(models.Model):
     def __str__(self):
         return self.name
 
-class Party_Retailer(models.Model):
-    name = models.CharField(max_length=20,null=False)
-    city = models.CharField(max_length=10)
-    state = models.CharField(max_length=20)
-    contact = PhoneField(blank=True, help_text='Company_Number')
-    doctor = models.CharField(max_length=20,null=False)
-    cheque = GenericRelation(Cheque)
+# class Party_Retailer(models.Model):
+#     name = models.CharField(max_length=20,null=False)
+#     city = models.CharField(max_length=10)
+#     state = models.CharField(max_length=20)
+#     contact = PhoneField(blank=True, help_text='Company_Number')
+#     doctor = models.CharField(max_length=20,null=False)
+#     cheque = GenericRelation(Cheque)
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
 
