@@ -134,6 +134,7 @@ def GetQuantity(request):
         quan = cursor.fetchall()[0]
         print(quan)
         return HttpResponse(json.dumps(quan),content_type="application/json")
+        
 
 
 

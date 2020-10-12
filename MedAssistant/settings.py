@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'party',
     'bill',
     'cheque',
+    'reports',
+
     
 ]
 

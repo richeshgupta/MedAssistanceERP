@@ -100,7 +100,7 @@
                     </td>
                     <td>
                         <div class="ui input">
-                            <input class='no-outline' name="quantity" placeholder="Quantity" autocomplete="off">
+                            <input class='no-outline' id="3" name="quantity" placeholder="Quantity" autocomplete="off">
                         </div>
                     </td>
                     <td>
@@ -110,10 +110,10 @@
                         <div class="ui input"><input name="deal" placeholder="Deal"></div>
                     </td>
                     <td>
-                        <div class="ui input"><input id ="3" name="tax" placeholder="Tax"></div>
+                        <div class="ui input"><input id ="4" name="tax" placeholder="Tax"></div>
                     </td>
                     <td>
-                        <div class="ui input"><input id ="4" name="sale_rate" placeholder="Sale Rate"></div>
+                        <div class="ui input"><input id ="5" name="sale_rate" placeholder="Sale Rate"></div>
                     </td>
                 </tr>
             </tbody>
@@ -124,8 +124,13 @@
             <div class="ui primary large button add" style="padding:10px 30px">Add</div>
         </div>
 
-<script>
-    $('.paymentMode').dropdown();
+    <script>
+            $('.paymentMode').dropdown();
+
+        
+
+
+
             // count is id of latest medname added 
             var n = 0;
 
@@ -135,9 +140,10 @@
 
             // add button
             $(document).on('click', '.ui.button.add', function() {
+
                 // +4 is done for because sale_rate id of last row is +3 of medname id
                 count+=1;
-                n+=5;
+                n+=6;
 
                 //for company id
                 c=n+1;
@@ -145,8 +151,11 @@
                 // for batch_no id
                 b=c+1;
 
+                // for Quantity
+                quan = b+1;
+
                 //for tax
-                t=b+1
+                t=quan+1
 
                 //for sale rate id
                 s=t+1;
@@ -182,7 +191,7 @@
                     </td>\
                     <td>\
                         <div class="ui input">\
-                            <input name="quantity" placeholder="Quantity">\
+                            <input name="quantity" id='+ quan +' placeholder="Quantity">\
                         </div>\
                     </td>\
                     <td>\
@@ -207,15 +216,24 @@
                 $(template).appendTo('tbody');
         
                 //fetching data from backend for the med name field added using the add button only on every key stroke
-                $(document).ready(function(){
+            $(document).ready(function(){
+
                 $(".medname").click(function(){
+                    
+
                     //setting id of currrent active medicine field
-                    med_id=$(this).attr('id');
+                    med_id=$(this).attr('id'); // getting id for the field
+
                     med_company_id=String(Number(med_id)+1);
+
                     med_batch_id=String(Number(med_company_id)+1);
-                    med_tax_id=String(Number(med_batch_id)+1);
+
+                    med_tax_id=String(Number(med_batch_id)+2);
+
                     med_sale_rate_id=String(Number(med_tax_id)+1);
+
                     $('#'+med_id+' .menu').html('');
+
                     $.ajax({
                         url: "getMedName/",
                         type: "GET",
@@ -234,12 +252,16 @@
                                     type: "GET",
                                     datatype:'json',
                                     data:{medName:med_name},
-                                    success: function(response){
+                                    success: function(response)
+                                    {
+
                                         $('#'+med_company_id+' .menu').html('');
                                         $.each(response,function(key,value){
                                             $('#'+med_company_id+' .menu').append('<div class="item" data-value='+value+'>'+value+'</div>');
                                         });
                                         $('#'+med_company_id).dropdown();
+
+
                                         $('#'+med_company_id+' .item').click(function(){
                                             med_company=$(this).data("value");
                                             $('#'+med_batch_id+' .menu').html('');
@@ -271,7 +293,25 @@
                                                    $("#"+med_sale_rate_id).val(response[0]);
                                                 }
                                             });
-
+                                            
+                                            $.ajax({
+                                                url:"getquantity/",
+                                                type:"GET",
+                                                datatype:"json",
+                                                data:
+                                                {
+                                                    medName:med_name,
+                                                    medCompany:med_company,
+                                                    batch_no:batch_no,
+                                                },
+                                                success: function(response)
+                                                    {
+                                                        confirm("Hello!");
+                                                        
+                                                    }
+                                            });
+                                            
+                                            
                                           
 
                                         });
@@ -419,6 +459,7 @@
                                         $('#1 .item').click(function(){
                                             med_company=$(this).data("value");
                                             $('#2 .menu').html('');
+
                                             $.ajax({
                                                 url: "getMedBatch/",
                                                 type: "GET",
@@ -432,18 +473,20 @@
                                                     $('#2').dropdown();
                                                 }
                                             });
+
                                             $.ajax({
                                                 url: "getMedSaleRate&Tax/",
                                                 type: "GET",
                                                 datatype:'json',
                                                 data:{medName:med_name,medCompany:med_company},
                                                 success: function(response){
+
                                                     // tax
-                                                    $("#3").val(response[1]);
+                                                    $("#4").val(response[1]);
 
 
                                                     // sale rate
-                                                   $("#4").val(response[0]);
+                                                   $("#5").val(response[0]);
                                                    
                                                 }
                                             });
