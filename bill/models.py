@@ -49,13 +49,13 @@ class Purchase(models.Model):
     mode_of_payment = models.PositiveSmallIntegerField(choices=payment,default=1)
     total_bill = models.FloatField(null=False)
     name = ArrayField(models.CharField(max_length=35, null=False))
+    company = ArrayField(models.CharField(max_length=20, null=False))
     batch_number = ArrayField(models.CharField(max_length=10))
     quantity = ArrayField(models.IntegerField(null=False))
     discount = ArrayField(models.FloatField(default=0))
     deal = ArrayField(models.IntegerField(default=0))
     tax = ArrayField(models.FloatField(default=0))
-    loss = ArrayField(models.BooleanField(default=False))
-    sale_rate = ArrayField(models.FloatField(null=True))
+    purchase_rate = ArrayField(models.FloatField(null=True))
     
     def __str__(self):
         return str(self.date)

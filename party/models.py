@@ -5,6 +5,7 @@ from phone_field import PhoneField
 
 
 class Party_Wholeseller(models.Model):
+    party_id = models.CharField(max_length=10,null=False,primary_key=True)
     name = models.CharField(max_length=20,null=False)
     address = models.CharField(max_length=50)
     city = models.CharField(max_length=10)

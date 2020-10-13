@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from .models import Bill_Retailer
+from .models import Bill_Retailer,Purchase
 from django.http import HttpResponse,JsonResponse
 from company.models import Product,Batch
+from party.models import Party_Wholeseller
 from django.core import serializers
 import json
 from django.contrib.auth.decorators import login_required
@@ -12,6 +13,9 @@ from users.views import ErrorPage
 @login_required(login_url='/')
 def Sale(request):
     return render(request,"bill/sale2.html",{})
+
+def Bill_Purchase(request):
+    return render(request,"bill/purchase.html",{})
 
 @login_required(login_url='home')
 def Create_Bill_Sale(request):
@@ -34,6 +38,24 @@ def Create_Bill_Sale(request):
         return HttpResponse('')
     # else:
     #     return ErrorPage(request,"Only POST allowed")
+
+def Create_Bill_Purchase(request):
+    if request.method == 'POST':
+        Purchase.objects.create(
+            party_id = int(request.POST['party_wholeseller']),
+            mode_of_payment = request.POST['mode_of_payment'],
+            total_bill = request.POST['total_bill'],
+            name = request.POST.getlist('name'),
+            company = request.POST.getlist('company'),
+            batch_number = request.POST.getlist('batch_number'),
+            quantity = request.POST.getlist('quantity'),
+            discount = request.POST.getlist('discount'),
+            deal = request.POST.getlist('deal'),
+            tax = request.POST.getlist('tax'),
+            purchase_rate = request.POST.getlist('purchase_rate'),
+        )
+        return HttpResponse('')
+
 
 
 def GetMedName(request):
@@ -137,5 +159,46 @@ def GetQuantity(request):
         
 
 
+def GetPartyWholeseller(request):
+    if request.method=="GET":
+        cursor = connection.cursor()
+        cursor.execute("SELECT name FROM party_party_wholeseller")
+        data= cursor.fetchall()
+        b=[]
+        [b.append(a[0]) for a in data if a[0] not in b]
+        return HttpResponse(json.dumps(b), content_type='application/json')
 
 
+def GetMedPurchaseRate(request):
+    medName = request.GET['medName']    # Getting all MedName from client
+    compname = request.GET['medCompany']
+    batch_no = request.GET['medBatch']
+    cursor = connection.cursor()
+    cursor.execute("select id from company_company where comp_name=%s",[compname])
+    comp_id = cursor.fetchone()[0]
+    cursor.execute('select id from company_product where name=%s and company_id=%s ',[medName,comp_id])
+    med_id = cursor.fetchone()[0]
+    cursor.execute('select purchase_rate from company_batch where product_id=%s',[med_id])
+    pur = cursor.fetchall()[0]
+    return HttpResponse(json.dumps(pur),content_type="application/json")
+
+def GetMedTax(request):
+    if request.method == "GET":
+        medName = request.GET['medName']
+        medCompany = request.GET['medCompany']
+        cursor = connection.cursor()
+        cursor.execute("SELECT id FROM company_company where comp_name=%s",[medCompany])
+        medCompanyID = cursor.fetchone()[0]
+        cursor.execute("SELECT gst FROM company_product where name=%s and company_id=%s",[medName,medCompanyID])
+        return HttpResponse(json.dumps(cursor.fetchone()), content_type='application/json')
+    else:
+        return ErrorPage(request,"Only GET allowed")
+
+def GetPartyWholesellerID(request):
+    if request.method == "GET":
+        partyName = request.GET['party_wholeseller']
+        cursor = connection.cursor()
+        cursor.execute("SELECT party_id FROM party_party_wholeseller where name=%s",[partyName])
+        return HttpResponse(json.dumps(cursor.fetchone()), content_type='application/json')
+    else:
+        return ErrorPage(request,"Only GET allowed")
