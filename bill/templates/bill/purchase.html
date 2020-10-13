@@ -19,7 +19,7 @@
 <h3 class="ui center small aligned icon header">
     <i class=" circular clipboard icon"></i>
     <div style="font-size: x-large;">
-    Sale
+    Purchase
     </div>
 </h3>
 <br>
@@ -51,7 +51,7 @@
        </div>
        <div class="field">
            <div class="ui center aligned small header">Total</div>
-           <input name="total_bill" type="text" class="ui input focus" placeholder="Total Price">
+           <input name="total_bill" type="text" class="ui input focus" placeholder="Total Price" id="total_pur_bill">
        </div>
    </div>
 </div>
@@ -72,7 +72,7 @@
             <tbody>
                 <tr>
                     <td style='width:13vw'>
-                        <div id="0" class="ui fluid search selection dropdown medname">
+                        <div id="0" class="ui fluid search selection dropdown medname Cal_Total">
                             <input type="hidden" name="name" >
                             <div class="text">Choose..</div>
                             <i class="dropdown icon"></i>
@@ -82,7 +82,7 @@
                         </div>
                     </td>
                     <td style='width:12vw'>
-                        <div id="1" class="ui fluid selection dropdown ">
+                        <div id="1" class="ui fluid selection dropdown Cal_Total">
                             <input type="hidden"  name="company">
                             <div class="text">Choose..</div>
                             <i class="dropdown icon"></i>
@@ -92,7 +92,7 @@
                         </div>
                     </td>
                     <td style='width:10vw'>
-                        <div id="2" class="ui fluid selection dropdown ">
+                        <div id="2" class="ui fluid selection dropdown Cal_Total">
                             <input type="hidden"  name="batch_no">
                             <div class="text">Choose..</div>
                             <i class="dropdown icon"></i>
@@ -103,20 +103,20 @@
                     </td>
                     <td>
                         <div class="ui input">
-                            <input class='no-outline' name="quantity" placeholder="Quantity" autocomplete="off">
+                            <input class='no-outline Cal_Total' id ="3"  name="quantity" placeholder="Quantity" autocomplete="off" >
                         </div>
                     </td>
                     <td>
-                        <div class="ui input"><input name="discount" placeholder="Discount"></div>
+                        <div class="ui input"><input name="discount" id ="4"  placeholder="Discount" class="Cal_Total"></div>
                     </td>
                     <td>
-                        <div class="ui input"><input name="deal" placeholder="Deal"></div>
+                        <div class="ui input"><input name="deal" id ="5"  placeholder="Deal" class="Cal_Total"></div>
                     </td>
                     <td>
-                        <div class="ui input"><input id ="3" name="tax" placeholder="Tax"></div>
+                        <div class="ui input"><input id ="6" name="tax" placeholder="Tax" class="Cal_Total"></div>
                     </td>
                     <td>
-                        <div class="ui input"><input id ="4" name="purchase_rate" placeholder="Purchase Rate"></div>
+                        <div class="ui input"><input id ="7" name="purchase_rate" placeholder="Purchase Rate" class="Cal_Total"></div>
                     </td>
                 </tr>
             </tbody>
@@ -138,13 +138,14 @@
             //number of rows right now
             var count =0;
 
-
             // add button
             $(document).on('click', '.ui.button.add', function() {
 
-                // +5 is done for because purchase_rate id of last row is +4 of medname id
+                // +8 is done for because purchase_rate id of last row is 7
                 count+=1;
-                n+=5;
+
+                //for medname
+                n+=8;
 
                 //for company id
                 c=n+1;
@@ -152,8 +153,17 @@
                 // for batch_no id
                 b=c+1;
 
+                // for quantity
+                q = b+1;
+
+                //for discount
+                dis=q+1;
+
+                //for deal
+                de =dis+1;
+
                 //for tax
-                t=b+1
+                t=de+1
 
                 //for purchase rate id
                 p=t+1;
@@ -161,7 +171,7 @@
                 //c is the id of ul in the med name just for template
                 var template = '<tr>\
                     <td style="width:13vw">\
-                        <div id='+ n +' class="ui fluid search selection dropdown medname ">\
+                        <div id='+ n +' class="ui fluid search selection dropdown medname Cal_Total">\
                             <input type="hidden" name="name">\
                             <div class="text">Choose..</div>\
                             <i class="dropdown icon"></i>\
@@ -170,7 +180,7 @@
                         </div>\
                     </td>\
                     <td style="width:12vw">\
-                        <div id='+ c +' class="ui fluid selection dropdown ">\
+                        <div id='+ c +' class="ui fluid selection dropdown Cal_Total">\
                             <input type="hidden"  name="company">\
                             <div class="text">Choose..</div>\
                             <i class="dropdown icon"></i>\
@@ -179,7 +189,7 @@
                         </div>\
                     </td>\
                     <td style="width:10vw">\
-                        <div id='+ b + ' class="ui fluid selection dropdown ">\
+                        <div id='+ b + ' class="ui fluid selection dropdown Cal_Total">\
                             <input type="hidden"  name="batch_no">\
                             <div class="text">Choose..</div>\
                             <i class="dropdown icon"></i>\
@@ -189,20 +199,20 @@
                     </td>\
                     <td>\
                         <div class="ui input">\
-                            <input name="quantity" placeholder="Quantity">\
+                            <input class="Cal_Total" name="quantity" id=' +  q + ' placeholder="Quantity">\
                         </div>\
                     </td>\
                     <td>\
-                        <div class="ui input"><input name="discount" placeholder="Discount"></div>\
+                        <div class="ui input"><input class="Cal_Total" name="discount" id=' + dis + ' placeholder="Discount"></div>\
                     </td>\
                     <td>\
-                        <div class="ui input"><input name="deal" placeholder="Deal"></div>\
+                        <div class="ui input"><input class="Cal_Total" name="deal" id=' +  de + ' placeholder="Deal"></div>\
                     </td>\
                     <td>\
-                        <div class="ui input"><input id ='+ t +' name="tax" placeholder="Tax"></div>\
+                        <div class="ui input"><input class="Cal_Total" id ='+ t +' name="tax" placeholder="Tax"></div>\
                     </td>\
                     <td>\
-                        <div class="ui input"><input id ='+ p +' name="purchase_rate" placeholder="Purchase Rate"></div>\
+                        <div class="ui input"><input class="Cal_Total" id ='+ p +' name="purchase_rate" placeholder="Purchase Rate"></div>\
                     </td>\
                     <td>\
                         <i class="close icon"></i>\
@@ -212,8 +222,36 @@
         
                 //adding the template everytime add button is clicked
                 $(template).appendTo('tbody');
+
+
+                //Calculate Total
+                $('.Cal_Total').change(function(e){
+                    c=count;
+                    x=0;
+                    tot=0;
+                    var i=0;
+                    for(i=0;i<=c;i++){
+                        p=x+7;
+                        t=x+6;
+                        de=x+5;
+                        dis=x+4;
+                        q=x+3;
+                        temp=0;
+                        temp += (parseFloat(document.getElementById(p).value) * parseFloat(document.getElementById(q).value)) + parseFloat(document.getElementById(t).value) - parseFloat(document.getElementById(dis).value);
+                        if(!(isNaN(temp))){
+                            tot+=temp;
+                        }   
+                        x=+8;
+                    }
+                    if(isNaN(tot)){
+                        $('#total_pur_bill').val(0);
+                    }
+                    else{
+                        $('#total_pur_bill').val(tot);
+                    }
+                });
         
-                //fetching data from backend for the med name field added using the add button only on every key stroke
+            //fetching data from backend for the med name field added using the add button only on every key stroke
             $(document).ready(function(){
 
                 $(".medname").click(function(){
@@ -226,7 +264,7 @@
 
                     med_batch_id=String(Number(med_company_id)+1);
 
-                    med_tax_id=String(Number(med_batch_id)+1);
+                    med_tax_id=String(Number(med_batch_id)+4);
 
                     med_purchase_rate_id=String(Number(med_tax_id)+1);
 
@@ -322,8 +360,36 @@
                 });
             });
             
+
+
+            //Calculate Total
+            $('.Cal_Total').change(function(e){
+                c=count;
+                x=0;
+                tot=0;
+                var i=0;
+                for(i=0;i<=c;i++){
+                    p=x+7;
+                    t=x+6;
+                    de=x+5;
+                    dis=x+4;
+                    q=x+3;
+                    temp=0;
+                    temp += (parseFloat(document.getElementById(p).value) * parseFloat(document.getElementById(q).value)) + parseFloat(document.getElementById(t).value) - parseFloat(document.getElementById(dis).value);
+                    if(!(isNaN(temp))){
+                        tot+=temp;
+                    } 
+                    x=+8;
+                }
+                if(isNaN(tot)){
+                    $('#total_pur_bill').val(0);
+                }
+                else{
+                $('#total_pur_bill').val(tot);
+                }
+            });
             
-        
+            
             //submit button
             $(document).on('click','.ui.submit.button',function(e){
                 e.preventDefault();
@@ -492,7 +558,7 @@
 
                                                     $('#2 .item').click(function(){
                                                         med_batch_no=$(this).data("value");
-                                                        $('#4').val('0');
+                                                        $('#7').val('0');
 
                                                         $.ajax({
                                                             url: "getMedPurchaseRate/",
@@ -501,7 +567,7 @@
                                                             data:{medName:med_name,medCompany:med_company,medBatch : med_batch_no},
                                                             success: function(response){
                                                                 // purchase rate
-                                                                $("#4").val(response[0]);
+                                                                $("#7").val(response[0]);
                                                             }
                                                         });
 
@@ -517,7 +583,7 @@
                                                 data:{medName:med_name,medCompany:med_company},
                                                 success: function(response){
                                                     //tax
-                                                   $("#3").val(response[0]);
+                                                   $("#6").val(response[0]);
                                                 }
                                             });
                                             
@@ -533,7 +599,7 @@
     $(document).on('click','.close.icon',function(){
         $(this).parent('td').parent('tr').remove();
         count-=1; 
-        n-=1;
+        n-=8;
     });
 </script>
 {% endblock content %}
