@@ -231,13 +231,30 @@
                     tot=0;
                     var i=0;
                     for(i=0;i<=c;i++){
+                      
                         p=x+7;
+
                         t=x+6;
-                        de=x+5;
+
+                        de=x+5; // deal
+
                         dis=x+4;
-                        q=x+3;
+
+                        q=x+3; //quan
+
                         temp=0;
-                        temp += (parseFloat(document.getElementById(p).value) * parseFloat(document.getElementById(q).value)) + parseFloat(document.getElementById(t).value) - parseFloat(document.getElementById(dis).value);
+
+                        // Qty * Purchase Rate
+                        base = (parseFloat(document.getElementById(p).value) * parseFloat(document.getElementById(q).value));
+                        
+                        // discount calculation
+                        discount = (base * parseFloat(document.getElementById(dis).value))/100;
+
+                        // tax calculation
+                        tax = ((parseFloat(document.getElementById(t).value)) * (base+discount))/100;
+
+                        temp += ( base  + tax - discount);
+                       
                         if(!(isNaN(temp))){
                             tot+=temp;
                         }   
@@ -375,7 +392,18 @@
                     dis=x+4;
                     q=x+3;
                     temp=0;
-                    temp += (parseFloat(document.getElementById(p).value) * parseFloat(document.getElementById(q).value)) + parseFloat(document.getElementById(t).value) - parseFloat(document.getElementById(dis).value);
+
+                    // Pur. rate * Qty
+                    base = (parseFloat(document.getElementById(p).value) * parseFloat(document.getElementById(q).value));
+
+                    // discount 
+                    discount = parseFloat(document.getElementById(dis).value)*base/100;
+
+                    // Tax calculation (to be calculated on base price, not dicounted one)
+                    tax = parseFloat(document.getElementById(t).value)*base/100;
+
+                    temp += base  + tax - discount;
+                    
                     if(!(isNaN(temp))){
                         tot+=temp;
                     } 
