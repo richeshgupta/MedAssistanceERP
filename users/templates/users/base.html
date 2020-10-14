@@ -26,60 +26,100 @@
 
     </head>
 
-    <body>
+<body>
       
-        <div class="ui secondary pointing menu">
-            <div class="ui container">
+    <div class="ui secondary pointing menu">
+      <div class="ui container">
+        {% if request.path == '/' %}
+          <a class="active item" href="{% url 'home' %}">Home</a>  
+        {% else %}
+          <a class="item" href="{% url 'home' %}">Home</a>  
+        {% endif %}
+        
+        {% if request.path == '/bill/sale/' %}
+          <a class="active item" href="{% url 'sale' %}">Sale</a>
+        {% else %}
+        <a class="item" href="{% url 'sale' %}">Sale</a>
+        {% endif %}
+        
+        <div class="item ui simple dropdown">
+          <span class="text">Report</span>
+          <i class="dropdown icon"></i>
+          <div class="menu">
 
+            <div class="item">
+              <i class="dropdown icon"></i>
+              <span class="text">Sale Report</span>
+              <div class="menu">
+                <a class="item">By Month</a>
+                <a class="item">By Year</a>
+                <a class="item">By Company</a>
+                <a class="item">Custom Date</a>
+                <a class="item">Total Analysis</a>
+              </div>
+            </div>
 
-                {% if request.path == '/' %}
-                  <a class="active item" href="{% url 'home' %}">Home</a>  
-                {% else %}
-                  <a class="item" href="{% url 'home' %}">Home</a>  
-                {% endif %}
-                
-                {% if request.path == '/bill/sale/' %}
-                  <a class="active item" href="{% url 'sale' %}">Sale</a>
-                {% else %}
-                <a class="item" href="{% url 'sale' %}">Sale</a>
-                {% endif %}
-                
-                <a class="item" href="{% url 'test' %}">Report</a>
-                <a class="item" href="{% url 'test' %}">Search</a>
-                <a class="item" href="{% url 'test' %}">GST Return</a>
+            <div class="item">
+              <i class="dropdown icon"></i>
+              <span class="text">Purchase Report</span>
+              <div class="menu">
+                <a class="item">By Month</a>
+                <a class="item">By Year</a>
+                <a class="item">By Company</a>
+                <a class="item">Custom Date</a>
+                <a class="item">Total Analysis</a>
+              </div>
+            </div>
 
-                {% if request.path == '/tools/' %}
-                  <a class="active item" href="{% url 'tools' %}">Tools</a>
-                {% else %}
-                  <a class="item" href="{% url 'tools' %}">Tools</a>
-                {% endif %}
+            <div class="item">
+              <i class="dropdown icon"></i>
+              <span class="text">Stock Report</span>
+              <div class="menu">
+                <a class="item">By Product</a>
+                <a class="item">By Company</a>
+              </div>
+            </div>
 
-
-
-
-
-                <div class="right item">
-                    {% if request.user.is_authenticated %} 
-                        <a class="ui negative button" href="{% url 'logout' %}">Logout</a>
-                        
-                    {% else %}
-                        <a class="ui positive button" href="{% url 'home' %}">Login</a>
-                    {% endif %}
-                </div>
-                {% if request.user.is_authenticated %} 
-                    <div class="item">
-                        <a class="ui  button" id="tooltip" data-tooltip="Settings"  data-position="bottom right" href="{% url 'settings' %}"><i class="cogs icon"></i></a>
-                    </div>
-                {% endif %}
-                
-                </div>       
+          </div>
         </div>
 
-        <!--Required Scripts -->
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-    {% block content %}
-    {% endblock content %}
+        {% if request.path == '/test/' %}
+          <a class="active item" href="{% url 'test' %}">Search</a>
+        {% else %}
+          <a class="item" href="{% url 'test' %}">Search</a>
+        {% endif %}
+        
+        <a class="item" href="{% url 'test' %}">GST Return</a>
+
+        {% if request.path == '/tools/' %}
+          <a class="active item" href="{% url 'tools' %}">Tools</a>
+        {% else %}
+          <a class="item" href="{% url 'tools' %}">Tools</a>
+        {% endif %}
+
+        <div class="right item">
+            {% if request.user.is_authenticated %} 
+                <a class="ui negative button" href="{% url 'logout' %}">Logout</a>
+                
+            {% else %}
+                <a class="ui positive button" href="{% url 'home' %}">Login</a>
+            {% endif %}
+        </div>
+        {% if request.user.is_authenticated %} 
+          <div class="item">
+              <a class="ui  button" id="tooltip" data-tooltip="Settings"  data-position="bottom right" href="{% url 'settings' %}"><i class="cogs icon"></i></a>
+          </div>
+        {% endif %}
+                
+      </div>       
+    </div>
+
+<!--Required Scripts -->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+
+{% block content %}
+{% endblock content %}
 
     {% block footer %}
     <div class="ui inverted vertical footer segment">
