@@ -48,7 +48,7 @@
        </div>
        <div class="field">
            <div class="ui center aligned small header">Total</div>
-           <input name="total_bill" type="text" class="ui input focus" placeholder="Total Price">
+           <input name="total_bill" type="text" class="ui input focus" id="total_sale_bill" placeholder="Total Price">
        </div>
    </div>
 </div>
@@ -69,7 +69,7 @@
             <tbody>
                 <tr>
                     <td style='width:13vw'>
-                        <div id="0" class="ui fluid search selection dropdown medname">
+                        <div id="0" class="ui fluid search selection dropdown medname Cal_Total">
                             <input type="hidden" name="name" >
                             <div class="text">Choose..</div>
                             <i class="dropdown icon"></i>
@@ -79,7 +79,7 @@
                         </div>
                     </td>
                     <td style='width:12vw'>
-                        <div id="1" class="ui fluid selection dropdown ">
+                        <div id="1" class="ui fluid selection dropdown Cal_Total">
                             <input type="hidden"  name="company">
                             <div class="text">Choose..</div>
                             <i class="dropdown icon"></i>
@@ -89,7 +89,7 @@
                         </div>
                     </td>
                     <td style='width:10vw'>
-                        <div id="2" class="ui fluid selection dropdown ">
+                        <div id="2" class="ui fluid selection dropdown Cal_Total">
                             <input type="hidden"  name="batch_no">
                             <div class="text">Choose..</div>
                             <i class="dropdown icon"></i>
@@ -100,20 +100,20 @@
                     </td>
                     <td>
                         <div class="ui input">
-                            <input class='no-outline' id="3" name="quantity" placeholder="Quantity" autocomplete="off">
+                            <input class='no-outline Cal_Total' id="3" name="quantity" placeholder="Quantity" autocomplete="off">
                         </div>
                     </td>
                     <td>
-                        <div class="ui input"><input name="discount" placeholder="Discount"></div>
+                        <div class="ui input "><input name="discount" id="6" placeholder="Discount" class="Cal_Total"></div>
                     </td>
                     <td>
-                        <div class="ui input"><input name="deal" placeholder="Deal"></div>
+                        <div class="ui input"><input name="deal" id="7" placeholder="Deal" class="Cal_Total"></div>
                     </td>
                     <td>
-                        <div class="ui input"><input id ="4" name="tax" placeholder="Tax"></div>
+                        <div class="ui input"><input id ="4" name="tax" placeholder="Tax" class="Cal_Total"></div>
                     </td>
                     <td>
-                        <div class="ui input"><input id ="5" name="sale_rate" placeholder="Sale Rate"></div>
+                        <div class="ui input"><input id ="5" name="sale_rate" placeholder="Sale Rate" class="Cal_Total"></div>
                     </td>
                 </tr>
             </tbody>
@@ -125,11 +125,10 @@
         </div>
 
     <script>
+            
+            
+            
             $('.paymentMode').dropdown();
-
-        
-
-
 
             // count is id of latest medname added 
             var n = 0;
@@ -143,7 +142,8 @@
 
                 // +4 is done for because sale_rate id of last row is +3 of medname id
                 count+=1;
-                n+=6;
+
+                n+=8;
 
                 //for company id
                 c=n+1;
@@ -152,18 +152,27 @@
                 b=c+1;
 
                 // for Quantity
-                quan = b+1;
+                quan=b+1;
 
                 //for tax
-                t=quan+1
+                t=quan+1;
 
                 //for sale rate id
                 s=t+1;
-        
+
+
+                // discount index to be used in template (add button)
+                dis_ind_template = s+1;
+
+                // deal index to be used in template (add button)
+                deal_index_template = dis_ind_template + 1;
+
+
+
                 //c is the id of ul in the med name just for template
                 var template = '<tr>\
                     <td style="width:13vw">\
-                        <div id='+ n +' class="ui fluid search selection dropdown medname ">\
+                        <div id='+ n +' class="ui fluid search selection dropdown medname Cal_Total">\
                             <input type="hidden" name="name">\
                             <div class="text">Choose..</div>\
                             <i class="dropdown icon"></i>\
@@ -172,7 +181,7 @@
                         </div>\
                     </td>\
                     <td style="width:12vw">\
-                        <div id='+ c +' class="ui fluid selection dropdown ">\
+                        <div id='+ c +' class="ui fluid selection dropdown Cal_Total">\
                             <input type="hidden"  name="company">\
                             <div class="text">Choose..</div>\
                             <i class="dropdown icon"></i>\
@@ -181,7 +190,7 @@
                         </div>\
                     </td>\
                     <td style="width:10vw">\
-                        <div id='+ b + ' class="ui fluid selection dropdown ">\
+                        <div id='+ b + ' class="ui fluid selection dropdown Cal_Total">\
                             <input type="hidden"  name="batch_no">\
                             <div class="text">Choose..</div>\
                             <i class="dropdown icon"></i>\
@@ -191,20 +200,20 @@
                     </td>\
                     <td>\
                         <div class="ui input">\
-                            <input name="quantity" id='+ quan +' placeholder="Quantity">\
+                            <input name="quantity" id='+ quan +' placeholder="Quantity" class="Cal_Total">\
                         </div>\
                     </td>\
                     <td>\
-                        <div class="ui input"><input name="discount" placeholder="Discount"></div>\
+                        <div class="ui input"><input name="discount" id='+ dis_ind_template + ' placeholder="Discount" class="Cal_Total"></div>\
                     </td>\
                     <td>\
-                        <div class="ui input"><input name="deal" placeholder="Deal"></div>\
+                        <div class="ui input"><input name="deal" id=' + deal_index_template + ' placeholder="Deal" class="Cal_Total"></div>\
                     </td>\
                     <td>\
-                        <div class="ui input"><input id ='+ t +' name="tax" placeholder="Tax"></div>\
+                        <div class="ui input"><input id ='+ t +' name="tax" placeholder="Tax" class="Cal_Total"></div>\
                     </td>\
                     <td>\
-                        <div class="ui input"><input id ='+ s +' name="sale_rate" placeholder="Sale Rate"></div>\
+                        <div class="ui input"><input id ='+ s +' name="sale_rate" placeholder="Sale Rate" class="Cal_Total"></div>\
                     </td>\
                     <td>\
                         <i class="close icon"></i>\
@@ -213,8 +222,61 @@
         
         
                 //adding the template everytime add button is clicked
-                $(template).appendTo('tbody');
+                  $(template).appendTo('tbody');
         
+           
+           
+                // Total Price Calculation
+                $('.Cal_Total').change(
+                   function(e)
+                   {
+                    c= count;
+                    x = 0;
+                    tot=0;
+                    var i;
+                    
+                    for(i=0;i<=c;i++)
+                    {
+                        sale_rate_index = x+5;
+                        tax_index = x+4;
+                        deal_index = x+7;
+                        discount_index = x+6;
+                        quantity_index = x+3;
+
+                        temp =0;
+                        
+                        // Base Price Calculation
+                        base = parseFloat(document.getElementById(sale_rate_index).value) * parseFloat(document.getElementById(quantity_index).value);
+                        
+                        // Discount Calculation
+                        discount = base * parseFloat(document.getElementById(discount_index).value)/100;
+                        
+                        // Tax Calculation
+                        tax = base * parseFloat(document.getElementById(tax_index).value)/100;
+
+                        // Final Equation
+                        temp += base - discount + tax;
+                    
+                    
+                          if(!(isNaN(temp))) // if temp is not NaN then add temp to tot (temp - > Row wise formula, Total -> all the columns' Temp)
+                            {
+                                    tot+=temp;
+                            }  
+
+                        x+=8;
+                        // alert(discount);
+                    }
+
+                  
+                    if(isNaN(tot)){
+                        $('#total_sale_bill').val(0); // if tot is  NaN  then make it 0 else the value
+                    }
+                    else{
+                        $('#total_sale_bill').val(tot);
+                    }
+               });
+
+
                 //fetching data from backend for the med name field added using the add button only on every key stroke
             $(document).ready(function(){
 
@@ -327,7 +389,55 @@
             });
             
             
-        
+            $('.Cal_Total').change(
+                   function(e)
+                   {
+                    c= count;
+                    x = 0;
+                    tot=0;
+                    var i;
+                    for(i=0;i<=c;i++)
+                    {
+                        sale_rate_index = x+5;
+                        tax_index = x+4;
+                        deal_index = x+7;
+                        discount_index = x+6;
+                        quantity_index = x+3;
+
+                        temp =0;
+
+                        // Base Price Calculation
+                        base = parseFloat(document.getElementById(sale_rate_index).value) * parseFloat(document.getElementById(quantity_index).value);
+
+                        // Discount Calculation
+                        discount = base * parseFloat(document.getElementById(discount_index).value)/100;
+
+                        // Tax Calculation
+                        tax = base * parseFloat(document.getElementById(tax_index).value)/100;
+
+                        // Final Equation
+                        temp += base - discount + tax;
+                    
+                    
+                          if(!(isNaN(temp))) // if temp is not NaN then add temp to tot (temp - > Row wise formula, Total -> all the columns' Temp)
+                            {
+                                    tot+=temp;
+                            }  
+
+                        x+=8;
+                        // document.write(base);
+                    }
+
+                  
+                    if(isNaN(tot)){
+                        $('#total_sale_bill').val(0); // if tot is  NaN  then make it 0 else the value
+                    }
+                    else{
+                        $('#total_sale_bill').val(tot);
+                    }
+               });
+
+
             //submit button
             $(document).on('click','.ui.submit.button',function(e){
                 e.preventDefault();
