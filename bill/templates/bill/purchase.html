@@ -514,12 +514,32 @@
                         purchase_rate : purchase_rate,
                         csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken]').val()
                     },
-                    success:function(){
-                        alert('created bill purchase');
+                    success:function(response){
+                        console.log('created bill purchase');
+                        $.ajax({
+                            type : 'POST',
+                            dataType : "json",
+                            traditional : true,
+                            url : 'updateStock/',
+                            data:{
+                                name : name,
+                                company:company,
+                                batch_number : batch_no,
+                                quantity : quantity,
+                                csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken]').val()
+                            },
+                            success:function(){
+                                alert('Updated Stock');
+                            },
+                            error:function(){
+                                
+                            }
+                
+                        });
                         
                     },
                     error:function(){
-                        
+                        console.log('created');
                     }
         
                 });
