@@ -74,7 +74,7 @@ def GetMedName(request):
 def GetMedCompany(request):
     if request.method=="GET":
         medName=request.GET['medName']
-        print("Requesting db for : ",medName)
+        # print("Requesting db for : ",medName)
         cursor = connection.cursor()
         cursor.execute("SELECT company_id FROM company_product where name=%s",[medName])
         data= cursor.fetchall()
@@ -99,6 +99,25 @@ def GetMedBatch(request):
         temp_batches=cursor.fetchall()
         batches=[a[0] for a in temp_batches]
         return HttpResponse(json.dumps(batches), content_type='application/json')
+
+def getQuantity(request):
+    if request.method=="GET":
+        medName=request.GET['medName']
+        medCompany = request.GET['medCompany']
+        batch_no = request.GET['batch']
+        print("Batch came : ",batch_no," medName : ",medName," company :",medCompany)
+        cursor = connection.cursor()
+        cursor.execute("select id from company_company where comp_name=%s",[medCompany])
+        comp_id = cursor.fetchone()[0]
+        print("comp id: ",comp_id)
+        cursor.execute('select id from company_product where name=%s and company_id=%s ',[medName,comp_id])
+        med_id = cursor.fetchone()[0]
+        print("medId : ",med_id)
+        cursor.execute('select quantity from company_batch where product_id=%s and batch_number=%s',[med_id,batch_no])
+        quan = cursor.fetchall()[0]
+        print("comp id:",comp_id,"\n product id:",med_id,"\n Quantity :",quan)
+
+        return HttpResponse(json.dumps(quan),content_type='application/json')
 
 
 def GetMedSaleRateANDtax(request):
@@ -144,20 +163,20 @@ def ComputeLoss(request):
 # Getting quantity
 # this method is to be called on every time batch is edited.
 #To be corrected company batch query
-def GetQuantity(request):
-    if request.method=="GET":
-        medName = request.GET.getlist('medName')    # Getting all MedName from client
-        compname = request.GET.getlist('medCompany')
-        batch_no = request.GET.getlist('batch_no')
-        cursor = connection.cursor()
-        cursor.execute("select id from company_company where comp_name=%s",[compname])
-        comp_id = cursor.fetchone()[0]
-        cursor.execute('select id from company_product where name=%s and company_id=%d ',[medName,comp_id])
-        med_id = cursor.fetchone()[0]
-        cursor.execute('select quantity from company_batch where product_id=%d',[med_id])
-        quan = cursor.fetchall()[0]
-        print(quan)
-        return HttpResponse(json.dumps(quan),content_type="application/json")
+# def GetQuantity(request):
+#     if request.method=="GET":
+#         medName = request.GET.getlist('medName')    # Getting all MedName from client
+#         compname = request.GET.getlist('medCompany')
+#         batch_no = request.GET.getlist('batch_no')
+#         cursor = connection.cursor()
+#         cursor.execute("select id from company_company where comp_name=%s",[compname])
+#         comp_id = cursor.fetchone()[0]
+#         cursor.execute('select id from company_product where name=%s and company_id=%d ',[medName,comp_id])
+#         med_id = cursor.fetchone()[0]
+#         cursor.execute('select quantity from company_batch where product_id=%d',[med_id])
+#         quan = cursor.fetchall()[0]
+#         print(quan)
+#         return HttpResponse(json.dumps(quan),content_type="application/json")
         
 
 

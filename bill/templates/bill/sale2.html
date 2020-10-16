@@ -60,9 +60,9 @@
                     <th class='ui center aligned small header'>Company</th>
                     <th class='ui center aligned small header'>Batch</th>
                     <th class='ui center aligned small header'>Quantity</th>
-                    <th class='ui center aligned small header'>Discount</th>
+                    <th class='ui center aligned small header'>Discount (%)</th>
                     <th class='ui center aligned small header'>Deal</th>
-                    <th class='ui center aligned small header'>Tax</th>
+                    <th class='ui center aligned small header'>Tax (%)</th>
                     <th class='ui center aligned small header'>Sale Rate</th>
                 </tr>
             </thead>
@@ -100,7 +100,7 @@
                     </td>
                     <td>
                         <div class="ui input">
-                            <input class='no-outline Cal_Total' id="3" name="quantity" placeholder="Quantity" autocomplete="off">
+                            <input class='no-outline Cal_Total Quantity_Field' id="3" name="quantity" placeholder="Quantity" autocomplete="off">
                         </div>
                     </td>
                     <td>
@@ -225,7 +225,7 @@
                   $(template).appendTo('tbody');
         
            
-           
+               
                 // Total Price Calculation
                 $('.Cal_Total').change(
                    function(e)
@@ -305,10 +305,14 @@
                             $.each(response,function(key,value){
                                 $('#'+med_id+' .menu').append('<div class="item" data-value='+value+'>'+value+'</div>');
                             });
-                            $('#'+med_id).dropdown();
+                            
+                            $('#'+med_id).dropdown(); //enabling dropdown with .dropdown() of semantic
+                            
                             $('#'+med_id + ' .item').click(function(){
                                 med_name=$(this).data("value");
                                 $('#'+med_company_id+' .menu').html('');
+                                
+                                
                                 $.ajax({
                                     url: "getMedCompany/",
                                     type: "GET",
@@ -325,8 +329,16 @@
 
 
                                         $('#'+med_company_id+' .item').click(function(){
+                                            
                                             med_company=$(this).data("value");
+
+                                            console.log(med_company);
+
                                             $('#'+med_batch_id+' .menu').html('');
+
+
+
+                                            
 
                                             $.ajax({
                                                 url: "getMedBatch/",
@@ -335,12 +347,51 @@
                                                 data:{medName:med_name,medCompany:med_company},
                                                 success: function(response){
                                                     $('#'+med_batch_id+' .menu').html('');
+                                                    
                                                     $.each(response,function(key,value){
                                                         $('#'+med_batch_id+' .menu').append('<div class="item" data-value='+value+'>'+value+'</div>');
                                                     });
                                                     $('#'+med_batch_id).dropdown();
+
+                                                    $('#'+med_batch_id + ' .item').
+                                                    click(function(e)
+                                                    {
+                                                        med_batch_id=$(this).data("value");
+                                                        // $('#'+med_batch_id+' .menu').html('');
+                                                       
+                                                    });
+                                                                                  
                                                 }
                                             });
+                                                
+
+                                                quantity_id = String(Number(med_batch_id)+1);
+                                                
+                                                // Getting Quantity and checking for valid data
+                                                $('#'+med_batch_id).change(function(e)
+                                                {
+
+                                                    $.ajax({
+                                                        url:"getQuantity/",
+                                                        type:"GET",
+                                                        dataType:"json",
+                                                        data:
+                                                        {
+                                                            medName:med_name,
+                                                            medCompany:med_company,
+                                                            batch:med_batch_id,
+                                                        },
+                                                        success:function(response)
+                                                        {
+                                                        //    $('#'+quantity_id).val(response[0]);
+                                                            $('#'+quantity_id).attr("placeholder",response[0]);
+                                                        }
+                                                    });
+
+                                                });
+
+                                                
+                                              
 
                                             $.ajax({
                                                 url: "getMedSaleRate&Tax/",
@@ -355,40 +406,23 @@
                                                    $("#"+med_sale_rate_id).val(response[0]);
                                                 }
                                             });
-                                            
-                                            $.ajax({
-                                                url:"getquantity/",
-                                                type:"GET",
-                                                datatype:"json",
-                                                data:
-                                                {
-                                                    medName:med_name,
-                                                    medCompany:med_company,
-                                                    batch_no:batch_no,
-                                                },
-                                                success: function(response)
-                                                    {
-                                                        confirm("Hello!");
-                                                        
-                                                    }
-                                            });
-                                            
-                                            
-                                          
 
                                         });
                                     }
                                 });
         
                             });
+
                         }
                         });
+
                     });
         
                 });
             });
             
-            
+    
+
             $('.Cal_Total').change(
                    function(e)
                    {
@@ -583,23 +617,13 @@
                                                     $('#2').dropdown();
                                                 }
                                             });
-
-                                            $.ajax({
-                                                url: "getMedSaleRate&Tax/",
-                                                type: "GET",
-                                                datatype:'json',
-                                                data:{medName:med_name,medCompany:med_company},
-                                                success: function(response){
-
-                                                    // tax
-                                                    $("#4").val(response[1]);
+                                            
+                                          
 
 
-                                                    // sale rate
-                                                   $("#5").val(response[0]);
-                                                   
-                                                }
-                                            });
+                                           
+                                                
+                                                
                                         });
                                     }
                                 });

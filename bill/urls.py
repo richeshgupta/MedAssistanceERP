@@ -10,7 +10,7 @@ urlpatterns = [
     path('sale/getMedBatch/',GetMedBatch),
     path('sale/getMedSaleRate&Tax/',GetMedSaleRateANDtax),
     path('sale/computeloss/',ComputeLoss),
-    path('sale/getquantity/',GetQuantity),
+    path('sale/getQuantity/',getQuantity),
     path('purchase/getPartyWholeseller/',GetPartyWholeseller),
     path('purchase/getMedName/',GetMedName),
     path('purchase/getMedCompany/',GetMedCompany),
