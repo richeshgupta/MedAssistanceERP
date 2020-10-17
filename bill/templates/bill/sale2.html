@@ -385,6 +385,19 @@
                                                         {
                                                         //    $('#'+quantity_id).val(response[0]);
                                                             $('#'+quantity_id).attr("placeholder",response[0]);
+                                                            
+                                                            $('#'+quantity_id).change(function(e){
+                                                                data_q = $('#'+quantity_id).val();
+                                                                if(data_q>response[0])
+                                                                {
+                                                                    $('#'+quantity_id).addClass('ui red segment');
+                                                                }
+                                                                else
+                                                                {
+                                                                    $('#'+quantity_id).addClass('ui green segment');
+                                                                }   
+                                                            });
+                                                            
                                                         }
                                                     });
 
@@ -617,12 +630,45 @@
                                                     $('#2').dropdown();
                                                 }
                                             });
-                                            
-                                          
-
-
-                                           
                                                 
+                                                quantity_id = 3;
+                                                med_batch_id = 2;
+                                                // Getting Quantity and checking for valid data
+                                                $('#'+med_batch_id).change(function(e)
+                                                {
+
+                                                    $.ajax({
+                                                        url:"getQuantity/",
+                                                        type:"GET",
+                                                        dataType:"json",
+                                                        data:
+                                                        {
+                                                            medName:med_name,
+                                                            medCompany:med_company,
+                                                            batch:med_batch_id,
+                                                        },
+                                                        success:function(response)
+                                                        {
+                                                        //    $('#'+quantity_id).val(response[0]);
+                                                            $('#'+quantity_id).attr("placeholder",response[0]);
+                                                            
+                                                            $('#'+quantity_id).change(function(e){
+                                                                data_q = $('#'+quantity_id).val();
+                                                                if(data_q>response[0])
+                                                                {
+                                                                    $('#'+quantity_id).addClass('ui red segment');
+                                                                }
+                                                                else
+                                                                {
+                                                                    $('#'+quantity_id).addClass('ui green segment');
+                                                                }   
+                                                            });
+                                                            
+                                                        }
+                                                    });
+
+                                                });
+                                            
                                                 
                                         });
                                     }
