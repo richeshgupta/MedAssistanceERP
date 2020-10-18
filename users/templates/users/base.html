@@ -42,6 +42,12 @@
         <a class="item" href="{% url 'sale' %}">Sale</a>
         {% endif %}
         
+        {% if request.path == '/bill/purchase/' %}
+          <a class="active item" href="{% url 'purchase' %}">Purchase</a>
+        {% else %}
+          <a class="item" href="{% url 'purchase' %}">Purchase</a>
+        {% endif %}
+        
         <div class="item ui simple dropdown">
           <span class="text">Report</span>
           <i class="dropdown icon"></i>

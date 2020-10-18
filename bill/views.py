@@ -35,7 +35,8 @@ def Create_Bill_Sale(request):
             loss = request.POST.getlist('loss'),
             sale_rate = request.POST.getlist('sale_rate'),
         )
-        return HttpResponse('')
+        a='done'
+        return HttpResponse(json.dumps({'a': a}), content_type="application/json")
     # else:
     #     return ErrorPage(request,"Only POST allowed")
 
@@ -114,7 +115,7 @@ def getQuantity(request):
         med_id = cursor.fetchone()[0]
         print("medId : ",med_id)
         cursor.execute('select quantity from company_batch where product_id=%s and batch_number=%s',[med_id,batch_no])
-        quan = cursor.fetchall()[0]
+        quan = cursor.fetchone()[0]
         print("comp id:",comp_id,"\n product id:",med_id,"\n Quantity :",quan)
 
         return HttpResponse(json.dumps(quan),content_type='application/json')
@@ -249,6 +250,37 @@ def UpdateStock(request):
             batchID=a[0]
             batch_quantity=a[1]
             new_batch_quantity=int(batch_quantity)+int(quantity[i])
+            cursor.execute("Update company_batch SET quantity=%s where id=%s",[new_batch_quantity,batchID])
+            i+=1
+        return HttpResponse(status=200)
+    else:
+        return ErrorPage(request,"Only POST allowed")
+
+
+def BillUpdateStock(request):
+    if request.method == "POST":
+        medName = request.POST.getlist('name')
+        medCompany = request.POST.getlist('company')
+        batch_no=request.POST.getlist('batch_number')
+        quantity=request.POST.getlist('quantity')
+        cursor = connection.cursor()
+        #loop
+        i=0
+        l=len(medName)
+        while(i<l):
+            cursor.execute("SELECT id FROM company_company where comp_name=%s",[medCompany[i]])
+            medCompanyID = cursor.fetchone()[0]
+            cursor.execute("SELECT id,free FROM company_product where name=%s and company_id=%s",[medName[i],medCompanyID])
+            a=cursor.fetchone()
+            medID=a[0]
+            pro_quantity=a[1]
+            new_pro_quantity=int(pro_quantity)-int(quantity[i])
+            cursor.execute("Update company_product SET free=%s where id=%s",[new_pro_quantity,medID])
+            cursor.execute('select id,quantity from company_batch where product_id=%s and batch_number=%s',[medID,batch_no[i]])
+            a=cursor.fetchone()
+            batchID=a[0]
+            batch_quantity=a[1]
+            new_batch_quantity=int(batch_quantity)-int(quantity[i])
             cursor.execute("Update company_batch SET quantity=%s where id=%s",[new_batch_quantity,batchID])
             i+=1
         return HttpResponse(status=200)

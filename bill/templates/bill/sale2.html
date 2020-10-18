@@ -100,7 +100,7 @@
                     </td>
                     <td>
                         <div class="ui input">
-                            <input class='no-outline Cal_Total Quantity_Field' id="3" name="quantity" placeholder="Quantity" autocomplete="off">
+                            <input class='no-outline Cal_Total Quantity_Field ui segment' id="3" name="quantity" placeholder="Quantity" autocomplete="off">
                         </div>
                     </td>
                     <td>
@@ -200,7 +200,7 @@
                     </td>\
                     <td>\
                         <div class="ui input">\
-                            <input name="quantity" id='+ quan +' placeholder="Quantity" class="Cal_Total">\
+                            <input name="quantity" id='+ quan +' placeholder="Quantity" class="Cal_Total ui segment">\
                         </div>\
                     </td>\
                     <td>\
@@ -336,10 +336,6 @@
 
                                             $('#'+med_batch_id+' .menu').html('');
 
-
-
-                                            
-
                                             $.ajax({
                                                 url: "getMedBatch/",
                                                 type: "GET",
@@ -356,8 +352,43 @@
                                                     $('#'+med_batch_id + ' .item').
                                                     click(function(e)
                                                     {
-                                                        med_batch_id=$(this).data("value");
+                                                        med_batch_data=$(this).data("value");
+                                                        console.log('rr');
                                                         // $('#'+med_batch_id+' .menu').html('');
+                                                        quantity_id = String(Number(med_batch_id)+1);
+                                                        $.ajax({
+                                                            url:"getQuantity/",
+                                                            type:"GET",
+                                                            dataType:"json",
+                                                            data:
+                                                            {
+                                                                medName:med_name,
+                                                                medCompany:med_company,
+                                                                batch:med_batch_data,
+                                                            },
+                                                            success:function(response)
+                                                            {
+                                                            //    $('#'+quantity_id).val(response[0]);
+                                                                console.log(response);
+                                                                $('#'+quantity_id).attr("placeholder",response);
+                                                                
+                                                                $('#'+quantity_id).change(function(e){
+                                                                    data_q = $('#'+quantity_id).val();
+                                                                    if(data_q>response && data_q>=0)
+                                                                    {
+                                                                        $('#'+quantity_id).addClass('red');
+                                                                        $('#'+quantity_id).removeClass('green');
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        $('#'+quantity_id).addClass('green');
+                                                                        $('#'+quantity_id).removeClass('red');
+                                                                        
+                                                                    }   
+                                                                });
+                                                                
+                                                            }
+                                                        });
                                                        
                                                     });
                                                                                   
@@ -365,43 +396,13 @@
                                             });
                                                 
 
-                                                quantity_id = String(Number(med_batch_id)+1);
+                                                
                                                 
                                                 // Getting Quantity and checking for valid data
-                                                $('#'+med_batch_id).change(function(e)
-                                                {
+                                                    // med_batch_data=$('#'+med_batch_id).attr('data-value');
+                                                    // med_batch_data = $('#'+med_batch_id).data('value');
+                                                   
 
-                                                    $.ajax({
-                                                        url:"getQuantity/",
-                                                        type:"GET",
-                                                        dataType:"json",
-                                                        data:
-                                                        {
-                                                            medName:med_name,
-                                                            medCompany:med_company,
-                                                            batch:med_batch_id,
-                                                        },
-                                                        success:function(response)
-                                                        {
-                                                        //    $('#'+quantity_id).val(response[0]);
-                                                            $('#'+quantity_id).attr("placeholder",response[0]);
-                                                            
-                                                            $('#'+quantity_id).change(function(e){
-                                                                data_q = $('#'+quantity_id).val();
-                                                                if(data_q>response[0])
-                                                                {
-                                                                    $('#'+quantity_id).addClass('ui red segment');
-                                                                }
-                                                                else
-                                                                {
-                                                                    $('#'+quantity_id).addClass('ui green segment');
-                                                                }   
-                                                            });
-                                                            
-                                                        }
-                                                    });
-
-                                                });
 
                                                 
                                               
@@ -572,7 +573,26 @@
                     },
                     success:function(){
                         alert('created bill sale');
-                        
+                        $.ajax({
+                            type : 'POST',
+                            dataType : "json",
+                            traditional : true,
+                            url : 'updateStock/',
+                            data:{
+                                name : name,
+                                company:company,
+                                batch_number : batch_no,
+                                quantity : quantity,
+                                csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken]').val()
+                            },
+                            success:function(){
+                                alert('Updated Stock');
+                            },
+                            error:function(){
+                                
+                            }
+                
+                        }); 
                     },
                     error:function(){
                         
@@ -583,8 +603,8 @@
 
 
 
-            //fetching data for the first Medicine Name Field
-            $(document).ready(function(){
+               //fetching data for the first Medicine Name Field
+               $(document).ready(function(){
                 $(".medname").click(function(){
                     //setting id of currrent active medicine field
                     med_id="0";
@@ -628,48 +648,76 @@
                                                         $('#2 .menu').append('<div class="item" data-value='+value+'>'+value+'</div>');
                                                     });
                                                     $('#2').dropdown();
+                                                    $('#2' + ' .item').
+                                                    click(function(e)
+                                                    {
+                                                        med_batch_data=$(this).data("value");
+                                                        // $('#'+med_batch_id+' .menu').html('');
+                                                                                                           
+                                                        quantity_id = 3;
+                                                
+                                                         // Getting Quantity and checking for valid data
+                                                        // med_batch_data = $('#2').val();
+                                                        console.log("YO : ",med_batch_data);
+                                                        $.ajax({
+                                                            url:"getQuantity/",
+                                                            type:"GET",
+                                                            dataType:"json",
+                                                            data:
+                                                            {
+                                                                medName:med_name,
+                                                                medCompany:med_company,
+                                                                batch:med_batch_data,
+                                                            },
+                                                            success:function(response)
+                                                            {
+                                                                current_quantity = response;
+                                                                //    $('#'+quantity_id).val(response[0]);
+                                                                
+                                                                $('#'+quantity_id).attr("placeholder",response);
+                                                                $('#3').change(function(e){
+                                                                    data_q = $('#'+quantity_id).val();
+                                                                    if(data_q>current_quantity && data_q>=0)
+                                                                    {
+                                                                        $('#'+quantity_id).addClass('red');
+                                                                        $('#'+quantity_id).removeClass('green');
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        $('#'+quantity_id).addClass('green');
+                                                                        $('#'+quantity_id).removeClass('red');
+                                                                    }   
+                                                                });
+                                                            
+                                                                
+                                                            }
+                                                        });
+                                                       
+                                                    });
                                                 }
                                             });
+ 
                                                 
-                                                quantity_id = 3;
-                                                med_batch_id = 2;
-                                                // Getting Quantity and checking for valid data
-                                                $('#'+med_batch_id).change(function(e)
-                                                {
 
-                                                    $.ajax({
-                                                        url:"getQuantity/",
-                                                        type:"GET",
-                                                        dataType:"json",
-                                                        data:
-                                                        {
-                                                            medName:med_name,
-                                                            medCompany:med_company,
-                                                            batch:med_batch_id,
-                                                        },
-                                                        success:function(response)
-                                                        {
-                                                        //    $('#'+quantity_id).val(response[0]);
-                                                            $('#'+quantity_id).attr("placeholder",response[0]);
-                                                            
-                                                            $('#'+quantity_id).change(function(e){
-                                                                data_q = $('#'+quantity_id).val();
-                                                                if(data_q>response[0])
-                                                                {
-                                                                    $('#'+quantity_id).addClass('ui red segment');
-                                                                }
-                                                                else
-                                                                {
-                                                                    $('#'+quantity_id).addClass('ui green segment');
-                                                                }   
-                                                            });
-                                                            
-                                                        }
-                                                    });
+                                            $.ajax({
+                                                url: "getMedSaleRate&Tax/",
+                                                type: "GET",
+                                                datatype:'json',
+                                                data:{medName:med_name,medCompany:med_company},
+                                                success: function(response){
 
-                                                });
-                                            
-                                                
+                                                    // tax
+                                                    $("#4").val(response[1]);
+
+
+                                                    // sale rate
+                                                   $("#5").val(response[0]);
+                                                   
+                                                }
+                                            });
+
+
+
                                         });
                                     }
                                 });
@@ -677,7 +725,7 @@
                         }
                     });
                 });
-            });  
+            }); 
     // remove row    
     $(document).on('click','.close.icon',function(){
         $(this).parent('td').parent('tr').remove();
