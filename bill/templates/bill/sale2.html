@@ -374,7 +374,7 @@
                                                                 
                                                                 $('#'+quantity_id).change(function(e){
                                                                     data_q = $('#'+quantity_id).val();
-                                                                    if(data_q>response)
+                                                                    if(data_q>response && data_q>=0)
                                                                     {
                                                                         $('#'+quantity_id).addClass('red');
                                                                         $('#'+quantity_id).removeClass('green');
@@ -677,7 +677,7 @@
                                                                 $('#'+quantity_id).attr("placeholder",response);
                                                                 $('#3').change(function(e){
                                                                     data_q = $('#'+quantity_id).val();
-                                                                    if(data_q>current_quantity)
+                                                                    if(data_q>current_quantity && data_q>=0)
                                                                     {
                                                                         $('#'+quantity_id).addClass('red');
                                                                         $('#'+quantity_id).removeClass('green');
