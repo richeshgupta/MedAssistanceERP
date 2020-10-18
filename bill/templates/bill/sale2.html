@@ -572,7 +572,26 @@
                     },
                     success:function(){
                         alert('created bill sale');
-                        
+                        $.ajax({
+                            type : 'POST',
+                            dataType : "json",
+                            traditional : true,
+                            url : 'updateStock/',
+                            data:{
+                                name : name,
+                                company:company,
+                                batch_number : batch_no,
+                                quantity : quantity,
+                                csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken]').val()
+                            },
+                            success:function(){
+                                alert('Updated Stock');
+                            },
+                            error:function(){
+                                
+                            }
+                
+                        }); 
                     },
                     error:function(){
                         
@@ -667,6 +686,21 @@
                                                         }
                                                     });
 
+                                                });
+
+
+                                                $.ajax({
+                                                    url: "getMedSaleRate&Tax/",
+                                                    type: "GET",
+                                                    datatype:'json',
+                                                    data:{medName:med_name,medCompany:med_company},
+                                                    success: function(response){
+                                                        //tax
+                                                        $("#4").val(response[1]);
+
+                                                        //sale rate
+                                                    $("#5").val(response[0]);
+                                                    }
                                                 });
                                             
                                                 

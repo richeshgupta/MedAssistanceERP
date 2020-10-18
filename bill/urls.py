@@ -19,6 +19,7 @@ urlpatterns = [
     path('purchase/getMedTax/',GetMedTax),
     path('purchase/create/',Create_Bill_Purchase),
     path('purchase/getPartyWholesellerID/',GetPartyWholesellerID),
-    path('purchase/updateStock/',UpdateStock)
+    path('purchase/updateStock/',UpdateStock),
+    path('sale/updateStock/',BillUpdateStock)
 
 ]
