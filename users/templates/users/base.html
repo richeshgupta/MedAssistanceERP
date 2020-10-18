@@ -51,11 +51,10 @@
               <i class="dropdown icon"></i>
               <span class="text">Sale Report</span>
               <div class="menu">
-                <a class="item">By Month</a>
-                <a class="item">By Year</a>
-                <a class="item">By Company</a>
-                <a class="item">Custom Date</a>
-                <a class="item">Total Analysis</a>
+                <a class="item" href="{% url 'saleReportDuration' %}">By Duration</a>
+                <a class="item" href="{% url 'saleReportCompany' %}">By Company</a>
+                <a class="item" href="{% url 'saleReportDate' %}">Custom Date</a>
+                <a class="item" href='#'>Total Analysis</a>
               </div>
             </div>
 
@@ -174,6 +173,9 @@
 
     <script>
         $('#tooltip').popup();
+
+        $('.ui.dropdown')
+          .dropdown();
     </script>
 
     <script>
