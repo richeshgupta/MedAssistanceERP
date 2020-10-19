@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'bill',
     'cheque',
     'reports',
+    'profile_retailer',
 
     
 ]

@@ -24,7 +24,10 @@
 </h3>
 <br>
 <div class="ui equal width form">
+
     {% csrf_token %}
+
+
    <div class="fields">
        <div class="field">
            <div class="ui center aligned small header">Customer Name</div>
@@ -67,8 +70,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td style='width:13vw'>
+                <tr class="ui">
+                    <td style='width:13vw' class="ui segment">
                         <div id="0" class="ui fluid search selection dropdown medname Cal_Total">
                             <input type="hidden" name="name" >
                             <div class="text">Choose..</div>
@@ -170,8 +173,8 @@
 
 
                 //c is the id of ul in the med name just for template
-                var template = '<tr>\
-                    <td style="width:13vw">\
+                var template = '<tr class="ui">\
+                    <td style="width:13vw" class="ui segment">\
                         <div id='+ n +' class="ui fluid search selection dropdown medname Cal_Total">\
                             <input type="hidden" name="name">\
                             <div class="text">Choose..</div>\
@@ -253,11 +256,13 @@
                         
                         // Tax Calculation
                         tax = base * parseFloat(document.getElementById(tax_index).value)/100;
-
+                        
+                        row_wise_sum = base - discount + tax;
+                        
                         // Final Equation
                         temp += base - discount + tax;
-                    
-                    
+                       
+                        
                           if(!(isNaN(temp))) // if temp is not NaN then add temp to tot (temp - > Row wise formula, Total -> all the columns' Temp)
                             {
                                     tot+=temp;
@@ -399,8 +404,7 @@
                                                 
                                                 
                                                 // Getting Quantity and checking for valid data
-                                                    // med_batch_data=$('#'+med_batch_id).attr('data-value');
-                                                    // med_batch_data = $('#'+med_batch_id).data('value');
+                                      
                                                    
 
 
@@ -440,6 +444,7 @@
             $('.Cal_Total').change(
                    function(e)
                    {
+                    row_wise_sum = 0;
                     c= count;
                     x = 0;
                     tot=0;
@@ -463,9 +468,12 @@
                         // Tax Calculation
                         tax = base * parseFloat(document.getElementById(tax_index).value)/100;
 
+                        row_wise_sum = base - discount + tax;
+
                         // Final Equation
                         temp += base - discount + tax;
-                    
+                        
+                       
                     
                           if(!(isNaN(temp))) // if temp is not NaN then add temp to tot (temp - > Row wise formula, Total -> all the columns' Temp)
                             {
@@ -657,8 +665,8 @@
                                                         quantity_id = 3;
                                                 
                                                          // Getting Quantity and checking for valid data
-                                                        // med_batch_data = $('#2').val();
-                                                        console.log("YO : ",med_batch_data);
+                                                        
+                                                        
                                                         $.ajax({
                                                             url:"getQuantity/",
                                                             type:"GET",
@@ -730,7 +738,7 @@
     $(document).on('click','.close.icon',function(){
         $(this).parent('td').parent('tr').remove();
         count-=1; 
-        n-=1;
+        n-=8;
     });
 </script>
 {% endblock content %}
