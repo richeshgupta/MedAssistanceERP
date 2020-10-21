@@ -5,6 +5,8 @@ from phone_field import PhoneField
 
 
 class Party_Wholeseller(models.Model):
+    #add auto increment
+    #do not make id default
     party_id = models.CharField(max_length=10,null=False,primary_key=True)
     name = models.CharField(max_length=20,null=False)
     address = models.CharField(max_length=50)

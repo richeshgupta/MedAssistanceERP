@@ -515,7 +515,7 @@
                         csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken]').val()
                     },
                     success:function(response){
-                        console.log('created bill purchase');
+                        alert('created bill purchase');
                         $.ajax({
                             type : 'POST',
                             dataType : "json",
@@ -530,6 +530,7 @@
                             },
                             success:function(){
                                 alert('Updated Stock');
+                                window.open("{% url 'getpurchasepdf' %}");
                             },
                             error:function(){
                                 

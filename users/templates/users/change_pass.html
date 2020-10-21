@@ -1,0 +1,52 @@
+{% extends 'users/base.html' %}
+{% block head %}
+    <title>Change Password</title>
+    <style>
+        .field input {
+            border-top-style: hidden !important;
+            border-right-style: hidden !important;
+            border-left-style: hidden !important;
+            border-bottom-style: groove !important;
+        }
+    </style>
+{% endblock head %}
+{% block content %}
+ 
+
+<div class="ui large center aligned header">Welcome, {{request.user.username}}!!</div>
+<div class="ui hidden divider"></div>
+
+<div class="ui container">
+    <button class="circular ui icon button" data-tooltip="Back"  data-position="bottom right" id="tooltip">
+        <a href="{{request.META.HTTP_REFERER|escape}}"><i class="angle left icon"></i></a>
+    </button>
+    <br><br>
+    <div class="ui center aligned grid">
+        <div class="ui large header">Change Password</div>
+        <div class="two wide row">
+            <div class="seven wide column">
+                <br>
+                <form method='post' class='ui large form'>
+                    {% csrf_token %}
+                    <div class="field">
+                        <label class='ui tiny left aligned header'>Current Password: </label>
+                        <input type="password" name='cur_pass' required />
+                    </div>
+                    <div class="field">
+                        <label class='ui tiny left aligned header'>New Password: </label>
+                        <input type="password" name='pass1' required />
+                    </div>
+                    <div class="field">
+                        <label class='ui tiny left aligned header'>Confirm Password: </label>
+                        <input type="password" name='pass2' required />
+                    </div>
+                    <br>
+                    <input type="submit" class="ui positive large button" value='Update'>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+

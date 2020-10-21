@@ -1,1 +1,20 @@
 {% extends 'users/base.html' %}
+
+{% block head %}
+    <title>Profile - Retailer</title>
+{% endblock head %}
+{% block content %}
+    
+    <div class="ui container">
+        <h1 class="ui header">Retailer Shop Details</h1>
+        <div class="ui hidden divider"></div>
+        <div class="ui form">
+            <form method="POST">
+                {% csrf_token %}
+                {{form}}
+                <div class="ui hidden divider"></div>
+                <input class="ui button" type="submit" value="submit" />
+            </form> 
+        </div>
+    </div>
+{% endblock content %}

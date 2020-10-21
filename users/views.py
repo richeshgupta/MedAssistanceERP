@@ -62,7 +62,7 @@ def Signup(request):
 
 from django.contrib.auth.hashers import make_password, check_password
 @login_required(login_url="home")
-def Settings(request):
+def ChangePassword(request):
     if request.method=="POST":
         curr_user = User.objects.get(username__exact=request.user.username) #fetching requesting user from db
         hashed_pass = curr_user.password #gets db password in hashed form
@@ -84,7 +84,11 @@ def Settings(request):
 
 
         
-    return render(request,"users/settings.html",{}) #if get req. sent only this get executed
+    return render(request,"users/change_pass.html",{}) #if get req. sent only this get executed
+
+def Settings(request):
+    return render(request,"users/settings.html",{})
+
 
 def Tools(request):
     return render(request,'users/tools.html',{})
