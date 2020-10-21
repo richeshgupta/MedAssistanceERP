@@ -9,6 +9,14 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.db import connection
 from users.views import ErrorPage
+from django.template.loader import get_template
+from io import BytesIO
+from xhtml2pdf import pisa
+import os
+from django.conf import settings
+from django.contrib.staticfiles import finders
+
+
 
 @login_required(login_url='/')
 def Sale(request):
@@ -226,7 +234,7 @@ def GetPartyWholesellerID(request):
         return ErrorPage(request,"Only GET allowed")
 
 
-def UpdateStock(request):
+def PurchaseUpdateStock(request):
     if request.method == "POST":
         medName = request.POST.getlist('name')
         medCompany = request.POST.getlist('company')
@@ -252,12 +260,13 @@ def UpdateStock(request):
             new_batch_quantity=int(batch_quantity)+int(quantity[i])
             cursor.execute("Update company_batch SET quantity=%s where id=%s",[new_batch_quantity,batchID])
             i+=1
-        return HttpResponse(status=200)
+        a='done'
+        return HttpResponse(json.dumps({'a': a}), content_type="application/json")
     else:
         return ErrorPage(request,"Only POST allowed")
 
 
-def BillUpdateStock(request):
+def SaleUpdateStock(request):
     if request.method == "POST":
         medName = request.POST.getlist('name')
         medCompany = request.POST.getlist('company')
@@ -283,6 +292,103 @@ def BillUpdateStock(request):
             new_batch_quantity=int(batch_quantity)-int(quantity[i])
             cursor.execute("Update company_batch SET quantity=%s where id=%s",[new_batch_quantity,batchID])
             i+=1
-        return HttpResponse(status=200)
+        
+        a='done'
+        return HttpResponse(json.dumps({'a': a}), content_type="application/json")
+
+
+
+def GetSalePDF(request):
+    cursor = connection.cursor()
+    cursor.execute("SELECT max(id) FROM bill_bill_retailer")
+    bill_id=cursor.fetchone()[0]
+    cursor.execute("SELECT * FROM bill_bill_retailer where id=%s",[bill_id])
+    bill=cursor.fetchone()
+    data={}
+    data['id']=bill[0]
+    data['date']=bill[1]
+    data['customer_name']=bill[2]
+    data['customer_email']=bill[3]
+    if(bill[4] == 1):
+        mop='Cash'
     else:
-        return ErrorPage(request,"Only POST allowed")
+        mop='Card'
+    data['mode_of_payment']=mop
+    data['total_bill']=bill[5]
+
+    i=0
+    l=len(bill[6])
+    product_list=[]
+    while(i<l):
+        temp={}
+        temp['name']=bill[6][i]
+        temp['company']=bill[7][i]
+        temp['batch_number']=bill[8][i]
+        temp['quantity']=bill[9][i]
+        temp['discount']=bill[10][i]
+        temp['deal']=bill[11][i]
+        temp['tax']=bill[12][i]
+        temp['loss']=bill[13][i]
+        temp['sale_rate']=bill[14][i]
+        product_list.append(temp)
+        i+=1
+
+    data['product_list']=product_list
+    template=get_template("bill/sale_pdf_page.html")
+    data_p=template.render(data)
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(data_p.encode("ISO-8859-1")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return None
+
+def GetPurchasePDF(request):
+    cursor = connection.cursor()
+    cursor.execute("SELECT max(id) FROM bill_purchase")
+    bill_id=cursor.fetchone()[0]
+    cursor.execute("SELECT * FROM bill_purchase where id=%s",[bill_id])
+    bill=cursor.fetchone()
+    data={}
+    data['id']=bill[0]
+    data['date']=bill[1]
+    
+    #party id
+    party_id=bill[12]
+    cursor.execute("SELECT name FROM party_party_wholeseller where party_id=%s",[party_id])
+    data['party']=cursor.fetchone()[0]
+
+
+
+    if(bill[2] == 1):
+        mop='Cash'
+    else:
+        mop='Card'
+    data['mode_of_payment']=mop
+    data['total_bill']=bill[3]
+
+    i=0
+    l=len(bill[4])
+    product_list=[]
+    while(i<l):
+        temp={}
+        temp['name']=bill[4][i]
+        temp['company']=bill[5][i]
+        temp['batch_number']=bill[6][i]
+        temp['quantity']=bill[7][i]
+        temp['discount']=bill[8][i]
+        temp['deal']=bill[9][i]
+        temp['tax']=bill[10][i]
+        temp['purchase_rate']=bill[11][i]
+        product_list.append(temp)
+        i+=1
+
+    data['product_list']=product_list
+    template=get_template("bill/purchase_pdf_page.html")
+    data_p=template.render(data)
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(data_p.encode("ISO-8859-1")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return None
+
+

@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Purchase Invoice</title>
+
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+    		<div class="invoice-title">
+    			<h1 style="font-size: xxx-large;">Invoice</h1>
+    		</div>
+    		<hr>
+    		<div class="row">
+    			<div >
+    				<address>
+    				<h2 style="font-size: xx-large; padding-bottom: -20px;"><strong >Billed To:</strong></h2>
+                        <h3 style="display: inline; font-size: x-large;"><strong>Party Name : </strong></h3><h4 style="display: inline; font-size: large;">{{ party }}</h4><br>
+    				</address>
+    			</div>
+            </div>
+            <br>    
+    		<div class="row">
+    			<div class="col-xs-6">
+    				<address>
+                        <h2 style="display: inline; font-size: x-large"><strong>Payment Method:  </strong></h2>
+                        <h3 style="display: inline; font-size: large" ><strong> {{mode_of_payment}}</strong></h3>   
+    				</address>
+                </div>
+                <!-- date sent from view -->
+    			<!-- <div class="col-xs-6 text-right">
+    				<address>
+    					<strong>Order Date:</strong><br>
+    					March 7, 2014<br><br>
+    				</address>
+                </div> -->
+    		</div>
+    	</div>
+    </div>
+    
+    <div class="row">
+    	<div class="col-md-12">
+    		<div class="panel panel-default">
+    			<div class="panel-heading">
+                    <br><br>
+                    <h2 class="panel-title" style="display: inline; font-size: xx-large"><strong>Order summary</strong></h2>
+                    <br>
+    			</div>
+    			<div class="panel-body">
+    				<div class="table-responsive">
+    					<table class="table table-condensed">
+    						<thead>
+                                <tr>
+        							<td><h3 style="font-size:large"><strong>Name</strong></h3></td>
+                                    <td class="text-center"><h3 style="font-size:large"><strong>Company</strong></h3></td>
+                                    <td class="text-center"><h3 style="font-size:large"><strong>Batch No</strong></h3></td>
+                                    <td class="text-center"><h3 style="font-size:large"><strong>Quantity</strong></h3></td>
+                                    <td class="text-center"><h3 style="font-size:large"><strong>Discount</strong></h3></td>
+                                    <td class="text-center"><h3 style="font-size:large"><strong>Deal</strong></h3></td>
+                                    <td class="text-center"><h3 style="font-size:large"><strong>Tax</strong></h3></td>
+                                    <td class="text-right"><h3 style="font-size:large"><strong>Purchase Rate</strong></h3></td>
+                                </tr>
+                            </thead>
+    						<tbody>
+                                <!-- foreach ($order->lineItems as $line) or some such thing here -->
+                                <hr>
+                                {% for product in product_list %}
+                                <tr>
+                                    <td>{{ product.name }}</td>
+                                    <td>{{ product.company }}</td>
+                                    <td>{{ product.batch_number }}</td>
+                                    <td>{{ product.quantity }}</td>
+                                    <td>{{ product.discount }}</td>
+                                    <td>{{ product.deal }}</td>
+                                    <td>{{ product.tax }}</td>
+                                    <td>{{ product.purchase_rate }}</td>
+                                </tr>
+                                {% endfor %}
+    							<tr>
+    								<td class="no-line"></td>
+                                    <td class="no-line"></td>
+                                    <td class="no-line"></td>
+                                    <td class="no-line"></td>
+                                    <td class="no-line"></td>
+                                    <td class="no-line"></td>
+    								<td class="no-line text-center" style="font-size: large"><strong>Total</strong></td>
+    								<td class="no-line text-right">{{total_bill}}</td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                        <hr>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+</div>
+</body>
+</html>

@@ -24,10 +24,7 @@
 </h3>
 <br>
 <div class="ui equal width form">
-
     {% csrf_token %}
-
-
    <div class="fields">
        <div class="field">
            <div class="ui center aligned small header">Customer Name</div>
@@ -70,8 +67,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="ui">
-                    <td style='width:13vw' class="ui segment">
+                <tr>
+                    <td style='width:13vw'>
                         <div id="0" class="ui fluid search selection dropdown medname Cal_Total">
                             <input type="hidden" name="name" >
                             <div class="text">Choose..</div>
@@ -124,6 +121,7 @@
         <br><br>
         <div class="ui center aligned grid">
             <div class="ui positive large button submit" style="padding:10px 30px">Submit</div>
+            <!-- <a class="ui positive large button " href="{% url 'getpdf' %}" style="padding:10px 30px">PDF</a> -->
             <div class="ui primary large button add" style="padding:10px 30px">Add</div>
         </div>
 
@@ -173,8 +171,8 @@
 
 
                 //c is the id of ul in the med name just for template
-                var template = '<tr class="ui">\
-                    <td style="width:13vw" class="ui segment">\
+                var template = '<tr>\
+                    <td style="width:13vw">\
                         <div id='+ n +' class="ui fluid search selection dropdown medname Cal_Total">\
                             <input type="hidden" name="name">\
                             <div class="text">Choose..</div>\
@@ -256,13 +254,11 @@
                         
                         // Tax Calculation
                         tax = base * parseFloat(document.getElementById(tax_index).value)/100;
-                        
-                        row_wise_sum = base - discount + tax;
-                        
+
                         // Final Equation
                         temp += base - discount + tax;
-                       
-                        
+                    
+                    
                           if(!(isNaN(temp))) // if temp is not NaN then add temp to tot (temp - > Row wise formula, Total -> all the columns' Temp)
                             {
                                     tot+=temp;
@@ -379,7 +375,7 @@
                                                                 
                                                                 $('#'+quantity_id).change(function(e){
                                                                     data_q = $('#'+quantity_id).val();
-                                                                    if(data_q>response && data_q>=0)
+                                                                    if(data_q>response)
                                                                     {
                                                                         $('#'+quantity_id).addClass('red');
                                                                         $('#'+quantity_id).removeClass('green');
@@ -404,7 +400,8 @@
                                                 
                                                 
                                                 // Getting Quantity and checking for valid data
-                                      
+                                                    // med_batch_data=$('#'+med_batch_id).attr('data-value');
+                                                    // med_batch_data = $('#'+med_batch_id).data('value');
                                                    
 
 
@@ -444,7 +441,6 @@
             $('.Cal_Total').change(
                    function(e)
                    {
-                    row_wise_sum = 0;
                     c= count;
                     x = 0;
                     tot=0;
@@ -468,12 +464,9 @@
                         // Tax Calculation
                         tax = base * parseFloat(document.getElementById(tax_index).value)/100;
 
-                        row_wise_sum = base - discount + tax;
-
                         // Final Equation
                         temp += base - discount + tax;
-                        
-                       
+                    
                     
                           if(!(isNaN(temp))) // if temp is not NaN then add temp to tot (temp - > Row wise formula, Total -> all the columns' Temp)
                             {
@@ -587,14 +580,24 @@
                             traditional : true,
                             url : 'updateStock/',
                             data:{
-                                name : name,
-                                company:company,
-                                batch_number : batch_no,
-                                quantity : quantity,
-                                csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken]').val()
+                                    customer_name : document.getElementsByName('customer_name')[0].value ,
+                                    customer_email : document.getElementsByName('customer_email')[0].value,
+                                    mode_of_payment : document.getElementsByName('mode_of_payment')[0].value,
+                                    total_bill : document.getElementsByName('total_bill')[0].value,
+                                    name : name,
+                                    company:company,
+                                    batch_number : batch_no,
+                                    quantity : quantity,
+                                    discount : discount,
+                                    deal : deal,
+                                    tax : tax,
+                                    loss : loss,
+                                    sale_rate : sale_rate,
+                                    csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken]').val()
                             },
                             success:function(){
                                 alert('Updated Stock');
+                                window.open("{% url 'getsalepdf' %}");
                             },
                             error:function(){
                                 
@@ -665,8 +668,8 @@
                                                         quantity_id = 3;
                                                 
                                                          // Getting Quantity and checking for valid data
-                                                        
-                                                        
+                                                        // med_batch_data = $('#2').val();
+                                                        console.log("YO : ",med_batch_data);
                                                         $.ajax({
                                                             url:"getQuantity/",
                                                             type:"GET",
@@ -685,7 +688,8 @@
                                                                 $('#'+quantity_id).attr("placeholder",response);
                                                                 $('#3').change(function(e){
                                                                     data_q = $('#'+quantity_id).val();
-                                                                    if(data_q>current_quantity && data_q>=0)
+
+                                                                    if(data_q>current_quantity)
                                                                     {
                                                                         $('#'+quantity_id).addClass('red');
                                                                         $('#'+quantity_id).removeClass('green');
@@ -738,7 +742,7 @@
     $(document).on('click','.close.icon',function(){
         $(this).parent('td').parent('tr').remove();
         count-=1; 
-        n-=8;
+        n-=1;
     });
 </script>
 {% endblock content %}
