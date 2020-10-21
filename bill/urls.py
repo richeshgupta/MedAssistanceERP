@@ -22,6 +22,8 @@ urlpatterns = [
     path('purchase/updateStock/',PurchaseUpdateStock),
     path('sale/updateStock/',SaleUpdateStock),
     path('sale/getPDF/',GetSalePDF , name='getsalepdf'),
-    path('purchase/getPDF/',GetPurchasePDF , name='getpurchasepdf')
+    path('purchase/getPDF/',GetPurchasePDF , name='getpurchasepdf'),
+    path('sale/getPurchaseRate/',getPurchaseRate),
+
 
 ]
