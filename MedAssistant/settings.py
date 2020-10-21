@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'cheque',
     'reports',
     'profile_retailer',
+    'rest_framework',
 
     
 ]

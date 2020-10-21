@@ -1,0 +1,6 @@
+
+{% for bill in bills %}
+    <h1>{{bill.customer_name}}</h1>
+    <h3>Purchased: {{bill.name}}</h3>
+    <p><u>Date of purchase</u>: {{bill.date}}</p>
+{% endfor %}
