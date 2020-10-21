@@ -62,16 +62,17 @@
                     <th class='ui center aligned small header'>Product Name</th>
                     <th class='ui center aligned small header'>Company</th>
                     <th class='ui center aligned small header'>Batch</th>
-                    <th class='ui center aligned small header'>Quantity</th>
+                    <th class='ui center aligned small header'>Qty.</th>
                     <th class='ui center aligned small header'>Discount (%)</th>
                     <th class='ui center aligned small header'>Deal</th>
                     <th class='ui center aligned small header'>Tax (%)</th>
                     <th class='ui center aligned small header'>Sale Rate</th>
+                    <th class='ui center aligned small header'>Total</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class=''>
                 <tr class="ui">
-                    <td style='width:13vw' class="ui segment">
+                    <td style='width:13vw' class="">
                         <div id="0" class="ui fluid search selection dropdown medname Cal_Total">
                             <input type="hidden" name="name" >
                             <div class="text">Choose..</div>
@@ -81,7 +82,7 @@
                             </div>
                         </div>
                     </td>
-                    <td style='width:12vw'>
+                    <td style='width:8vw'>
                         <div id="1" class="ui fluid selection dropdown Cal_Total">
                             <input type="hidden"  name="company">
                             <div class="text">Choose..</div>
@@ -103,20 +104,23 @@
                     </td>
                     <td>
                         <div class="ui input">
-                            <input class='no-outline Cal_Total Quantity_Field ui segment' id="3" name="quantity" placeholder="Quantity" autocomplete="off">
+                            <input style="width:8vw;" class='no-outline Cal_Total Quantity_Field ui segment' id="3" name="quantity" placeholder="Quantity" autocomplete="off">
                         </div>
                     </td>
-                    <td>
-                        <div class="ui input "><input name="discount" id="6" placeholder="Discount" class="Cal_Total"></div>
+                    <td style="width:10vw;">
+                        <div class="ui input"><input style="width:8vw;" name="discount" id="6" placeholder="Discount" class="Cal_Total" autocomplete="off"></div>
                     </td>
                     <td>
-                        <div class="ui input"><input name="deal" id="7" placeholder="Deal" class="Cal_Total"></div>
+                        <div class="ui input"><input style="width:5vw;" name="deal" id="7" placeholder="Deal" class="Cal_Total" autocomplete="off"></div>
                     </td>
                     <td>
-                        <div class="ui input"><input id ="4" name="tax" placeholder="Tax" class="Cal_Total"></div>
+                        <div class="ui input"><input style="width:6vw;" id ="4" name="tax" placeholder="Tax" class="Cal_Total" autocomplete="off"></div>
                     </td>
                     <td>
-                        <div class="ui input"><input id ="5" name="sale_rate" placeholder="Sale Rate" class="Cal_Total"></div>
+                        <div class="ui input"><input id ="5" name="sale_rate" placeholder="Sale Rate" class="Cal_Total" autocomplete="off"></div>
+                    </td>
+                    <td>
+                        <div class="ui input"><input  name="Row_Total" placeholder="Total" class="Cal_Total" autocomplete="off"></div>
                     </td>
                 </tr>
             </tbody>
@@ -173,8 +177,8 @@
 
 
                 //c is the id of ul in the med name just for template
-                var template = '<tr class="ui">\
-                    <td style="width:13vw" class="ui segment">\
+                var template = '<tr class="ui ">\
+                    <td style="width:13vw" class="ui ">\
                         <div id='+ n +' class="ui fluid search selection dropdown medname Cal_Total">\
                             <input type="hidden" name="name">\
                             <div class="text">Choose..</div>\
@@ -203,20 +207,23 @@
                     </td>\
                     <td>\
                         <div class="ui input">\
-                            <input name="quantity" id='+ quan +' placeholder="Quantity" class="Cal_Total ui segment">\
+                            <input style="width:8vw;" name="quantity" id='+ quan +' placeholder="Quantity" class="Cal_Total ui segment">\
                         </div>\
                     </td>\
                     <td>\
-                        <div class="ui input"><input name="discount" id='+ dis_ind_template + ' placeholder="Discount" class="Cal_Total"></div>\
+                        <div class="ui input"><input style="width:8vw;" name="discount" id='+ dis_ind_template + ' placeholder="Discount" class="Cal_Total"></div>\
                     </td>\
                     <td>\
-                        <div class="ui input"><input name="deal" id=' + deal_index_template + ' placeholder="Deal" class="Cal_Total"></div>\
+                        <div class="ui input"><input style="width:5vw;" name="deal" id=' + deal_index_template + ' placeholder="Deal" class="Cal_Total"></div>\
                     </td>\
                     <td>\
-                        <div class="ui input"><input id ='+ t +' name="tax" placeholder="Tax" class="Cal_Total"></div>\
+                        <div class="ui input"><input style="width:6vw;" id ='+ t +' name="tax" placeholder="Tax" class="Cal_Total"></div>\
                     </td>\
                     <td>\
                         <div class="ui input"><input id ='+ s +' name="sale_rate" placeholder="Sale Rate" class="Cal_Total"></div>\
+                    </td>\
+                    <td>\
+                        <div class="ui input"><input name="Row_Total" placeholder="Total" ></div>\
                     </td>\
                     <td>\
                         <i class="close icon"></i>\
@@ -259,6 +266,9 @@
                         
                         row_wise_sum = base - discount + tax;
                         
+                        
+
+
                         // Final Equation
                         temp += base - discount + tax;
                        
@@ -357,9 +367,10 @@
                                                     $('#'+med_batch_id + ' .item').
                                                     click(function(e)
                                                     {
+                                                        // Getting Quantity and checking for valid data
                                                         med_batch_data=$(this).data("value");
-                                                        console.log('rr');
-                                                        // $('#'+med_batch_id+' .menu').html('');
+                                                        
+                                                        
                                                         quantity_id = String(Number(med_batch_id)+1);
                                                         $.ajax({
                                                             url:"getQuantity/",
@@ -373,8 +384,8 @@
                                                             },
                                                             success:function(response)
                                                             {
-                                                            //    $('#'+quantity_id).val(response[0]);
-                                                                console.log(response);
+                                                            
+                                                                // console.log(response);
                                                                 $('#'+quantity_id).attr("placeholder",response);
                                                                 
                                                                 $('#'+quantity_id).change(function(e){
@@ -399,15 +410,6 @@
                                                                                   
                                                 }
                                             });
-                                                
-
-                                                
-                                                
-                                                // Getting Quantity and checking for valid data
-                                      
-                                                   
-
-
                                                 
                                               
 
@@ -451,12 +453,15 @@
                     var i;
                     for(i=0;i<=c;i++)
                     {
+                        med_name_index = x;
+                        comp_index = x+1;
+                        batch_index = x+2;
                         sale_rate_index = x+5;
                         tax_index = x+4;
                         deal_index = x+7;
                         discount_index = x+6;
                         quantity_index = x+3;
-
+                        
                         temp =0;
 
                         // Base Price Calculation
@@ -470,6 +475,9 @@
 
                         row_wise_sum = base - discount + tax;
 
+                        
+                       
+
                         // Final Equation
                         temp += base - discount + tax;
                         
@@ -481,7 +489,7 @@
                             }  
 
                         x+=8;
-                        // document.write(base);
+                        
                     }
 
                   
@@ -597,7 +605,7 @@
                                 alert('Updated Stock');
                             },
                             error:function(){
-                                
+                                alert('some error has ocurred!')
                             }
                 
                         }); 
@@ -684,7 +692,9 @@
                                                                 
                                                                 $('#'+quantity_id).attr("placeholder",response);
                                                                 $('#3').change(function(e){
+                                                                    
                                                                     data_q = $('#'+quantity_id).val();
+
                                                                     if(data_q>current_quantity && data_q>=0)
                                                                     {
                                                                         $('#'+quantity_id).addClass('red');

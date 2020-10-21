@@ -20,6 +20,7 @@ urlpatterns = [
     path('purchase/create/',Create_Bill_Purchase),
     path('purchase/getPartyWholesellerID/',GetPartyWholesellerID),
     path('purchase/updateStock/',UpdateStock),
-    path('sale/updateStock/',BillUpdateStock)
+    path('sale/updateStock/',BillUpdateStock),
+    path('sale/getPurchaseRate/',getPurchaseRate),
 
 ]

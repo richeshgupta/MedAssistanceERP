@@ -68,8 +68,8 @@ def GetMedName(request):
         b=[]
         [b.append(a[0]) for a in data if a[0] not in b]
         return HttpResponse(json.dumps(b), content_type='application/json')
-    # else:
-    #     return ErrorPage(request,"Only GET allowed")
+    else:
+        return ErrorPage(request,"Only GET allowed")
 
 
 def GetMedCompany(request):
@@ -100,6 +100,8 @@ def GetMedBatch(request):
         temp_batches=cursor.fetchall()
         batches=[a[0] for a in temp_batches]
         return HttpResponse(json.dumps(batches), content_type='application/json')
+    else:
+        ErrorPage(request,"POST requests are not allowed")
 
 def getQuantity(request):
     if request.method=="GET":
@@ -119,6 +121,24 @@ def getQuantity(request):
         print("comp id:",comp_id,"\n product id:",med_id,"\n Quantity :",quan)
 
         return HttpResponse(json.dumps(quan),content_type='application/json')
+    else:
+        return ErrorPage(request,"POST requests are not allowed")
+
+def getPurchaseRate(request):
+    if request.method=="GET":
+        medName=request.GET['medName']
+        medCompany = request.GET['medCompany']
+        batch_no = request.GET['batch']
+        cursor = connection.cursor()
+        cursor.execute('select id from company_company where comp_name=%s',[medCompany])
+        comp_id = comp_id = cursor.fetchone()[0]
+        cursor.execute('select id from company_product where name=%s and company_id=%s ',[medName,comp_id])
+        med_id = cursor.fetchone()[0]
+        cursor.execute('select purchase_rate from company_batch where product_id=%s and batch_number=%s',[med_id,batch_no])
+        purchase_rate = cursor.fetchone()[0]
+        return HttpResponse(json.dumps(purchase_rate),content_type='application/json')
+    else:
+        return ErrorPage("Only GET requests are allowed")
 
 
 def GetMedSaleRateANDtax(request):
@@ -159,25 +179,11 @@ def ComputeLoss(request):
                 loss.append('True')
             i+=1
         return HttpResponse(json.dumps(loss), content_type='application/json')
+    else:
+        return ErrorPage(request,"POST requests are not allowed")
 
 
-# Getting quantity
-# this method is to be called on every time batch is edited.
-#To be corrected company batch query
-# def GetQuantity(request):
-#     if request.method=="GET":
-#         medName = request.GET.getlist('medName')    # Getting all MedName from client
-#         compname = request.GET.getlist('medCompany')
-#         batch_no = request.GET.getlist('batch_no')
-#         cursor = connection.cursor()
-#         cursor.execute("select id from company_company where comp_name=%s",[compname])
-#         comp_id = cursor.fetchone()[0]
-#         cursor.execute('select id from company_product where name=%s and company_id=%d ',[medName,comp_id])
-#         med_id = cursor.fetchone()[0]
-#         cursor.execute('select quantity from company_batch where product_id=%d',[med_id])
-#         quan = cursor.fetchall()[0]
-#         print(quan)
-#         return HttpResponse(json.dumps(quan),content_type="application/json")
+
         
 
 
@@ -189,7 +195,8 @@ def GetPartyWholeseller(request):
         b=[]
         [b.append(a[0]) for a in data if a[0] not in b]
         return HttpResponse(json.dumps(b), content_type='application/json')
-
+    else:
+        return ErrorPage(request,"only GET requests are allowed")
 
 def GetMedPurchaseRate(request):
     medName = request.GET['medName']    # Getting all MedName from client
