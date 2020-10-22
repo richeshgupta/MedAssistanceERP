@@ -1,6 +1,40 @@
+{% extends 'users/base.html' %}
+    <!-- <h1>{{ args }}</h1>
+    {% for customer_name in customer_name %}
+        <h3>Purchased By: {{ customer_name }}</h3>
+        {% for date in date %}
+        <p><u>Date of purchase</u>: {{ date }}</p>
+        {% endfor %}
+    {% endfor %} -->
 
-{% for bill in bills %}
-    <h1>{{bill.customer_name}}</h1>
-    <h3>Purchased: {{bill.name}}</h3>
-    <p><u>Date of purchase</u>: {{bill.date}}</p>
-{% endfor %}
+{% block content %}  
+<table class="ui single line table">
+    <thead>
+    <tr>
+        <th>Customer Name</th>
+        <th>Mail Id</th>
+        <th>Purchase Date</th>
+        <th>Name of Medicine</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>{{ customer_name.0 }}</td>
+        <td>{{ mail.0 }}</td>
+        <td>{{ date.0 }}</td>
+        <td>{{ name.0.0 }}</td>
+    </tr>
+    <tr>
+        <td>{{ customer_name.1 }}</td>
+        <td>{{ mail.1 }}</td>
+        <td>{{ date.1 }}</td>
+        <td>{{ name.1.0 }}</td>
+    </tr>
+    </tbody>
+</table>
+{% endblock %}
+
+<!-- {% for i in '51'|make_list %}
+    {{  forloop.counter }}
+{% endfor %} -->
