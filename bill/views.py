@@ -399,3 +399,26 @@ def GetPurchasePDF(request):
     return None
 
 
+
+def ComputeRowLoss(request):
+    if request.method == "GET":
+        medName = request.GET['medName']
+        medCompany = request.GET['medCompany']
+        batch_no = request.GET['batch_no']
+        rate = request.GET['rate']
+        cursor = connection.cursor()
+        loss=''
+        cursor.execute("SELECT id FROM company_company where comp_name=%s",[medCompany])
+        medCompanyID = cursor.fetchone()[0]
+        cursor.execute("SELECT id FROM company_product where name=%s and company_id=%s",[medName,medCompanyID])
+        medProductID = cursor.fetchone()[0]
+        cursor.execute("SELECT purchase_rate FROM company_batch where product_id=%s and batch_number=%s",[medProductID,batch_no])
+        purchase_rate=cursor.fetchone()[0]
+        if(float(purchase_rate) < float(rate)):
+            loss='False'
+        else:
+            loss='True'
+
+        return HttpResponse(json.dumps(loss), content_type='application/json')
+    else:
+        return ErrorPage(request,"POST requests are not allowed")

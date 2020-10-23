@@ -117,7 +117,7 @@
                         <div class="ui input"><input id ="5" name="sale_rate" placeholder="Sale Rate" class="Cal_Total" autocomplete="off"></div>
                     </td>
                     <td>
-                        <div class="ui input"><input  name="Row_Total" placeholder="Total" class="Cal_Total" autocomplete="off"></div>
+                        <div class="ui input"><input id="8"  name="Row_Total" placeholder="Total" class="ui segment" autocomplete="off"></div>
                     </td>
                 </tr>
             </tbody>
@@ -147,7 +147,7 @@
                 // +4 is done for because sale_rate id of last row is +3 of medname id
                 count+=1;
 
-                n+=8;
+                n+=9;
 
                 //for company id
                 c=n+1;
@@ -170,6 +170,8 @@
 
                 // deal index to be used in template (add button)
                 deal_index_template = dis_ind_template + 1;
+
+                row_tot=deal_index_template+1
 
 
 
@@ -220,7 +222,7 @@
                         <div class="ui input"><input id ='+ s +' name="sale_rate" placeholder="Sale Rate" class="Cal_Total"></div>\
                     </td>\
                     <td>\
-                        <div class="ui input"><input name="Row_Total" placeholder="Total" ></div>\
+                        <div class="ui input"><input id='+ row_tot +' name="Row_Total" placeholder="Total" class="ui segment"></div>\
                     </td>\
                     <td>\
                         <i class="close icon"></i>\
@@ -244,14 +246,19 @@
                     
                     for(i=0;i<=c;i++)
                     {
+                        comp_index=x+1;
+                        batch_index=x+2;
                         sale_rate_index = x+5;
                         tax_index = x+4;
                         deal_index = x+7;
                         discount_index = x+6;
                         quantity_index = x+3;
 
+                        row_total_id= x+8;
+
                         temp =0;
                         
+                        quan=parseFloat(document.getElementById(quantity_index).value);
                         // Base Price Calculation
                         base = parseFloat(document.getElementById(sale_rate_index).value) * parseFloat(document.getElementById(quantity_index).value);
                         
@@ -264,7 +271,32 @@
                         row_wise_sum = base - discount + tax;
                         
                         
+                        //adding value to row
+                        if(!(isNaN(row_wise_sum)) && row_wise_sum != $('#'+row_total_id).val()) 
+                        {
+                            $("#"+row_total_id).val(row_wise_sum);
+                            $.ajax({
+                                url: "computerowloss/",
+                                type: "GET",
+                                traditional : true,
+                                datatype:'json',
 
+                                //synchronous
+                                async: false,
+                                data:{medName : document.getElementsByName('name')[i].value , medCompany : document.getElementsByName('company')[i].value, batch_no : document.getElementsByName('batch_no')[i].value , rate:row_wise_sum/quan},
+                                success: function(response){
+                                    if(response=='True'){
+                                        $('#'+row_total_id).addClass('red');
+                                        $('#'+row_total_id).removeClass('green');
+                                    }
+                                    else{
+                                        $('#'+row_total_id).addClass('green');
+                                        $('#'+row_total_id).removeClass('red');
+                                    }
+                                }
+                            });
+                        }
+                        
 
                         // Final Equation
                         temp += base - discount + tax;
@@ -275,7 +307,7 @@
                                     tot+=temp;
                             }  
 
-                        x+=8;
+                        x+=9;
                         // alert(discount);
                     }
 
@@ -344,7 +376,7 @@
                                             
                                             med_company=$(this).data("value");
 
-                                            console.log(med_company);
+                                            
 
                                             $('#'+med_batch_id+' .menu').html('');
 
@@ -457,9 +489,11 @@
                         deal_index = x+7;
                         discount_index = x+6;
                         quantity_index = x+3;
+                        row_total_id= x+8;
                         
                         temp =0;
 
+                        quan=parseFloat(document.getElementById(quantity_index).value);
                         // Base Price Calculation
                         base = parseFloat(document.getElementById(sale_rate_index).value) * parseFloat(document.getElementById(quantity_index).value);
 
@@ -471,6 +505,32 @@
 
                         row_wise_sum = base - discount + tax;
 
+                        //adding value to row
+                        if(!(isNaN(row_wise_sum)) && row_wise_sum != $('#'+row_total_id).val()) 
+                        {
+                            $("#"+row_total_id).val(row_wise_sum);
+                            //console.log($('#'+x).data("value"));
+                            $.ajax({
+                                url: "computerowloss/",
+                                type: "GET",
+                                traditional : true,
+                                datatype:'json',
+
+                                //synchronous
+                                async: false,
+                                data:{medName : document.getElementsByName('name')[i].value , medCompany : document.getElementsByName('company')[i].value, batch_no : document.getElementsByName('batch_no')[i].value , rate:row_wise_sum/quan},
+                                success: function(response){
+                                    if(response=='True'){
+                                        $('#'+row_total_id).addClass('red');
+                                        $('#'+row_total_id).removeClass('green');
+                                    }
+                                    else{
+                                        $('#'+row_total_id).addClass('green');
+                                        $('#'+row_total_id).removeClass('red');
+                                    }
+                                }
+                            });
+                        }
                         
                        
 
@@ -483,7 +543,7 @@
                                     tot+=temp;
                             }  
 
-                        x+=8;
+                        x+=9;
                         
                     }
 
@@ -679,7 +739,7 @@
                                                 
                                                          // Getting Quantity and checking for valid data
                                                         // med_batch_data = $('#2').val();
-                                                        console.log("YO : ",med_batch_data);
+                                                        // console.log("YO : ",med_batch_data);
                                                         $.ajax({
                                                             url:"getQuantity/",
                                                             type:"GET",
@@ -753,7 +813,7 @@
     $(document).on('click','.close.icon',function(){
         $(this).parent('td').parent('tr').remove();
         count-=1; 
-        n-=1;
+        n-=9;
     });
 </script>
 {% endblock content %}
