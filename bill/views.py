@@ -132,6 +132,25 @@ def getQuantity(request):
     else:
         return ErrorPage(request,"POST requests are not allowed")
 
+def getMrp(request):
+    if request.method=="GET":
+        medName=request.GET['medName']
+        medCompany = request.GET['medCompany']
+        batch_no = request.GET['batch']
+        cursor = connection.cursor()
+        cursor.execute("select id from company_company where comp_name=%s",[medCompany])
+        comp_id = cursor.fetchone()[0]
+        print("comp id: ",comp_id)
+        cursor.execute('select id from company_product where name=%s and company_id=%s ',[medName,comp_id])
+        med_id = cursor.fetchone()[0]
+        print("medId : ",med_id)
+        cursor.execute('select mrp from company_batch where product_id=%s and batch_number=%s',[med_id,batch_no])
+        quan = cursor.fetchone()[0]
+
+        return HttpResponse(json.dumps(quan),content_type='application/json')
+    else:
+        return ErrorPage(request,"POST requests are not allowed")
+
 def getPurchaseRate(request):
     if request.method=="GET":
         medName=request.GET['medName']

@@ -114,7 +114,7 @@
                         <div class="ui input"><input style="width:6vw;" id ="4" name="tax" placeholder="Tax" class="Cal_Total" autocomplete="off"></div>
                     </td>
                     <td>
-                        <div class="ui input"><input id ="5" name="sale_rate" placeholder="Sale Rate" class="Cal_Total" autocomplete="off"></div>
+                        <div class="ui input"><input id ="5" name="sale_rate" placeholder="Sale Rate" class="Cal_Total ui segment" autocomplete="off"></div>
                     </td>
                     <td>
                         <div class="ui input"><input id="8"  name="Row_Total" placeholder="Total" class="ui segment" autocomplete="off"></div>
@@ -219,7 +219,7 @@
                         <div class="ui input"><input style="width:6vw;" id ='+ t +' name="tax" placeholder="Tax" class="Cal_Total"></div>\
                     </td>\
                     <td>\
-                        <div class="ui input"><input id ='+ s +' name="sale_rate" placeholder="Sale Rate" class="Cal_Total"></div>\
+                        <div class="ui input"><input id ='+ s +' name="sale_rate" placeholder="Sale Rate" class="Cal_Total ui segment"></div>\
                     </td>\
                     <td>\
                         <div class="ui input"><input id='+ row_tot +' name="Row_Total" placeholder="Total" class="ui segment"></div>\
@@ -434,6 +434,44 @@
                                                                 
                                                             }
                                                         });
+
+
+
+                                                        $.ajax({
+                                                            url:"getMrp/",
+                                                            type:"GET",
+                                                            dataType:"json",
+                                                            data:
+                                                            {
+                                                                medName:med_name,
+                                                                medCompany:med_company,
+                                                                batch:med_batch_data,
+                                                            },
+                                                            success:function(response)
+                                                            {
+                                                                current_mrp = response;
+                                                                //    $('#'+quantity_id).val(response[0]);
+                                                                
+                                                                $('#'+med_sale_rate_id).attr("placeholder",response);
+                                                                $('#'+med_sale_rate_id).change(function(e){
+                                                                    
+                                                                    current_sale_rate = $('#'+med_sale_rate_id).val();
+
+                                                                    if(current_sale_rate>current_mrp && current_sale_rate>=0)
+                                                                    {
+                                                                        $('#'+med_sale_rate_id).addClass('red');
+                                                                        $('#'+med_sale_rate_id).removeClass('green');
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        $('#'+med_sale_rate_id).addClass('green');
+                                                                        $('#'+med_sale_rate_id).removeClass('red');
+                                                                    }   
+                                                                });
+                                                            
+                                                                
+                                                            }
+                                                        });
                                                        
                                                     });
                                                                                   
@@ -453,6 +491,8 @@
 
                                                     //sale rate
                                                    $("#"+med_sale_rate_id).val(response[0]);
+                                                   $('#'+med_sale_rate_id).addClass('green');
+                                                    $('#'+med_sale_rate_id).removeClass('red');
                                                 }
                                             });
 
@@ -775,7 +815,45 @@
                                                                 
                                                             }
                                                         });
-                                                       
+
+                                                        sale_rate_id=5;
+
+                                                        $.ajax({
+                                                            url:"getMrp/",
+                                                            type:"GET",
+                                                            dataType:"json",
+                                                            data:
+                                                            {
+                                                                medName:med_name,
+                                                                medCompany:med_company,
+                                                                batch:med_batch_data,
+                                                            },
+                                                            success:function(response)
+                                                            {
+                                                                current_mrp = response;
+                                                                //    $('#'+quantity_id).val(response[0]);
+                                                                
+                                                                $('#'+sale_rate_id).attr("placeholder",response);
+                                                                $('#'+sale_rate_id).change(function(e){
+                                                                    
+                                                                    current_sale_rate = $('#'+sale_rate_id).val();
+
+                                                                    if(current_sale_rate>current_mrp && current_sale_rate>=0)
+                                                                    {
+                                                                        $('#'+sale_rate_id).addClass('red');
+                                                                        $('#'+sale_rate_id).removeClass('green');
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        $('#'+sale_rate_id).addClass('green');
+                                                                        $('#'+sale_rate_id).removeClass('red');
+                                                                    }   
+                                                                });
+                                                            
+                                                                
+                                                            }
+                                                        });
+
                                                     });
                                                 }
                                             });
@@ -795,6 +873,8 @@
 
                                                     // sale rate
                                                    $("#5").val(response[0]);
+                                                   $('#5').addClass('green');
+                                                    $('#5').removeClass('red');
                                                    
                                                 }
                                             });

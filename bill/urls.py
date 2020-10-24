@@ -24,6 +24,7 @@ urlpatterns = [
     path('sale/getPDF/',GetSalePDF , name='getsalepdf'),
     path('purchase/getPDF/',GetPurchasePDF , name='getpurchasepdf'),
     path('sale/getPurchaseRate/',getPurchaseRate),
-    path('sale/computerowloss/',ComputeRowLoss)
+    path('sale/computerowloss/',ComputeRowLoss),
+    path('sale/getMrp/',getMrp)
 
 ]
