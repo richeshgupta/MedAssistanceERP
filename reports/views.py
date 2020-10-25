@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 import json
 from django.http import JsonResponse
 from bill.models import *
-from .serializers import *
+
 
 class ReportView(TemplateView):
     def get(self, request):
