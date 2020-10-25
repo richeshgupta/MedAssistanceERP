@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 #decorators
 from .custom_decorator import  *
 from django.contrib.auth.decorators import login_required
+from tools.backup import *
 
 
 
@@ -170,3 +171,8 @@ def Delete_Staff(request,user_id):
 @login_required(login_url='home')
 def Super_Admin(request):
     return HttpResponseRedirect('admin/')
+
+@is_admin_access
+def BackupPage(request):
+    path,time = db_backup()
+    return render(request,"users/backup.html",{'path':path,"time":time})

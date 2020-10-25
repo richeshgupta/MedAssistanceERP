@@ -15,5 +15,6 @@ def db_backup():
     cmnd = 'pg_dump -U postgres -d "MedDb" -f {path}backup-{date}.sql'.format(path=path,date=date)
     # os.system("cmd /k 'pg_dump -U postgres -d MedDb -f C:/backup.sql'")
     print(check_output(cmnd,shell=True).decode())
-db_backup()
+    return path,time
+
 

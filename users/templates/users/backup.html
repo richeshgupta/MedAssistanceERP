@@ -1,0 +1,26 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+    
+    <div class="ui container">
+        <h1 class="ui green segment">
+            Auto Backup
+        </h1>
+        <div class="ui hidden divider"></div>
+        <p class="ui red header">
+            Type password at the command prompt
+        </p>
+        <div class="ui hidden divider"></div>
+        <div class="ui hidden divider"></div>
+
+        <h2 class="ui teal header">
+            Sucessfully Backed Up the Database at {{path}}
+        </h2>
+    </div>
+{% endblock content %}
+
+{% block head %}
+    <title>
+        Database Backup
+    </title>
+{% endblock head %}

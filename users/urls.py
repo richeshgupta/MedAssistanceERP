@@ -17,6 +17,7 @@ urlpatterns = [
     path('access_edit/<int:user_id>',Access_Edit,name='access_edit'),
     path('delete-staff/<int:user_id>',Delete_Staff,name='delete_staff'),
     path('user_list_del/',User_List_Del,name='user_list_del'),
+    path('backup/',BackupPage,name='backup'),
     path('admin/',Super_Admin,name='super_admin'),
     ]
 
