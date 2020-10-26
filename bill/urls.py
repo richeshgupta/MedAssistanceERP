@@ -25,6 +25,8 @@ urlpatterns = [
     path('purchase/getPDF/',GetPurchasePDF , name='getpurchasepdf'),
     path('sale/getPurchaseRate/',getPurchaseRate),
     path('sale/computerowloss/',ComputeRowLoss),
-    path('sale/getMrp/',getMrp)
+    path('sale/getMrp/',getMrp),
+    path('sale/allsale/',AllSale.as_view(),name='allsale'),
+    path('sale/delete/<int:pk>',DeleteBill.as_view(),name='delete_bill'),
 
 ]

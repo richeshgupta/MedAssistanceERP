@@ -1,0 +1,24 @@
+{% extends 'users/base.html' %}
+{% block head %}   
+    <title>Delete {{object.customer_name}} Bill</title>
+{% endblock head %}
+
+{% block content %}
+    <div class="ui container red segment">
+        <h1 class="ui  header">
+            Do you really want to delete this bill?
+        </h1>
+        <form method="POST" id="delete-form">
+            {% csrf_token %}
+            {{form}}
+            <div class="ui hidden divider"></div>
+            <div class="ui hidden divider"></div>
+            <a href="javascript:{}" class="ui red button" onclick="document.getElementById('delete-form').submit();">
+                Yes
+            </a>
+            <a class="ui primary button" href="{% url 'allsale' %}">
+                No
+            </a>
+        </form>
+    </div>
+{% endblock content %}

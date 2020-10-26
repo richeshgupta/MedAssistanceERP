@@ -15,8 +15,24 @@ from xhtml2pdf import pisa
 import os
 from django.conf import settings
 from django.contrib.staticfiles import finders
+from users.custom_decorator import *
+from django.urls import reverse_lazy
+
+# Class based Views (built-in)
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
+from  django.views.generic.edit import DeleteView
+
+class AllSale(ListView):
+    model = Bill_Retailer
+    template_name="bill/allsale.html"
+    context_object_name = "bills"
+    ordering = ['-date']
 
 
+class DeleteBill(DeleteView):
+    model = Bill_Retailer
+    success_url = reverse_lazy('allsale')
 
 @login_required(login_url='/')
 def Sale(request):
