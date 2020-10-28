@@ -19,17 +19,20 @@ from users.custom_decorator import *
 from django.urls import reverse_lazy
 
 # Class based Views (built-in)
-from django.views.generic.detail import DetailView
+# from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from  django.views.generic.edit import DeleteView
+from django.utils.decorators import method_decorator
 
+
+@method_decorator(login_required,name="dispatch")
 class AllSale(ListView):
     model = Bill_Retailer
     template_name="bill/allsale.html"
     context_object_name = "bills"
     ordering = ['-date']
 
-
+@method_decorator(is_admin_access,name="dispatch")
 class DeleteBill(DeleteView):
     model = Bill_Retailer
     success_url = reverse_lazy('allsale')

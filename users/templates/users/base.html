@@ -22,12 +22,46 @@
                 margin-top:15em;
                 padding: 5em 0em;
             }
+            .custom-menu {
+            display: none;
+            z-index: 1000;
+            position: absolute;
+            overflow: hidden;
+            border: 1px solid #CCC;
+            white-space: nowrap;
+            font-family: sans-serif;
+            background: #FFF;
+            color: #333;
+            border-radius: 5px;
+            padding: 0;
+        }
+
+
+            .custom-menu li {
+                padding: 8px 12px;
+                cursor: pointer;
+                list-style-type: none;
+                transition: all .3s ease;
+                user-select: none;
+            }
+
+            .custom-menu li:hover {
+                background-color: #DEF;
+            }
         </style>
 
     </head>
 
 <body>
-      
+
+
+  <ul class='custom-menu'>
+    <li data-action="bill">Create Bill</li>
+    <li data-action="report">See reports</li>
+    <li data-action="backup">Take Backup</li>
+  </ul>
+
+
     <div class="ui secondary pointing menu">
       <div class="ui container">
         {% if request.path == '/' %}
@@ -196,6 +230,47 @@
         {% block script %}
         {% endblock script %}
 
+        <!-- Right click custom js -->
+        <script>
+          // $(".custom-menu").hide();
+          $(document).bind("contextmenu",function(e){
+            e.preventDefault();
+            $(".custom-menu").finish().toggle(100).css({
+              top:e.pageY+"px",
+              left:e.pageX+"px"
+            });
+          });
+          
+
+          $(document).bind("mousedown", function (e) {
+    
+              
+              if (!$(e.target).parents(".custom-menu").length > 0) {
+                  
+                  
+                  $(".custom-menu").hide(100);
+              }
+          });
+
+          $(".custom-menu li").click(function(){
+    
+    
+            switch($(this).attr("data-action")) {
+                
+                // A case for each action. Your actions here
+                case "bill": window.location.replace(" {% url 'sale' %} ");
+ break;
+                case "report": window.location.replace("{% url 'test' %}");
+ break;
+                case "backup": window.location.replace("{% url 'backup' %}");
+                alert('Enter password at terminal/cmd');
+ break;
+            }
+          
+            // Hide it AFTER the action was triggered
+            $(".custom-menu").hide(100);
+          });
+        </script>
     
     </body>
 

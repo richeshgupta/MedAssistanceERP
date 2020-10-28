@@ -14,7 +14,7 @@
             <th class='ui center aligned small header'>Customer Name</th>
             <th class='ui center aligned small header'>Mode Of Payment</th>
             <th class='ui center aligned small header'>Total Bill</th>
-            <th class='ui center aligned small header'>Edit</th>
+            
             <th class='ui center aligned small header'>Delete</th>
            
         </tr>
@@ -42,9 +42,7 @@
             <td style='width:8vw' class="center aligned">
                 {{bill.total_bill|floatformat}}
             </td>
-            <td style='width:8vw' class="center aligned">
-                <a class="ui primary button">Edit</div>
-            </td>
+            
             <td style='width:8vw' class="center aligned">
                 <a class="ui red button" href="{% url 'delete_bill' bill.id %}">Delete</div>
             </td>
