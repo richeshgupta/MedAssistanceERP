@@ -3,47 +3,60 @@
 <head>
     <meta charset="utf-8">
     <title>Sale Invoice</title>
-
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"> -->
+    
     <style>
-
+        address{
+            display: block;
+        }
+        h3#bill_id{
+            margin-left:100%;
+        }
     </style>
 </head>
 
 <body>
 
 <!------ Include the above in your HEAD tag ---------->
-
+<h3 id="bill_id">BILL NO : {{bill_id}}</h3>
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
     		<div class="invoice-title">
     			<h1 style="font-size: xxx-large;">Invoice</h1>
-    		</div>
+            </div>
+            <hr />
+            <div class="Shop Name">
+                <address>
+                    <h1>{{shop_name}}</h1>
+                    <h2>{{address}}</h2>
+                    <h2>GSTIN : {{GST}}</h2>
+                    <h2>Contact : {{contact}}</h2>
+                </address>                    
+            </div>
     		<hr>
     		<div class="row">
     			<div >
     				<address>
-    				<h2 style="font-size: xx-large; padding-bottom: -20px;"><strong >Billed To:</strong></h2>
-                        <h3 style="display: inline; font-size: x-large;"><strong>Customer Name : </strong></h3><h4 style="display: inline; font-size: large;">{{ customer_name}}</h4><br>
-                        <h3 style="display: inline;font-size: x-large;"><strong>Customer Email : </strong></h3><h4 style="display: inline; font-size: large;">{{ customer_email }}</h4>
-    				</address>
+    				<h2 style="font-size: xx-large; padding-bottom: -20px;"><strong ><u>Billed To:</u></strong></h2><br />
+                        <h3 style="display: inline; font-size: x-large;"><strong>Customer Name : </strong></h3><h4 style="display: inline; font-size: large;">{{ customer_name}}</h4><br><br />
+                        <h3 style="display: inline;font-size: x-large;"><strong>Customer Email : </strong></h3><h4 style="display: inline; font-size: large;">{{ customer_email }}</h4><br /><br />
+                        <h2 style="display: inline; font-size: x-large"><strong>Payment Method: {{mode_of_payment}} </strong></h2>
+                    </address>
+                    <br />
     			</div>
             </div>
-            <br>    
+              
+            <hr />
     		<div class="row">
     			<div class="col-xs-6">
     				<address>
-                        <h2 style="display: inline; font-size: x-large"><strong>Payment Method:  </strong></h2>
-                        <h3 style="display: inline; font-size: large" ><strong> {{mode_of_payment}}</strong></h3>   
+                        
+                        
     				</address>
                 </div>
                 <!-- date sent from view -->
-    			<!-- <div class="col-xs-6 text-right">
-    				<address>
-    					<strong>Order Date:</strong><br>
-    					March 7, 2014<br><br>
-    				</address>
-                </div> -->
+    		
     		</div>
     	</div>
     </div>
@@ -96,7 +109,7 @@
                                     <td class="no-line"></td>
                                     <td class="no-line"></td>
                                     <td class="no-line"></td>
-    								<td class="no-line text-center"><strong>Total</strong></td>
+    								<td class="no-line text-center"><strong>Grand Total</strong></td>
     								<td class="no-line text-right">{{total_bill}}</td>
                                 </tr>
                             </tbody>
@@ -108,6 +121,9 @@
     		</div>
     	</div>
     </div>
+    <br /><br /><br /><br /><br /><br /><br /><br />
+    <div style="margin-top:80%;"><h1>Proprietor Signature</h1></div>
 </div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -12,7 +12,11 @@ from tools.backup import *
 
 
 def home(request):
-    return render(request,'users/index.html')
+    user = request.user
+    obj = user_extended.objects.get(user=request.user)
+    access_level = obj.access_level
+    context = {'access_level':access_level}
+    return render(request,'users/index.html',context)
     
 def Test(request):
     return render(request,"users/test.html",{})
@@ -131,7 +135,7 @@ def Access_Edit(request,user_id):
         context = {'form':form,'user':xuser}
         return render(request,"users/access_edit.html",context)
     except:
-        print("HERE\n\n")
+        # print("HERE\n\n")
         try:
             super_user = User.objects.get(pk=user_id)
         except:

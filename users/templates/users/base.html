@@ -22,6 +22,7 @@
                 margin-top:15em;
                 padding: 5em 0em;
             }
+            
             .custom-menu {
             display: none;
             z-index: 1000;
@@ -57,8 +58,10 @@
 
   <ul class='custom-menu'>
     <li data-action="bill">Create Bill</li>
-    <li data-action="report">See reports</li>
+    <li data-action="report">See Reports</li>
     <li data-action="backup">Take Backup</li>
+    <li data-action="cheque">Cheque</li>
+    
   </ul>
 
 
@@ -196,7 +199,7 @@
             </div>
           </div>
           <div class="ui inverted section divider"></div>
-          <!-- <img src="{% static 'img/medassist.png' %}" class="ui centered mini image"> -->
+          
           <div class="ui horizontal inverted small divided link list">
             
             <a class="item" href="#">Contact Us</a>
@@ -257,17 +260,19 @@
     
             switch($(this).attr("data-action")) {
                 
-                // A case for each action. Your actions here
+                
                 case "bill": window.location.replace(" {% url 'sale' %} ");
- break;
+                break;
                 case "report": window.location.replace("{% url 'test' %}");
- break;
+                break;
                 case "backup": window.location.replace("{% url 'backup' %}");
                 alert('Enter password at terminal/cmd');
- break;
+                break;
+                case "cheque":window.location.replace("{% url 'cheque' %}");
+                break;
             }
           
-            // Hide it AFTER the action was triggered
+            
             $(".custom-menu").hide(100);
           });
         </script>

@@ -11,16 +11,25 @@
             border-left-style: hidden !important;
             border-bottom-style: groove !important;
         }
+        .floated.right
+        {
+            float: right;
+            
+            margin-top:5%;
+        }
     </style>
     <title>Sale - Billing </title>
 {% endblock head %}
 
 {% block content %}
+
+<div class="ui hidden divider"></div>
 <h3 class="ui center small aligned icon header">
     <i class=" circular clipboard icon"></i>
     <div style="font-size: x-large;">
     Sale
     </div>
+    
 </h3>
 <br>
 <div class="ui equal width form">
@@ -126,6 +135,11 @@
         <div class="ui center aligned grid">
             <div class="ui positive large button submit" style="padding:10px 30px">Submit</div>
             <div class="ui primary large button add" style="padding:10px 30px">Add</div>
+        </div>
+        <div class="ui hidden divider"></div>
+        <div class="ui hidden divider"></div>
+        <div class="ui center aligned grid">
+            <a href="{% url 'allsale' %}" class="ui teal large button" style="padding:10px 30px">See all saved bills</a>
         </div>
 
     <script>

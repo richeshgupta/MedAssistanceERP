@@ -17,7 +17,7 @@ from django.conf import settings
 from django.contrib.staticfiles import finders
 from users.custom_decorator import *
 from django.urls import reverse_lazy
-
+from profile_retailer.models import *
 # Class based Views (built-in)
 # from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
@@ -360,6 +360,8 @@ def GetSalePDF(request):
         mop='Card'
     data['mode_of_payment']=mop
     data['total_bill']=bill[5]
+    data['bill_id'] = bill_id
+    print("total : ",data['total_bill'])
 
     i=0
     l=len(bill[6])
@@ -377,8 +379,30 @@ def GetSalePDF(request):
         temp['sale_rate']=bill[14][i]
         product_list.append(temp)
         i+=1
-
+    
     data['product_list']=product_list
+    try:
+        obj = Profile_Retailer.objects.all()[0]
+        shop_name = obj.Shop_Name
+        Address  = obj.Address
+        GST = obj.GST
+        DL = obj.DL_no
+        contact = obj.contact
+        # print("shop",shop_details)
+    except Exception as e:
+        print(e)
+        shop_name = "NULL"
+        Address  = "NULL"
+        GST = "NULL"
+        DL = "NULL"
+        contact = "NULL"
+        
+    data['shop_name'] = shop_name
+    data['address']=Address
+    data['GST'] = GST
+    data['dl'] = DL
+    data['contact'] = contact
+
     template=get_template("bill/sale_pdf_page.html")
     data_p=template.render(data)
     result = BytesIO()
@@ -428,6 +452,8 @@ def GetPurchasePDF(request):
         i+=1
 
     data['product_list']=product_list
+    shop_details = Profile_Retailer.objects.all()[0]
+    print("shop",shop_details)
     template=get_template("bill/purchase_pdf_page.html")
     data_p=template.render(data)
     result = BytesIO()
