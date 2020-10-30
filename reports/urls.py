@@ -6,4 +6,6 @@ urlpatterns = [
     path('ReportInfo/',Bill_View.as_view(),name='ReportInfo'),
     path('saleReportCompany/',ReportView.as_view(),name='saleReportCompany'),
     path('saleReportDate/',ReportView.as_view(),name='saleReportDate'),
+    path('reports/',Reports_View),
+    path('reports/getRevenue/',GetRevenue),
 ]

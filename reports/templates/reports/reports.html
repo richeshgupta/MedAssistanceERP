@@ -1,0 +1,57 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+<h3 class="ui center small aligned icon header">
+    <i class=" circular object group  icon"></i>
+    <div style="font-size: x-large;">
+    Reports
+    </div>
+    
+</h3>
+    
+<div class="ui grid">
+    <div class="one wide column" ></div>
+    <div class="fourteen wide column" >
+        <canvas id="line-chart"  height="70"></canvas>  
+    </div>
+    <div class="one wide column"></div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+<script>
+data=[]
+year=0
+$.ajax({
+    url: "getRevenue/",
+    type: "GET",
+    traditional : true,
+    datatype:'json',
+    //synchronous
+    async: false,
+    success: function(response){
+        data=response;
+    }
+});
+new Chart(document.getElementById("line-chart"), {
+    type: 'line',
+    data: {
+      labels: ['Jan','Feb',"Mar",'Apr','May','Jun',"Jul",'Aug','Sep',"Oct",'Nov','Dec'],
+      datasets: [{ 
+          data: data,
+          label: "Revenue",
+          borderColor: "rgb(243, 85, 12)" ,
+          fill: true,
+        }
+      ],
+
+    },
+    options: {
+        scales:{
+
+        }
+    }
+  });
+</script>
+
+{% endblock %}
+

@@ -6,6 +6,9 @@ import json
 from django.http import JsonResponse
 from bill.models import *
 
+def Reports_View(request):
+    return render(request,"reports/reports.html",{})
+
 
 class ReportView(TemplateView):
     def get(self, request):
@@ -45,3 +48,26 @@ class Bill_View(TemplateView):
         # return HttpResponse(json.dumps(data), content_type='application/json')
     # return render(request,'reports/report.html',{})
 
+def GetRevenue(request):
+    if request.method=="GET":
+        cursor = connection.cursor()
+        #years
+        # cursor.execute("Select extract(year from date) from bill_bill_retailer")
+        # data= cursor.fetchall()
+        # i=0
+        # year=[]
+        # while(i<len(data)):
+        #     if(data[i][0] not in year):
+        #         year.append(int(data[i][0]))
+        #     i+=1
+        # for y in year:
+        i=1
+        data=[]
+        while(i<=12):
+            cursor.execute("Select sum(total_bill) from bill_bill_retailer where date_part('month',date)=%s",[i])
+            data.append(cursor.fetchall()[0][0])
+            i+=1
+
+        return HttpResponse(json.dumps(data),content_type="application/json")
+    else:
+        return ErrorPage(request,"Only GET allowed")
