@@ -21,6 +21,7 @@ class Bill_Retailer(models.Model):
     tax = ArrayField(models.FloatField(default=0))
     loss = ArrayField(models.BooleanField(default=False))
     sale_rate = ArrayField(models.FloatField(null=True))
+    pdf = models.FileField(upload_to='pdfs/', null=True, blank=True)
     def __str__(self):
         return str(self.date) + " : " + self.customer_name
 
