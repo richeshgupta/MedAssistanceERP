@@ -8,4 +8,7 @@ urlpatterns = [
     path('saleReportDate/',ReportView.as_view(),name='saleReportDate'),
     path('reports/',Reports_View),
     path('reports/getRevenue/',GetRevenue),
+    path('reports/getPurchase/',GetPurchase),
+    path('reports/getdetails/',GetDetails),
+    
 ]

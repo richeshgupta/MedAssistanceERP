@@ -8,19 +8,74 @@
     </div>
     
 </h3>
-    
+<div class="ui four statistics">
+    <div class="statistic">
+      <div class="value">
+        22
+      </div>
+      <div class="label">
+        Items Sold
+      </div>
+    </div>
+    <div class="statistic">
+      <div class="text value">
+          jk
+      </div>
+      <div class="label">
+        Items Purchased
+      </div>
+    </div>
+    <div class="statistic">
+      <div class="value">
+            5
+      </div>
+      <div class="label">
+        Items In Stock
+      </div>
+    </div>
+    <div class="statistic">
+      <div class="value">
+        42
+      </div>
+      <div class="label">
+        Team Members
+      </div>
+    </div>
+  </div>
 <div class="ui grid">
+
     <div class="one wide column" ></div>
     <div class="fourteen wide column" >
-        <canvas id="line-chart"  height="70"></canvas>  
+        <canvas id="revenue"  height="65%" ></canvas>  
     </div>
     <div class="one wide column"></div>
+    <!-- style="background-color: rgb(17, 118, 206); -->
 
+    <div class="five wide column"></div>
+    <div class="one wide column"></div>
+    <div class="five wide column">
+        <canvas id="purchase"  height="180%"></canvas> 
+    </div>
+    <div class="one wide column"></div>
+    <div class="five wide column"></div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 <script>
-data=[]
-year=0
+rev=[]
+pur=[]
+
+$.ajax({
+    url: "getdetails/",
+    type: "GET",
+    traditional : true,
+    datatype:'json',
+    //synchronous
+    async: false,
+    success: function(response){
+        rev=response;
+    }
+});
+
 $.ajax({
     url: "getRevenue/",
     type: "GET",
@@ -29,15 +84,15 @@ $.ajax({
     //synchronous
     async: false,
     success: function(response){
-        data=response;
+        rev=response;
     }
 });
-new Chart(document.getElementById("line-chart"), {
+new Chart(document.getElementById("revenue"), {
     type: 'line',
     data: {
       labels: ['Jan','Feb',"Mar",'Apr','May','Jun',"Jul",'Aug','Sep',"Oct",'Nov','Dec'],
       datasets: [{ 
-          data: data,
+          data: rev,
           label: "Revenue",
           borderColor: "rgb(243, 85, 12)" ,
           fill: true,
@@ -46,11 +101,37 @@ new Chart(document.getElementById("line-chart"), {
 
     },
     options: {
-        scales:{
-
-        }
     }
   });
+
+$.ajax({
+    url: "getPurchase/",
+    type: "GET",
+    traditional : true,
+    datatype:'json',
+    //synchronous
+    async: false,
+    success: function(response){
+        pur=response;
+    }
+});
+new Chart(document.getElementById("purchase"), {
+    type: 'line',
+    data: {
+      labels: ['Jan','Feb',"Mar",'Apr','May','Jun',"Jul",'Aug','Sep',"Oct",'Nov','Dec'],
+      datasets: [{ 
+          data: pur,
+          label: "Purchase",    
+          borderColor: "rgb(17, 118, 206)" ,
+          fill: true,
+        }
+      ],
+
+    },
+    options: {
+    }
+  });
+
 </script>
 
 {% endblock %}

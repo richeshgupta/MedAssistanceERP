@@ -71,3 +71,48 @@ def GetRevenue(request):
         return HttpResponse(json.dumps(data),content_type="application/json")
     else:
         return ErrorPage(request,"Only GET allowed")
+
+def GetPurchase(request):
+    if request.method=="GET":
+        cursor = connection.cursor()
+        #years
+        # cursor.execute("Select extract(year from date) from bill_bill_retailer")
+        # data= cursor.fetchall()
+        # i=0
+        # year=[]
+        # while(i<len(data)):
+        #     if(data[i][0] not in year):
+        #         year.append(int(data[i][0]))
+        #     i+=1
+        # for y in year:
+        i=1
+        data=[]
+        while(i<=12):
+            cursor.execute("Select sum(total_bill) from bill_purchase where date_part('month',date)=%s",[i])
+            data.append(cursor.fetchall()[0][0])
+            i+=1
+
+        return HttpResponse(json.dumps(data),content_type="application/json")
+    else:
+        return ErrorPage(request,"Only GET allowed")
+
+def GetDetails(request):
+    if request.method=="GET":
+        cursor = connection.cursor()
+        cursor.execute("Select quantity from bill_bill_retailer")
+        temp=cursor.fetchall()
+        sold=0
+        for s in temp:
+            for a in s[0]:
+                sold+=a
+        cursor.execute("Select quantity from bill_purchase")
+        temp=cursor.fetchall()
+        purchased=0
+        for s in temp:
+            for a in s[0]:
+                purchased+=a
+        cursor.execute("Select sum(free) from company_product")
+        stock=cursor.fetchone()[0]
+        return HttpResponse('')
+    else:
+        return ErrorPage(request,"Only GET allowed")

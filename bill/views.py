@@ -348,8 +348,66 @@ def SaleUpdateStock(request):
 
 class GeneratePDF(View):
     def get(self, request, *args, **kwargs):
+        cursor = connection.cursor()
+        cursor.execute("SELECT max(id) FROM bill_bill_retailer")
+        bill_id=cursor.fetchone()[0]
+        cursor.execute("SELECT * FROM bill_bill_retailer where id=%s",[bill_id])
+        bill=cursor.fetchone()
+        data={}
+        data['id']=bill[0]
+        data['date']=bill[1]
+        data['customer_name']=bill[2]
+        data['customer_email']=bill[3]
+        if(bill[4] == 1):
+            mop='Cash'
+        else:
+            mop='Card'
+        data['mode_of_payment']=mop
+        data['total_bill']=bill[5]
+        data['bill_id'] = bill_id
+
+        i=0
+        l=len(bill[6])
+        product_list=[]
+        while(i<l):
+            temp={}
+            temp['name']=bill[6][i]
+            temp['company']=bill[7][i]
+            temp['batch_number']=bill[8][i]
+            temp['quantity']=bill[9][i]
+            temp['discount']=bill[10][i]
+            temp['deal']=bill[11][i]
+            temp['tax']=bill[12][i]
+            temp['loss']=bill[13][i]
+            temp['sale_rate']=bill[14][i]
+            product_list.append(temp)
+            i+=1
+        
+        data['product_list']=product_list
+        try:
+            obj = Profile_Retailer.objects.all()[0]
+            shop_name = obj.Shop_Name
+            Address  = obj.Address
+            GST = obj.GST
+            DL = obj.DL_no
+            contact = obj.contact
+            # print("shop",shop_details)
+        except Exception as e:
+            print(e)
+            shop_name = "NULL"
+            Address  = "NULL"
+            GST = "NULL"
+            DL = "NULL"
+            contact = "NULL"
+            
+        data['shop_name'] = shop_name
+        data['address']=Address
+        data['GST'] = GST
+        data['dl'] = DL
+        data['contact'] = contact
+
         template = get_template("bill/sale_pdf_page.html")
-        pdf = render_to_pdf('bill/sale_pdf_page.html')
+        pdf = render_to_pdf('bill/sale_pdf_page.html',data)
         if pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
             filename = "Invoice_%s.pdf" %("CustomerName_Date")
