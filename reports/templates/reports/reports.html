@@ -9,36 +9,18 @@
     
 </h3>
 <div class="ui four statistics">
-    <div class="statistic">
-      <div class="value">
-        22
-      </div>
-      <div class="label">
-        Items Sold
-      </div>
+    <div class="statistic" id="sold">
     </div>
-    <div class="statistic">
-      <div class="text value">
-          jk
-      </div>
-      <div class="label">
-        Items Purchased
-      </div>
+    <div class="statistic" id="purchased">
     </div>
-    <div class="statistic">
-      <div class="value">
-            5
-      </div>
-      <div class="label">
-        Items In Stock
-      </div>
+    <div class="statistic" id="stock">
     </div>
     <div class="statistic">
       <div class="value">
         42
       </div>
       <div class="label">
-        Team Members
+        Employee
       </div>
     </div>
   </div>
@@ -72,7 +54,10 @@ $.ajax({
     //synchronous
     async: false,
     success: function(response){
-        rev=response;
+      $('#sold').append('<div class="value">'+response[0]+'</div><div class="label">Items Sold</div>');
+      $('#purchased').append('<div class="value">'+response[1]+'</div><div class="label">Items Purchased</div>');
+      $('#stock').append('<div class="value">'+response[2]+'</div><div class="label">Items In Stock</div>');
+      //employee
     }
 });
 

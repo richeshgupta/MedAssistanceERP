@@ -113,6 +113,11 @@ def GetDetails(request):
                 purchased+=a
         cursor.execute("Select sum(free) from company_product")
         stock=cursor.fetchone()[0]
-        return HttpResponse('')
+        data=[]
+        data.append(sold)
+        data.append(purchased)
+        data.append(stock)
+        #employee
+        return HttpResponse(json.dumps(data),content_type="application/json")
     else:
         return ErrorPage(request,"Only GET allowed")
