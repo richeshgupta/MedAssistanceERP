@@ -180,3 +180,14 @@ def Super_Admin(request):
 def BackupPage(request):
     path,time = db_backup()
     return render(request,"users/backup.html",{'path':path,"time":time})
+
+
+# Reminder Script
+from company.models import *
+from datetime import date,timedelta
+def Reminders(request):
+    start_exp_date = date.today() 
+    end_exp_date =  start_exp_date + timedelta(days=60)
+    exp_obj = Batch.objects.filter(expiry__lte=end_exp_date,expiry__gte=start_exp_date)
+    less_stock = Batch.objects.filter(quantity__lte=10)
+    return render(request,"users/reminders.html",{'expiry':exp_obj,'stock':less_stock})

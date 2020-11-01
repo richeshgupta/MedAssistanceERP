@@ -80,12 +80,17 @@
                         <h2 class='ui centered header'>
                             You are logged in as <u>{{request.user.username}}</u> !!
                             {{access_level}}
+                            <div class="ui hidden divider"></div>
+                            <a class="ui red button" href="{% url 'reminders' %}">
+                                See Reminders
+                            </a>
                         </h2>
 
                     </div>
                 </div>
                 
             {% endif %}  
+          
         </div>
     </div>
    

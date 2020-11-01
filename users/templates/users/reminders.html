@@ -1,0 +1,32 @@
+{% extends 'users/base.html' %}
+{% block head %}   
+    <title>Reminders</title>
+{% endblock head %}
+{% block content %}
+    <div class="ui container red segment">
+        <h1 class="ui red header">
+            Reminders
+        </h1>
+        <div class="ui hidden divider"></div>
+        <div class="ui container">
+            <h4 class="ui red segment center aligned header">
+                Expired Batches
+            </h4>
+            {% for i in expiry %}
+                Batch No: {{i.batch_number}}<br />
+                Product : {{i.product}}<br />
+                <hr />
+            {% endfor %}
+            <hr />
+            <h4 class="ui red center aligned header segment">
+                Stock About to Expire
+            </h4>
+            {% for i in stock %}
+                Batch No: {{i.batch_number}}<br />
+                Product : {{i.product}}<br />
+                <hr />
+            {% endfor %}
+        </div>
+    </div>
+    
+{% endblock content %}
