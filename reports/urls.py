@@ -10,5 +10,6 @@ urlpatterns = [
     path('reports/getRevenue/',GetRevenue),
     path('reports/getPurchase/',GetPurchase),
     path('reports/getdetails/',GetDetails),
+    path('reports/getProfit/',GetProfit),
     
 ]

@@ -96,6 +96,20 @@ def GetPurchase(request):
     else:
         return ErrorPage(request,"Only GET allowed")
 
+def GetProfit(request):
+    if request.method=="GET":
+        cursor = connection.cursor()
+        i=1
+        data=[]
+        while(i<=12):
+            cursor.execute("Select sum(profit) from bill_bill_retailer where date_part('month',date)=%s",[i])
+            data.append(cursor.fetchall()[0][0])
+            i+=1
+
+        return HttpResponse(json.dumps(data),content_type="application/json")
+    else:
+        return ErrorPage(request,"Only GET allowed")
+
 def GetDetails(request):
     if request.method=="GET":
         cursor = connection.cursor()
@@ -118,6 +132,13 @@ def GetDetails(request):
         data.append(purchased)
         data.append(stock)
         #employee
+        cursor.execute("Select count(id) from users_user_extended")
+        emp=cursor.fetchone()[0]
+        data=[]
+        data.append(sold)
+        data.append(purchased)
+        data.append(stock)
+        data.append(emp)
         return HttpResponse(json.dumps(data),content_type="application/json")
     else:
         return ErrorPage(request,"Only GET allowed")

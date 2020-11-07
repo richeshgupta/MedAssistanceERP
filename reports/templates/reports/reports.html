@@ -15,13 +15,7 @@
     </div>
     <div class="statistic" id="stock">
     </div>
-    <div class="statistic">
-      <div class="value">
-        42
-      </div>
-      <div class="label">
-        Employee
-      </div>
+    <div class="statistic" id="emp">
     </div>
   </div>
 <div class="ui grid">
@@ -33,18 +27,21 @@
     <div class="one wide column"></div>
     <!-- style="background-color: rgb(17, 118, 206); -->
 
-    <div class="five wide column"></div>
     <div class="one wide column"></div>
-    <div class="five wide column">
+    <div class="six wide column">
         <canvas id="purchase"  height="180%"></canvas> 
     </div>
+    <div class="two wide column"></div>
+    <div class="six wide column">
+      <canvas id="profit"  height="180%"></canvas> 
+    </div>
     <div class="one wide column"></div>
-    <div class="five wide column"></div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 <script>
 rev=[]
 pur=[]
+profit=[]
 
 $.ajax({
     url: "getdetails/",
@@ -57,7 +54,7 @@ $.ajax({
       $('#sold').append('<div class="value">'+response[0]+'</div><div class="label">Items Sold</div>');
       $('#purchased').append('<div class="value">'+response[1]+'</div><div class="label">Items Purchased</div>');
       $('#stock').append('<div class="value">'+response[2]+'</div><div class="label">Items In Stock</div>');
-      //employee
+      $('#emp').append('<div class="value">'+response[3]+'</div><div class="label">Employee</div>');
     }
 });
 
@@ -79,7 +76,7 @@ new Chart(document.getElementById("revenue"), {
       datasets: [{ 
           data: rev,
           label: "Revenue",
-          borderColor: "rgb(243, 85, 12)" ,
+          backgroundColor: "rgb(243, 85, 12)" ,
           fill: true,
         }
       ],
@@ -107,7 +104,36 @@ new Chart(document.getElementById("purchase"), {
       datasets: [{ 
           data: pur,
           label: "Purchase",    
-          borderColor: "rgb(17, 118, 206)" ,
+          backgroundColor: "rgb(17, 118, 206)" ,
+          fill: true,
+        }
+      ],
+
+    },
+    options: {
+    }
+  });
+
+
+  $.ajax({
+    url: "getProfit/",
+    type: "GET",
+    traditional : true,
+    datatype:'json',
+    //synchronous
+    async: false,
+    success: function(response){
+        profit=response;
+    }
+});
+new Chart(document.getElementById("profit"), {
+    type: 'bar',
+    data: {
+      labels: ['Jan','Feb',"Mar",'Apr','May','Jun',"Jul",'Aug','Sep',"Oct",'Nov','Dec'],
+      datasets: [{ 
+          data: profit,
+          label: "Profit",    
+          backgroundColor: "rgb(53, 238, 77)" ,
           fill: true,
         }
       ],

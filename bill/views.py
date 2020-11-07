@@ -69,6 +69,7 @@ def Create_Bill_Sale(request):
             customer_email = request.POST['customer_email'],
             mode_of_payment = request.POST['mode_of_payment'],
             total_bill = request.POST['total_bill'],
+            profit = request.POST['profit'],
             name = request.POST.getlist('name'),
             company = request.POST.getlist('company'),
             batch_number = request.POST.getlist('batch_number'),
@@ -227,6 +228,7 @@ def ComputeLoss(request):
         sale_rate = request.GET.getlist('sale_rate')
         cursor = connection.cursor()
         loss=[]
+        profit=0
         i=0
         l=len(medName)
         while(i<l):
@@ -236,11 +238,14 @@ def ComputeLoss(request):
             medProductID = cursor.fetchone()[0]
             cursor.execute("SELECT purchase_rate FROM company_batch where product_id=%s and batch_number=%s",[medProductID,batch_no[i]])
             purchase_rate=cursor.fetchone()[0]
+            pro=float(sale_rate[i]) - float(purchase_rate)
+            profit+=pro
             if(float(purchase_rate) < float(sale_rate[i])):
                 loss.append('False')
             else:
                 loss.append('True')
             i+=1
+        loss.append(profit)
         return HttpResponse(json.dumps(loss), content_type='application/json')
     else:
         return ErrorPage(request,"POST requests are not allowed")

@@ -657,6 +657,7 @@
 
                 //loss
                 var loss=[];
+                var profit;
                 $.ajax({
                     url: "computeloss/",
                     type: "GET",
@@ -667,13 +668,12 @@
                     async: false,
                     data:{medName : name , medCompany : company , batch_no : batch_no , sale_rate : sale_rate},
                     success: function(response){
-                        $.each(response,function(key,value){
-                            loss.push(value);
-                        });
+                        for(i=0;i<response.length-1;i++){
+                            loss.push(response[i]);
+                        }
+                        profit=response[response.length-1]
                     }
                 });
-    
-                
                 
                 $.ajax({
                     type : 'POST',
@@ -685,6 +685,7 @@
                         customer_email : document.getElementsByName('customer_email')[0].value,
                         mode_of_payment : document.getElementsByName('mode_of_payment')[0].value,
                         total_bill : document.getElementsByName('total_bill')[0].value,
+                        profit : profit,
                         name : name,
                         company:company,
                         batch_number : batch_no,

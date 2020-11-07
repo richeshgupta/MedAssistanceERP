@@ -20,6 +20,7 @@ class Bill_Retailer(models.Model):
     deal = ArrayField(models.IntegerField(default=0))
     tax = ArrayField(models.FloatField(default=0))
     loss = ArrayField(models.BooleanField(default=False))
+    profit=models.FloatField(default=0)
     sale_rate = ArrayField(models.FloatField(null=True))
     pdf = models.FileField(upload_to='pdfs/', null=True, blank=True)
     def __str__(self):
