@@ -8,15 +8,20 @@ from django.http import HttpResponseRedirect
 from .custom_decorator import  *
 from django.contrib.auth.decorators import login_required
 from tools.backup import *
+from django.contrib.auth.views import LoginView
 
 
+class home(LoginView):
+    template_name="users/index.html"
+    
+    # def __init__(self,request):
+    #     obj = user_extended.objects.filter(user=request.user)
+    #     if(len(obj)<1):
+    #         return redirect('edit_permission')
+    #     else:
+    #         access_level = obj.access_level
+    #     return super().access_level
 
-def home(request):
-    user = request.user
-    obj = user_extended.objects.get(user=request.user)
-    access_level = obj.access_level
-    context = {'access_level':access_level}
-    return render(request,'users/index.html',context)
     
 def Test(request):
     return render(request,"users/test.html",{})
@@ -188,6 +193,6 @@ from datetime import date,timedelta
 def Reminders(request):
     start_exp_date = date.today() 
     end_exp_date =  start_exp_date + timedelta(days=60)
-    exp_obj = Batch.objects.filter(expiry__lte=end_exp_date,expiry__gte=start_exp_date)
-    less_stock = Batch.objects.filter(quantity__lte=10)
+    exp_obj = Batch.objects.filter(expiry__lte=end_exp_date,expiry__gte=start_exp_date,quantity__gt=0)
+    less_stock = Batch.objects.filter(quantity__lte=10,quantity__gt=0)
     return render(request,"users/reminders.html",{'expiry':exp_obj,'stock':less_stock})

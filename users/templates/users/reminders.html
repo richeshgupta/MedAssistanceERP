@@ -1,6 +1,12 @@
 {% extends 'users/base.html' %}
 {% block head %}   
     <title>Reminders</title>
+    <style>
+        .margin-apply
+        {
+            margin:5px;
+        }
+    </style>
 {% endblock head %}
 {% block content %}
     <div class="ui container red segment">
@@ -10,22 +16,50 @@
         <div class="ui hidden divider"></div>
         <div class="ui container">
             <h4 class="ui red segment center aligned header">
-                Expired Batches
+                Near Expiry
             </h4>
+            <br />
+            <div class="ui five wide grid container">
             {% for i in expiry %}
-                Batch No: {{i.batch_number}}<br />
-                Product : {{i.product}}<br />
-                <hr />
+            <div class="ui card margin-apply" style="margin: 2% !important;">
+                <div class="content">
+                  <div class="header">{{i.product}}</div>
+                  <div class="meta">
+                    
+                  </div>
+                  <p><br />
+                    Batch No: {{i.batch_number}}<br />
+                    Expiry Date : {{i.expiry}}<br />
+                    Stock : {{i.quantity}}<br />
+                  </p>
+                </div>
+
+            </div>
+            
+                
             {% endfor %}
-            <hr />
+           </div>
             <h4 class="ui red center aligned header segment">
                 Stock About to Expire
             </h4>
+            <div class="ui five wide grid container">
             {% for i in stock %}
-                Batch No: {{i.batch_number}}<br />
-                Product : {{i.product}}<br />
-                <hr />
+                
+                <div class="ui card margin-apply" style="margin: 2% !important;">
+                    <div class="content">
+                      <div class="header">{{i.product}}</div>
+                      <div class="meta">
+                        
+                      </div>
+                      <p><br />
+                        Batch No: {{i.batch_number}}<br />
+                        Stock : {{i.quantity}}<br />
+                      </p>
+                    </div>
+    
+                </div>
             {% endfor %}
+        </div>
         </div>
     </div>
     
