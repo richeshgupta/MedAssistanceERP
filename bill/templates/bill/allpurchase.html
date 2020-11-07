@@ -1,0 +1,69 @@
+{% extends 'users/base.html' %}
+{% block head %}   
+    <title>Select Bill</title>
+{% endblock head %}
+{% block content %}
+<h1 class="ui container center aligned header red segment">
+    Bill History
+</h1>
+<table class="ui stripped table">
+    <thead>
+        <tr>
+            <th class='ui center aligned small header'>Bill Id </th>
+            <th class='ui center aligned small header'>Date</th>
+            <th class='ui center aligned small header'>Customer Name</th>
+            <th class='ui center aligned small header'>Mode Of Payment</th>
+            <th class='ui center aligned small header'>Total Bill</th>
+            
+            <th class='ui center aligned small header'>Delete</th>
+           
+        </tr>
+    </thead>
+    <tbody class=''>
+        
+       
+        {% if bills %}
+            {% for bill in bills %}
+            <tr class="ui">
+                <td style='width:8vw' class="center aligned">
+                    {{bill.id}}
+                </td>
+                <td style='width:8vw' class="center aligned">
+                    {{bill.date}}
+                </td>
+                <td style='width:8vw' class="center aligned">
+                {{bill.customer_name}}
+                </td>
+                <td style='width:8vw' class="center aligned">
+                    {% if bill.mode_of_payment == 2 %}
+                        Credit
+                    {% else %}
+                        Cash
+                    {% endif %}
+                </td>
+                <td style='width:8vw' class="center aligned">
+                    {{bill.total_bill|floatformat}}
+                </td>
+                
+                <td style='width:8vw' class="center aligned">
+                    <a class="ui red button" href="{% url 'delete_purchase_bill' bill.id %}">Delete</div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+            {% endfor %}
+        {% else %}
+        <div class="ui container">
+            <h1 class="ui primary header blue segment">
+                No Entry to Show!
+            </h1>
+        </div>
+        
+        {% endif %}
+      
+            
+        
+
+  
+
+{% endblock content %}

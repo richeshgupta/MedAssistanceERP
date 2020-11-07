@@ -27,6 +27,8 @@ urlpatterns = [
     path('sale/computerowloss/',ComputeRowLoss),
     path('sale/getMrp/',getMrp),
     path('sale/allsale/',AllSale.as_view(),name='allsale'),
+    path('purchase/allpurchase/',AllPurchase.as_view(),name='allpurchase'),
+    path('purchase/delete/<int:pk>',DeletePurchaseBill.as_view(),name='delete_purchase_bill'),
     path('sale/delete/<int:pk>',DeleteBill.as_view(),name='delete_bill'),
 
 ]

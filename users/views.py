@@ -13,14 +13,6 @@ from django.contrib.auth.views import LoginView
 
 class home(LoginView):
     template_name="users/index.html"
-    
-    # def __init__(self,request):
-    #     obj = user_extended.objects.filter(user=request.user)
-    #     if(len(obj)<1):
-    #         return redirect('edit_permission')
-    #     else:
-    #         access_level = obj.access_level
-    #     return super().access_level
 
     
 def Test(request):

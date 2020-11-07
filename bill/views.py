@@ -36,10 +36,23 @@ class AllSale(ListView):
     context_object_name = "bills"
     ordering = ['-date']
 
+@method_decorator(login_required,name="dispatch")
+class AllPurchase(ListView):
+    model = Purchase
+    template_name="bill/allpurchase.html"
+    context_object_name = "bills"
+    ordering = ['-date']
+
 @method_decorator(is_admin_access,name="dispatch")
 class DeleteBill(DeleteView):
     model = Bill_Retailer
     success_url = reverse_lazy('allsale')
+    
+@method_decorator(is_admin_access,name="dispatch")
+class DeletePurchaseBill(DeleteView):
+    model = Purchase
+    success_url = reverse_lazy('allpurchase')
+
 
 @login_required(login_url='/')
 def Sale(request):
@@ -530,8 +543,8 @@ def GetPurchasePDF(request):
         i+=1
 
     data['product_list']=product_list
-    shop_details = Profile_Retailer.objects.all()[0]
-    print("shop",shop_details)
+    # shop_details = Profile_Retailer.objects.all()[0]
+    # print("shop",shop_details)
     template=get_template("bill/purchase_pdf_page.html")
     data_p=template.render(data)
     result = BytesIO()
