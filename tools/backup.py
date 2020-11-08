@@ -7,10 +7,11 @@ from subprocess import check_output
 def db_backup():
     print(os.name)
     date = time.time()
-    # For Windows
+   
     if os.name=='posix':
         path = '~/'
     else:
+        # For Windows
         path='D:/'
     x = str(datetime.fromtimestamp(date))
     x = (x[:10])

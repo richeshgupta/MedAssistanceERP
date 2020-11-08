@@ -36,7 +36,10 @@
 
             </div>
             
-                
+            {% empty %}
+            <div class="ui hidden divider"></div>
+            <h3 class="ui blue header">No Entry to show</h3>
+            <div class="ui hidden divider"></div><div class="ui hidden divider"></div>
             {% endfor %}
            </div>
             <h4 class="ui red center aligned header segment">
@@ -58,8 +61,39 @@
                     </div>
     
                 </div>
+            {% empty %}
+                <div class="ui hidden divider"></div>
+                <h3 class="ui blue header">No Entry to show</h3>
+                <div class="ui hidden divider"></div><div class="ui hidden divider"></div>
             {% endfor %}
         </div>
+        <h4 class="ui red center aligned header segment">
+            Cheques
+        </h4>
+        
+        <div class="ui five wide grid container">
+            {% for i in cheque %}
+                <div class="ui card margin-apply" style="margin: 2% !important;">
+                    <div class="content">
+                    <div class="header">#{{i.cheque_num}}</div>
+                    <div class="meta">
+                        
+                    </div>
+                    <p><br />
+                        Party: {{i.party_wholeseller}}<br />
+                        Date for cheque is assigned : {{i.cheque_for_assigned}}<br />
+                        Amount : {{i.amount}} <br />
+                    </p>
+                    </div>
+
+                </div>
+            {% empty %}
+                <div class="ui hidden divider"></div>
+                <h3 class="ui blue header">No Entry to show</h3>
+                <div class="ui hidden divider"></div><div class="ui hidden divider"></div>
+            {% endfor %}
+        </div>
+        
         </div>
     </div>
     
