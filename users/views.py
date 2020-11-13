@@ -183,6 +183,7 @@ def BackupPage(request):
 from company.models import *
 from cheque.models import *
 from datetime import date,timedelta
+
 def Reminders(request):
     start_exp_date = date.today() 
     end_exp_date =  start_exp_date + timedelta(days=60)
@@ -190,4 +191,5 @@ def Reminders(request):
     exp_obj = Batch.objects.filter(expiry__lte=end_exp_date,expiry__gte=start_exp_date,quantity__gt=0)
     less_stock = Batch.objects.filter(quantity__lte=10,quantity__gt=0)
     cheques = Cheque.objects.filter(date_for_assigned__lte=cheque_threshold_date)
+    
     return render(request,"users/reminders.html",{'expiry':exp_obj,'stock':less_stock,'cheque':cheques})

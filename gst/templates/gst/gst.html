@@ -1,0 +1,19 @@
+{% extends 'users/base.html' %}
+{% block head %}
+    <title>GST</title>
+{% endblock head %}
+{% block content %}
+    <div class="ui container center aligned">
+        <h1 class="ui teal segment header">
+            GST
+        </h1>
+        
+                <h2 class="ui blue header">
+                    Choose Appropriately!
+                </h2>
+                <div class="ui hidden divider"></div>
+                <a href="{% url 'saleReturn' %}" class="ui blue button">Sale Return</a>
+                <a href="{% url 'purchaseReturn' %}" class="ui blue button">Purchase Return</a>
+    </div>
+
+{% endblock content %}

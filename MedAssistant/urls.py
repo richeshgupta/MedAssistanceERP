@@ -25,5 +25,6 @@ urlpatterns = [
     path('',include('company.urls')),
     path('reports/',include('reports.urls')),
     path('',include('profile_retailer.urls')),
+    path('gst/',include('gst.urls')),
 
 ]

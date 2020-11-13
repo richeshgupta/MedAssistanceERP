@@ -1,0 +1,37 @@
+{% extends 'users/base.html' %}
+{% block head %}
+    <title>GST Sale</title>
+{% endblock head %}
+{% block content %}
+<div class="ui container">
+  <h1 class="ui segment teal header">
+      Select Month and year
+  </h1>
+  <div class="ui hidden divider"></div>
+  <div class="ui calendar" id="cal">
+     <input name="from" type="month" id="gst-date">
+  </div>
+  <div class="ui hidden divider"></div>
+  <div class="ui button" id="submit">Generate GST</div>
+</div>
+{% endblock content %}
+{% block script %}
+<script>
+    $('#submit').on('click',()=>{
+      var date_a = new Date($('#gst-date').val());
+      var month = (date_a.getMonth()+1);
+      var year = date_a.getFullYear();
+      $.ajax({
+        url:'{% url "gst-sale-return" %}',
+        type:"GET",
+        traditional:true,
+        datatype:'json',
+        data:{month:month,year:year},
+        success:()=>{
+          alert('Check D: drive!');
+        }
+
+      });
+    });
+</script>
+{% endblock script %}

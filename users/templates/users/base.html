@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
         
         
+
         <style>
             a#Logo-Text
             {
@@ -133,7 +134,7 @@
           <a class="item" href="{% url 'test' %}">Search</a>
         {% endif %}
         
-        <a class="item" href="{% url 'test' %}">GST Return</a>
+        <a class="item" href="{% url 'gst' %}">GST Return</a>
 
         {% if request.path == '/tools/' %}
           <a class="active item" href="{% url 'tools' %}">Tools</a>
@@ -159,8 +160,8 @@
     </div>
 
 <!--Required Scripts -->
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/semantic.js' %}"></script>
 
 
 {% block content %}
