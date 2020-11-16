@@ -9,6 +9,8 @@ from bill.models import *
 def Reports_View(request):
     return render(request,"reports/reports.html",{})
 
+def Search_View(request):
+    return render(request,"reports/search.html",{})
 
 class ReportView(TemplateView):
     def get(self, request):

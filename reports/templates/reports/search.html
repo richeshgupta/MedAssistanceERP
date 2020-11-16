@@ -1,0 +1,48 @@
+{% extends 'users/base.html' %}
+
+{% block head %}
+    <title>Search</title>
+{% endblock head %}
+
+{% block content %}
+<div class="ui hidden divider"></div>
+<h3 class="ui center tiny aligned icon header">
+    <i class=" circular search icon"></i>
+    <div style="font-size: large;">
+    Search
+</div>
+<br>
+
+<div class="ui one column stackable center aligned page grid">
+    <div class="column twelve wide">
+<div class="ui action input"  >
+    <input type="text" placeholder="Search...">
+    <select class="ui compact selection dropdown">
+        <option selected="" value="cust name">Customer Name</option>
+        <option value="party">Party</option>
+        <option value="date">Date</option>
+        <option value="bill no">Bill No</option>
+        <option value="rate">Rate</option>
+    </select>
+    <div class="ui button">Search</div>
+</div>
+</div>
+</div>
+<script>
+    $(document).on('click', '.ui.button', function() {
+        $.ajax({
+            url:"getdetails/",
+            type:"GET",
+            dataType:"json",
+            data:
+            {
+                
+            },
+            success:function(response)
+            {   
+
+            }
+        });
+    });
+</script>
+{% endblock content %}

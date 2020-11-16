@@ -86,8 +86,15 @@
         {% else %}
           <a class="item" href="{% url 'purchase' %}">Purchase</a>
         {% endif %}
+
+        {% if request.path == '/reports/reports/' %}
+        <a class="active item" href="{% url 'reports' %}">Reports</a>
+        {% else %}
+        <a class="item" href="{% url 'reports' %}">Reports</a>
+         {% endif %}
+
         
-        <div class="item ui simple dropdown">
+        <!-- <div class="item ui simple dropdown">
           <span class="text">Report</span>
           <i class="dropdown icon"></i>
           <div class="menu">
@@ -125,12 +132,12 @@
             </div>
 
           </div>
-        </div>
+        </div> -->
 
-        {% if request.path == '/test/' %}
-          <a class="active item" href="{% url 'test' %}">Search</a>
+        {% if request.path == '/search/' %}
+          <a class="active item" href="{% url 'search' %}">Search</a>
         {% else %}
-          <a class="item" href="{% url 'test' %}">Search</a>
+          <a class="item" href="{% url 'search' %}">Search</a>
         {% endif %}
         
         <a class="item" href="{% url 'test' %}">GST Return</a>
