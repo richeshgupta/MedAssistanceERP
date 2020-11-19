@@ -1,0 +1,17 @@
+{% extends 'users/base.html' %}
+{% block head %}
+    <title>Add Wholeseller</title>
+{% endblock head %}
+{% block content %}
+    <div class="ui container">
+        <h1 class="ui blue header segment">
+            Add Wholeseller
+        </h1>
+        <form method="POST" class="ui form">
+            {% csrf_token %}
+                {{form}}
+            <div class="ui hidden divider"></div>
+            <input type="submit" value="submit" class="ui button">
+        </form>
+    </div>
+{% endblock content %}
