@@ -431,8 +431,7 @@ class GeneratePDF(View):
             filename = "Invoice_%s.pdf" %("CustomerName_Date")
             content = "inline; filename='%s" %(filename)
             download = request.GET.get("download")
-            if download:
-                content = "attachment; filename='%s" %(filename)
+            content = "attachment; filename='%s" %(filename)
             response['Content-Disposition'] = content
             current_url = resolve(request.path_info).url_name
             print(current_url)

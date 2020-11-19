@@ -16,10 +16,9 @@
 <div class="ui one column stackable center aligned page grid">
     <div class="column twelve wide">
 <div class="ui action input"  >
-    <input type="text" placeholder="Search...">
-    <select class="ui compact selection dropdown">
+    <input id="search_input" type="text" placeholder="Search...">
+    <select id="search_category" class="ui compact selection dropdown">
         <option selected="" value="cust name">Customer Name</option>
-        <option value="party">Party</option>
         <option value="date">Date</option>
         <option value="bill no">Bill No</option>
         <option value="rate">Rate</option>
@@ -36,11 +35,12 @@
             dataType:"json",
             data:
             {
-                
+                input:document.getElementById('search_input').value,
+                category:document.getElementById('search_category').value
             },
             success:function(response)
             {   
-
+                console.log(response);
             }
         });
     });

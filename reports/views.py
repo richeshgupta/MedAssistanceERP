@@ -144,3 +144,20 @@ def GetDetails(request):
         return HttpResponse(json.dumps(data),content_type="application/json")
     else:
         return ErrorPage(request,"Only GET allowed")
+
+
+def GetSearchDetail(request):
+    if request.method=="GET":
+        inp = request.GET['input']
+        cat = request.GET['category']
+        cursor = connection.cursor()
+        if(cat=='cust name'):
+            cursor.execute("Select * from bill_bill_retailer where customer_name=%s",[inp])
+            print(cursor.fetchall())
+        elif(cat=='bill no'):
+            cursor.execute("Select * from bill_bill_retailer where id=%s",[inp])
+            print(cursor.fetchall())
+
+
+        
+
