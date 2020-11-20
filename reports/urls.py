@@ -12,5 +12,7 @@ urlpatterns = [
     path('reports/getdetails/',GetDetails),
     path('reports/getProfit/',GetProfit),
     path('search/',Search_View,name="search"),
-    path('search/getdetails/',GetSearchDetail)
+    path('search/getsaledetails/',GetSaleSearchDetail),
+    path('search/deletesalebill/',DeleteSaleBill),
+    path('search/viewsalebill/',ViewSaleBill)
 ]

@@ -23,14 +23,31 @@
         <option value="bill no">Bill No</option>
         <option value="rate">Rate</option>
     </select>
-    <div class="ui button">Search</div>
+    <div class="ui button" id='search'>Search</div>
 </div>
 </div>
 </div>
+<table class="ui stripped table">
+    {% csrf_token %}
+    <thead>
+        <tr>
+            <th class='ui center aligned small header'>Bill Id </th>
+            <th class='ui center aligned small header'>Date</th>
+            <th class='ui center aligned small header'>Customer Name</th>
+            <th class='ui center aligned small header'>Mode Of Payment</th>
+            <th class='ui center aligned small header'>Total Bill</th>
+            <th class='ui center aligned small header'>Download</th>
+            <th class='ui center aligned small header'>Delete</th>
+           
+        </tr>
+    </thead>
+    <tbody id='body'>
+    </tbody>
+</table>
 <script>
-    $(document).on('click', '.ui.button', function() {
+    $(document).on('click', '#search', function() {
         $.ajax({
-            url:"getdetails/",
+            url:"getsaledetails/",
             type:"GET",
             dataType:"json",
             data:
@@ -40,9 +57,69 @@
             },
             success:function(response)
             {   
-                console.log(response);
+                $('#body').html('');
+                $.each(response,function(key,value){
+                    $('#body').append('<tr class="ui">\
+                        <td style="width:8vw" class="center aligned">'+ value[0] +'</td>\
+                        <td style="width:8vw" class="center aligned">\
+                            '+ value[1] +'\
+                        </td>\
+                        <td style="width:8vw" class="center aligned">\
+                            '+ value[2] +'\
+                        </td>\
+                        <td style="width:8vw" class="center aligned">\
+                            {% if '+ value[4] +' == 2 %}\
+                                Credit\
+                            {% else %}\
+                                Cash\
+                            {% endif %}\
+                        </td>\
+                        <td style="width:8vw" class="center aligned">\
+                            '+ value[5] +'\
+                        </td>\
+                        <td style="width:8vw" class="center aligned">\
+                        <a class="ui blue button" data-value='+value[0]+'>Download</div>\
+                        </td>\
+                        <td style="width:8vw" class="center aligned">\
+                        <a class="ui red button" data-value='+value[0]+'>Delete</div>\
+                        </td>\
+                        </tr>');                     
+                });
+            },
+        });
+    });
+    $(document).on('click', '.ui.red.button', function() {
+        id=$(this).data("value");
+        $.ajax({
+            url:"deletesalebill/",
+            type:"POST",
+            dataType:"json",
+            data:
+            {
+                id:id,
+                csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken]').val()
+            },
+            success:function(response){
+                console.log('success');
+                document.getElementById("search").click();
             }
         });
+    });
+    $(document).on('click', '.ui.blue.button', function() {
+        id=$(this).data("value");
+        window.open('http://127.0.0.1:8000/reports/search/viewsalebill/?id='+id)
+        // $.ajax({
+        //     url:"viewsalebill/",
+        //     type:"GET",
+        //     dataType:"json",
+        //     data:
+        //     {
+        //         id:id,
+        //     },
+        //     success:function(response){
+        //         console.log(response);
+        //     }
+        // });
     });
 </script>
 {% endblock content %}
