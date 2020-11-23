@@ -147,6 +147,7 @@
                     },
                     success:function(){
                         alert('Product Added');
+                        window.location.replace("{% url 'product' %}");
                         
                     },
                     error:function(){

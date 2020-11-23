@@ -723,6 +723,7 @@
                             success:function(){
                                 alert('Updated Stock');
                                 window.open("{% url 'generatepdf' %}");
+                                window.location.replace("{% url 'sale' %}");
                             },
                             error:function(){
                                 alert('some error has ocurred!')

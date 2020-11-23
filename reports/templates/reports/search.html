@@ -108,18 +108,6 @@
     $(document).on('click', '.ui.blue.button', function() {
         id=$(this).data("value");
         window.open('http://127.0.0.1:8000/reports/search/viewsalebill/?id='+id)
-        // $.ajax({
-        //     url:"viewsalebill/",
-        //     type:"GET",
-        //     dataType:"json",
-        //     data:
-        //     {
-        //         id:id,
-        //     },
-        //     success:function(response){
-        //         console.log(response);
-        //     }
-        // });
     });
 </script>
 {% endblock content %}

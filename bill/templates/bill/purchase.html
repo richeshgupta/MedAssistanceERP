@@ -535,6 +535,7 @@
                             success:function(){
                                 alert('Updated Stock');
                                 window.open("{% url 'getpurchasepdf' %}");
+                                window.location.replace("{% url 'purchase' %}");
                             },
                             error:function(){
                                 

@@ -113,7 +113,8 @@ def AddProduct(request):
             gst = request.POST['gst'],
             free = 0,
         )
-        return HttpResponse('')
+        a='done'
+        return HttpResponse(json.dumps({'a': a}), content_type="application/json")
 
 def GetMedProducts(request):
     if request.method=="GET":
@@ -167,4 +168,5 @@ def AddBatch(request):
             purchase_rate = request.POST['purchase_rate'],
             quantity = 0,
         )
-        return HttpResponse('')
+        a='done'
+        return HttpResponse(json.dumps({'a': a}), content_type="application/json")
