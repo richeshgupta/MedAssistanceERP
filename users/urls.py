@@ -20,5 +20,7 @@ urlpatterns = [
     path('backup/',BackupPage,name='backup'),
     path('admin/',Super_Admin,name='super_admin'),
     path('reminders/',Reminders,name='reminders'),
+    path('terms/',terms,name='terms'),
+    path('privacy/',privacy,name='privacy'),
     ]
 

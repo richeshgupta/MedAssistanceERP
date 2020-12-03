@@ -199,10 +199,10 @@
               </div>
             </div>
             <div class="three wide column">
-              <h4 class="ui inverted header">Group 3</h4>
+              <h4 class="ui inverted header">Analysis</h4>
               <div class="ui inverted link list">
-                <a href="#" class="item">Link One</a>
-                <a href="#" class="item">Link Two</a>
+                <a href="{% url 'reports'%}" class="item">Reports Dashboard</a>
+                <a href="{% url 'gst' %}" class="item">GSTR</a>
               </div>
             </div>
             <div class="seven wide column">
@@ -215,8 +215,8 @@
           <div class="ui horizontal inverted small divided link list">
             
             <a class="item" href="#">Contact Us</a>
-            <a class="item" href="#">Terms and Conditions</a>
-            <a class="item" href="#">Privacy Policy</a>
+            <a class="item" href="{% url 'terms' %}">Terms and Conditions</a>
+            <a class="item" href="{% url 'privacy' %}">Privacy Policy</a>
           </div>
           <div class="ui hidden divider"></div>
           <div class="ui yellow header">&copy; All rights Reserved by Pantomath</div>

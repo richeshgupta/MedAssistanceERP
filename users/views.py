@@ -193,3 +193,9 @@ def Reminders(request):
     cheques = Cheque.objects.filter(date_for_assigned__lte=cheque_threshold_date)
     
     return render(request,"users/reminders.html",{'expiry':exp_obj,'stock':less_stock,'cheque':cheques})
+
+def terms(request):
+    return render(request,"users/terms.html",{})
+
+def privacy(request):
+    return render(request,"users/privacy.html",{})
