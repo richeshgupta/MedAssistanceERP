@@ -22,5 +22,6 @@ urlpatterns = [
     path('reminders/',Reminders,name='reminders'),
     path('terms/',terms,name='terms'),
     path('privacy/',privacy,name='privacy'),
+    path('contactus/',contactus,name='contactus'),
     ]
 

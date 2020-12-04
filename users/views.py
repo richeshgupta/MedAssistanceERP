@@ -12,7 +12,8 @@ from django.contrib.auth.views import LoginView
 
 
 class home(LoginView):
-    template_name="users/index.html"
+    template_name="users/index.html" 
+
 
     
 def Test(request):
@@ -199,3 +200,6 @@ def terms(request):
 
 def privacy(request):
     return render(request,"users/privacy.html",{})
+
+def contactus(request):
+    return render(request,"users/contactus.html")
