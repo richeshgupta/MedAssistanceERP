@@ -38,12 +38,19 @@
       <canvas id="profit"  height="180%"></canvas> 
     </div>
     <div class="one wide column"></div>
+
+    <div class="four wide column" ></div>
+    <div class="eight wide column" >
+        <canvas id="weekly"  height="120%" ></canvas>  
+    </div>
+    <div class="four wide column"></div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 <script>
 rev=[]
 pur=[]
 profit=[]
+weekly=[]
 
 $.ajax({
     url: "getdetails/",
@@ -144,6 +151,36 @@ new Chart(document.getElementById("profit"), {
     options: {
     }
   });
+
+
+$.ajax({
+    url: "getWeekly/",
+    type: "GET",
+    traditional : true,
+    datatype:'json',
+    //synchronous
+    async: false,
+    success: function(response){
+        weekly=response;
+    }
+});
+new Chart(document.getElementById("weekly"), {
+    type: 'bar',
+    data: {
+      labels: ['week1','week2','week3','week4','week5'],
+      datasets: [{ 
+          data: weekly,
+          label: "Weekly",    
+          backgroundColor: "rgb(24, 237, 212)" ,
+          fill: true,
+        }
+      ],
+
+    },
+    options: {
+    }
+  });
+
 
 </script>
 

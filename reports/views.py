@@ -9,6 +9,7 @@ from django.template.loader import get_template
 from bill.utils import render_to_pdf
 from profile_retailer.models import *
 from django.urls import resolve
+from datetime import datetime
 
 def Reports_View(request):
     return render(request,"reports/reports.html",{})
@@ -69,8 +70,9 @@ def GetRevenue(request):
         # for y in year:
         i=1
         data=[]
+        year = datetime.today().strftime("%Y")
         while(i<=12):
-            cursor.execute("Select sum(total_bill) from bill_bill_retailer where date_part('month',date)=%s",[i])
+            cursor.execute("Select sum(total_bill) from bill_bill_retailer where date_part('month',date)=%s and date_part('year',date)=%s",[i,year])
             data.append(cursor.fetchall()[0][0])
             i+=1
 
@@ -93,8 +95,9 @@ def GetPurchase(request):
         # for y in year:
         i=1
         data=[]
+        year = datetime.today().strftime("%Y")
         while(i<=12):
-            cursor.execute("Select sum(total_bill) from bill_purchase where date_part('month',date)=%s",[i])
+            cursor.execute("Select sum(total_bill) from bill_purchase where date_part('month',date)=%s and date_part('year',date)=%s",[i,year])
             data.append(cursor.fetchall()[0][0])
             i+=1
 
@@ -107,8 +110,9 @@ def GetProfit(request):
         cursor = connection.cursor()
         i=1
         data=[]
+        year = datetime.today().strftime("%Y")
         while(i<=12):
-            cursor.execute("Select sum(profit) from bill_bill_retailer where date_part('month',date)=%s",[i])
+            cursor.execute("Select sum(profit) from bill_bill_retailer where date_part('month',date)=%s and date_part('year',date)=%s",[i,year])
             data.append(cursor.fetchall()[0][0])
             i+=1
 
@@ -245,3 +249,23 @@ def ViewSaleBill(request):
     return ErrorPage(request,"PDF Not Found")
 
 
+def GetWeekly(request):
+    month = datetime.today().strftime("%m")
+    year = datetime.today().strftime("%Y")
+    cursor = connection.cursor()
+    data=[]
+    i=1
+    d=7
+    while(i<=5):
+        cursor.execute("Select sum(total_bill) from bill_bill_retailer where date_part('month',date)=%s and date_part('year',date)=%s and date_part('day',date)<=%s and  date_part('day',date)>%s",[month,year,str(d),str(d-7)])
+        a=cursor.fetchall()[0][0]
+        if(a==None):
+            data.append(0)
+        else:
+            data.append(a)
+        i+=1
+        d+=7
+        return HttpResponse(json.dumps(data),content_type="application/json")
+    else:
+        return ErrorPage(request,"Only GET allowed")
+    
