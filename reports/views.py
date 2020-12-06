@@ -9,7 +9,7 @@ from django.template.loader import get_template
 from bill.utils import render_to_pdf
 from profile_retailer.models import *
 from django.urls import resolve
-from datetime import datetime
+from datetime import datetime,timedelta
 
 def Reports_View(request):
     return render(request,"reports/reports.html",{})
@@ -30,44 +30,31 @@ class ReportView(TemplateView):
 class Bill_View(TemplateView):
     template_name = 'reports/show.html'
     def get(self, request):
-        # serializer = Bill_ViewSerializer()
-        # return JsonResponse({"category details":serializer.data})
-        # bills = Bill_Retailer.objects.all()
+
         cur = connection.cursor()
         cur.execute("Select * from bill_Bill_retailer")
         data = cur.fetchall()
-        # data = serializer.data
-        # data = serializers.serialize('json', bill_Bill_retailer.objects.all(), fields=('date'))
+       
         print(data)
         date=[]
         customer_name= []
         mail= []
         name = []
         for i in range(0,len(data)):
-        #     # args = {'date':(data[i][1], ), 'customer_name':(data[i][2], )}
+        
             date.append(data[i][1])
             customer_name.append(data[i][2])
             mail.append(data[i][3])
             name.append(data[i][6])
         args = {'date':date, 'customer_name':customer_name, 'mail':mail, 'name':name}
-        # print(args)
+        
         return render(request,self.template_name, args)
-        # return HttpResponse(json.dumps(data), content_type='application/json')
-    # return render(request,'reports/report.html',{})
 
 def GetRevenue(request):
     if request.method=="GET":
         cursor = connection.cursor()
         #years
-        # cursor.execute("Select extract(year from date) from bill_bill_retailer")
-        # data= cursor.fetchall()
-        # i=0
-        # year=[]
-        # while(i<len(data)):
-        #     if(data[i][0] not in year):
-        #         year.append(int(data[i][0]))
-        #     i+=1
-        # for y in year:
+
         i=1
         data=[]
         year = datetime.today().strftime("%Y")
@@ -84,15 +71,7 @@ def GetPurchase(request):
     if request.method=="GET":
         cursor = connection.cursor()
         #years
-        # cursor.execute("Select extract(year from date) from bill_bill_retailer")
-        # data= cursor.fetchall()
-        # i=0
-        # year=[]
-        # while(i<len(data)):
-        #     if(data[i][0] not in year):
-        #         year.append(int(data[i][0]))
-        #     i+=1
-        # for y in year:
+     
         i=1
         data=[]
         year = datetime.today().strftime("%Y")
@@ -220,7 +199,7 @@ def ViewSaleBill(request):
         GST = obj.GST
         DL = obj.DL_no
         contact = obj.contact
-        # print("shop",shop_details)
+        
     except Exception as e:
         print(e)
         shop_name = "NULL"
@@ -249,6 +228,38 @@ def ViewSaleBill(request):
     return ErrorPage(request,"PDF Not Found")
 
 
+
+def GetLastWeekData(request):
+    week_date = datetime.now() - timedelta(days=7)
+    x = Bill_Retailer.objects.filter(date__gte=week_date)
+    weekly_data=[]
+    for i in x:
+        weekly_data.append(i.total_bill)
+    return HttpResponse(json.dumps(weekly_data),content_type="application/json")
+
+def Last30days(request):
+    time_frame = datetime.now()-timedelta(days=30)
+    objs = Bill_Retailer.objects.filter(date__gte=time_frame)
+    last30days = []
+    profit30days=[]
+    for i in objs:
+        last30days.append(i.total_bill)
+        profit30days.append(i.profit)
+    
+    data = {'30daysale':sum(last30days),'30dayprofit':sum(profit30days)}
+    print("Last 30 days : ",data)
+    return HttpResponse(json.dumps(data),content_type="application/json")
+
+    
+def GetYearly(request):
+    time_frame = datetime.now() - timedelta(days=365)
+    objs = Bill_Retailer.objects.filter(date__gte=time_frame)
+    Yearly_data = []
+    for i in objs:
+        Yearly_data.append(i.total_bill)
+
+    return HttpResponse(json.dumps(sum(Yearly_data)),content_type="application/json")
+
 def GetWeekly(request):
     month = datetime.today().strftime("%m")
     year = datetime.today().strftime("%Y")
@@ -265,7 +276,9 @@ def GetWeekly(request):
             data.append(a)
         i+=1
         d+=7
+        
         return HttpResponse(json.dumps(data),content_type="application/json")
     else:
         return ErrorPage(request,"Only GET allowed")
     
+

@@ -266,6 +266,7 @@ def GetPartyWholeseller(request):
     else:
         return ErrorPage(request,"only GET requests are allowed")
 
+
 def GetMedPurchaseRate(request):
     medName = request.GET['medName']    # Getting all MedName from client
     compname = request.GET['medCompany']
@@ -428,7 +429,7 @@ class GeneratePDF(View):
         pdf = render_to_pdf('bill/sale_pdf_page.html',data)
         if pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
-            filename = "Invoice_%s.pdf" %("CustomerName_Date")
+            filename = "Sale_Invoice_%s.pdf" %(data['customer_name'])
             content = "inline; filename='%s" %(filename)
             download = request.GET.get("download")
             content = "attachment; filename='%s" %(filename)

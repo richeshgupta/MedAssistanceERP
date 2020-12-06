@@ -13,9 +13,7 @@ from django.contrib.auth.views import LoginView
 
 class home(LoginView):
     template_name="users/index.html" 
-
-
-    
+   
 def Test(request):
     return render(request,"users/test.html",{})
 
@@ -71,7 +69,7 @@ def ChangePassword(request):
         hashed_pass = curr_user.password #gets db password in hashed form
         curr_passwd = request.POST.get('cur_pass') # gets password from frontend
         passw1 = request.POST.get('pass1') #getting password 1
-        passw2 = request.POST.get('pass2') #getting password 1
+        passw2 = request.POST.get('pass2') #getting password 2
         if check_password(curr_passwd,hashed_pass): #checking if the frontend curr_pass and db curr_pass are equal
             if passw1!=passw2 or len(passw1)<8: #if both new password match
                 return  ErrorPage(request,"Passwords Do not match or Length of password is less than 8 char")
@@ -100,8 +98,6 @@ def Tools(request):
 @is_intermediate_access
 def Manage_Staff(request):
     return render(request,"users/manage_staff.html",{})
-
-
 
 
 @login_required(login_url='home')

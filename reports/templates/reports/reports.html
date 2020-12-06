@@ -10,6 +10,7 @@
     </div>
     
 </h3>
+
 <div class="ui four statistics">
     <div class="statistic" id="sold">
     </div>
@@ -19,32 +20,43 @@
     </div>
     <div class="statistic" id="emp">
     </div>
-  </div>
+</div>
+<Div class="ui hidden divider"></Div>
+<h4 class="ui horizontal divider">
+  Charts
+</h4>
+<Div class="ui hidden divider"></Div>
 <div class="ui grid">
 
     <div class="one wide column" ></div>
     <div class="fourteen wide column" >
+        <h4 class="ui orange center header">Revenue</h4>
         <canvas id="revenue"  height="65%" ></canvas>  
     </div>
     <div class="one wide column"></div>
-    <!-- style="background-color: rgb(17, 118, 206); -->
+    
 
     <div class="one wide column"></div>
     <div class="six wide column">
+      <h4 class="ui blue center header">Purchase</h4>
         <canvas id="purchase"  height="180%"></canvas> 
     </div>
     <div class="two wide column"></div>
     <div class="six wide column">
+      <h4 class="ui green center header">Profits</h4>
       <canvas id="profit"  height="180%"></canvas> 
     </div>
     <div class="one wide column"></div>
 
     <div class="four wide column" ></div>
     <div class="eight wide column" >
+      <h4 class="ui teal center header">Weekly Sales</h4>
         <canvas id="weekly"  height="120%" ></canvas>  
     </div>
     <div class="four wide column"></div>
+    
 </div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 <script>
 rev=[]
@@ -106,6 +118,49 @@ $.ajax({
         pur=response;
     }
 });
+
+
+$.ajax({
+    url: "getYearly/",
+    type: "GET",
+    traditional : true,
+    datatype:'json',
+    //synchronous
+    async: false,
+    success: function(response){
+        yearly_sale=response;
+        
+    }
+});
+
+
+$.ajax({
+    url: "lastWeek/",
+    type: "GET",
+    traditional : true,
+    datatype:'json',
+    //synchronous
+    async: false,
+    success: function(response){
+        lastweekdata=response;
+        // console.log("Week data : ",lastweekdata);
+    }
+});
+
+$.ajax({
+    url: "last30days/",
+    type: "GET",
+    traditional : true,
+    datatype:'json',
+    //synchronous
+    async: false,
+    success: function(response){
+        last30days=response;
+        // console.log("Week data : ",last30days['30daysale']);
+    }
+});
+
+
 new Chart(document.getElementById("purchase"), {
     type: 'line',
     data: {
@@ -123,7 +178,7 @@ new Chart(document.getElementById("purchase"), {
     }
   });
 
-
+  
   $.ajax({
     url: "getProfit/",
     type: "GET",
@@ -135,6 +190,12 @@ new Chart(document.getElementById("purchase"), {
         profit=response;
     }
 });
+
+var purchase_year = pur.reduce((a, b) => a + b, 0);
+var profit_year  = profit.reduce((a, b) => a + b, 0);
+
+
+
 new Chart(document.getElementById("profit"), {
     type: 'bar',
     data: {
@@ -167,7 +228,7 @@ $.ajax({
 new Chart(document.getElementById("weekly"), {
     type: 'bar',
     data: {
-      labels: ['week1','week2','week3','week4','week5'],
+      labels: ['week 1','week 2','week 3','week 4','week 5'],
       datasets: [{ 
           data: weekly,
           label: "Weekly",    
@@ -183,6 +244,55 @@ new Chart(document.getElementById("weekly"), {
 
 
 </script>
+<div class="ui hidden divider"></div>
+<div class="ui hidden divider"></div>
+<h4 class="ui horizontal divider">
+  Analyzed Facts
+</h4>
+<div class="ui grid">
+  
+  <div class="ui three column row">
+    
+    <div class="column" style="margin-left:100px;">
+      <div class="ui card ">
+        <div class="content">
+            <div class="center aligned header">This Year : </div>
+            <div class="ui hidden divider"></div>
+            <div class="center aligned description">
+                <p id="Sale_year"></p>
+                <p id="purchase_good_year"> </p>
+                <p id="Profit_year"></p>
+                <p id="Average_month_sale"></p>
+            </div>
+        </div>  
+      </div>
+    </div>
+    <div class="column">
+      <div class="ui card ">
+        <div class="content">
+            <div class="center aligned header">Last 30 Days : </div>
+            <div class="ui hidden divider"></div>
+            <div class="center aligned description">
+                <p id="30day_sale"></p>
+                <p id="30day_profit"></p>
+                
+            </div>
+        </div>  
+      </div>
+    </div>
+    
+    
+</div>
+</div>
 
-{% endblock %}
+<script>
+  document.getElementById('Sale_year').innerHTML="You sold goods of <b>Rs."+Math.round(yearly_sale)+"</b>.";
+  document.getElementById('purchase_good_year').innerHTML = "You bought goods of value<b> Rs. " +Math.round(purchase_year)+"</b>";
+  document.getElementById('Profit_year').innerHTML="You made total profit of <B>Rs."+Math.round(profit_year)+"</B>";
+  document.getElementById('Average_month_sale').innerHTML = "You made <b>Rs."+Math.round(profit_year/12)+"</b> on average / month profit.";
+  document.getElementById('30day_sale').innerHTML = "You had sale of <b>Rs. "+Math.round(last30days['30daysale'])+" </b>."
+  document.getElementById('30day_profit').innerHTML="With Profit of <b>Rs."+Math.round(last30days['30dayprofit'])+"</b>"
+
+</script>
+{% endblock content %}
 
