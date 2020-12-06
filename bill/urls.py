@@ -21,7 +21,7 @@ urlpatterns = [
     path('purchase/getPartyWholesellerID/',GetPartyWholesellerID),
     path('purchase/updateStock/',PurchaseUpdateStock),
     path('sale/updateStock/',SaleUpdateStock),
-    path('sale/getPDF/',GeneratePDF.as_view() , name='generatepdf'),
+    path('sale/getPDF/',GeneratePDF, name='generatepdf'),
     path('purchase/getPDF/',GetPurchasePDF , name='getpurchasepdf'),
     path('sale/getPurchaseRate/',getPurchaseRate),
     path('sale/computerowloss/',ComputeRowLoss),

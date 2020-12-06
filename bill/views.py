@@ -18,16 +18,14 @@ from django.contrib.staticfiles import finders
 from users.custom_decorator import *
 from django.urls import reverse_lazy
 from profile_retailer.models import *
-# Class based Views (built-in)
-# from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
-from  django.views.generic.edit import DeleteView
+from django.views.generic.edit import DeleteView
 from django.utils.decorators import method_decorator
 from django.core.files import File
 from .utils import render_to_pdf
 from django.views.generic import View
 from django.urls import resolve
-
+from django.core.mail import EmailMessage
 
 @method_decorator(login_required,name="dispatch")
 class AllSale(ListView):
@@ -250,11 +248,6 @@ def ComputeLoss(request):
     else:
         return ErrorPage(request,"POST requests are not allowed")
 
-
-
-        
-
-
 def GetPartyWholeseller(request):
     if request.method=="GET":
         cursor = connection.cursor()
@@ -365,79 +358,82 @@ def SaleUpdateStock(request):
         return HttpResponse(json.dumps({'a': a}), content_type="application/json")
 
 
-class GeneratePDF(View):
-    def get(self, request, *args, **kwargs):
-        cursor = connection.cursor()
-        cursor.execute("SELECT max(id) FROM bill_bill_retailer")
-        bill_id=cursor.fetchone()[0]
-        cursor.execute("SELECT * FROM bill_bill_retailer where id=%s",[bill_id])
-        bill=cursor.fetchone()
-        data={}
-        data['id']=bill[0]
-        data['date']=bill[1]
-        data['customer_name']=bill[2]
-        data['customer_email']=bill[3]
-        if(bill[4] == 1):
-            mop='Cash'
-        else:
-            mop='Card'
-        data['mode_of_payment']=mop
-        data['total_bill']=bill[5]
-        data['bill_id'] = bill_id
+def GeneratePDF(request):
+    cursor = connection.cursor()
+    cursor.execute("SELECT max(id) FROM bill_bill_retailer")
+    bill_id=cursor.fetchone()[0]
+    cursor.execute("SELECT * FROM bill_bill_retailer where id=%s",[bill_id])
+    bill=cursor.fetchone()
+    data={}
+    data['id']=bill[0]
+    data['date']=bill[1]
+    data['customer_name']=bill[2]
+    data['customer_email']=bill[3]
+    if(bill[4] == 1):
+        mop='Cash'
+    else:
+        mop='Card'
+    data['mode_of_payment']=mop
+    data['total_bill']=bill[5]
+    data['bill_id'] = bill_id
 
-        i=0
-        l=len(bill[6])
-        product_list=[]
-        while(i<l):
-            temp={}
-            temp['name']=bill[6][i]
-            temp['company']=bill[7][i]
-            temp['batch_number']=bill[8][i]
-            temp['quantity']=bill[9][i]
-            temp['discount']=bill[10][i]
-            temp['deal']=bill[11][i]
-            temp['tax']=bill[12][i]
-            temp['loss']=bill[13][i]
-            temp['sale_rate']=bill[14][i]
-            product_list.append(temp)
-            i+=1
+    i=0
+    l=len(bill[6])
+    product_list=[]
+    while(i<l):
+        temp={}
+        temp['name']=bill[6][i]
+        temp['company']=bill[7][i]
+        temp['batch_number']=bill[8][i]
+        temp['quantity']=bill[9][i]
+        temp['discount']=bill[10][i]
+        temp['deal']=bill[11][i]
+        temp['tax']=bill[12][i]
+        temp['loss']=bill[13][i]
+        temp['sale_rate']=bill[14][i]
+        product_list.append(temp)
+        i+=1
+    
+    data['product_list']=product_list
+    try:
+        obj = Profile_Retailer.objects.all()[0]
+        shop_name = obj.Shop_Name
+        Address  = obj.Address
+        GST = obj.GST
+        DL = obj.DL_no
+        contact = obj.contact
+        # print("shop",shop_details)
+    except Exception as e:
+        print(e)
+        shop_name = "NULL"
+        Address  = "NULL"
+        GST = "NULL"
+        DL = "NULL"
+        contact = "NULL"
         
-        data['product_list']=product_list
-        try:
-            obj = Profile_Retailer.objects.all()[0]
-            shop_name = obj.Shop_Name
-            Address  = obj.Address
-            GST = obj.GST
-            DL = obj.DL_no
-            contact = obj.contact
-            # print("shop",shop_details)
-        except Exception as e:
-            print(e)
-            shop_name = "NULL"
-            Address  = "NULL"
-            GST = "NULL"
-            DL = "NULL"
-            contact = "NULL"
-            
-        data['shop_name'] = shop_name
-        data['address']=Address
-        data['GST'] = GST
-        data['dl'] = DL
-        data['contact'] = contact
+    data['shop_name'] = shop_name
+    data['address']=Address
+    data['GST'] = GST
+    data['dl'] = DL
+    data['contact'] = contact
 
-        template = get_template("bill/sale_pdf_page.html")
-        pdf = render_to_pdf('bill/sale_pdf_page.html',data)
-        if pdf:
-            response = HttpResponse(pdf, content_type='application/pdf')
-            filename = "Sale_Invoice_%s.pdf" %(data['customer_name'])
-            content = "inline; filename='%s" %(filename)
-            download = request.GET.get("download")
-            content = "attachment; filename='%s" %(filename)
-            response['Content-Disposition'] = content
-            current_url = resolve(request.path_info).url_name
-            print(current_url)
-            return response
-        return ErrorPage(request,"PDF Not Found")
+    #code to generate pdf
+    template = get_template("bill/sale_pdf_page.html")
+    pdf = render_to_pdf('bill/sale_pdf_page.html',data)
+    if pdf:
+        response = HttpResponse(pdf, content_type='application/pdf')
+        filename = "Sale_Invoice_{cust_name}_{date}.pdf".format(cust_name=bill[2], date=bill[1])
+        content = "inline; filename=%s" %(filename)
+        download = request.GET.get("download")
+        content = "attachment; filename=%s" %(filename)
+        response['Content-Disposition'] = content
+        return response
+
+        #code that we need to put in a different function
+        email = EmailMessage('MedAssistanceERP', 'Thank You for choosing our pharmacy. A copy of your bill has been attached below.', settings.EMAIL_HOST_USER, [bill[3]])
+        email.attach_file(r"C:\Users\ADMIN\Downloads\%s" %(filename))
+        email.send()
+    return ErrorPage(request,"PDF Not Found")
 
 def GetPurchasePDF(request):
     cursor = connection.cursor()
@@ -448,13 +444,9 @@ def GetPurchasePDF(request):
     data={}
     data['id']=bill[0]
     data['date']=bill[1]
-    
-    #party id
     party_id=bill[12]
     cursor.execute("SELECT name FROM party_party_wholeseller where party_id=%s",[party_id])
     data['party']=cursor.fetchone()[0]
-
-
 
     if(bill[2] == 1):
         mop='Cash'
