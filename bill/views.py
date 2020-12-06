@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Bill_Retailer,Purchase
 from django.http import HttpResponse,JsonResponse
 from company.models import Product,Batch
@@ -428,12 +428,23 @@ def GeneratePDF(request):
         content = "attachment; filename=%s" %(filename)
         response['Content-Disposition'] = content
         return response
-
-        #code that we need to put in a different function
-        email = EmailMessage('MedAssistanceERP', 'Thank You for choosing our pharmacy. A copy of your bill has been attached below.', settings.EMAIL_HOST_USER, [bill[3]])
-        email.attach_file(r"C:\Users\ADMIN\Downloads\%s" %(filename))
-        email.send()
     return ErrorPage(request,"PDF Not Found")
+
+def MailPDF(request):
+    cursor = connection.cursor()
+    cursor.execute("SELECT max(id) FROM bill_bill_retailer")
+    bill_id=cursor.fetchone()[0]
+    cursor.execute("SELECT * FROM bill_bill_retailer where id=%s",[bill_id])
+    bill=cursor.fetchone()
+    filename = "Sale_Invoice_{cust_name}_{date}.pdf".format(cust_name=bill[2], date=bill[1])
+    email = EmailMessage('MedAssistanceERP', 'Thank You for choosing our pharmacy. A copy of your bill has been attached below.', settings.EMAIL_HOST_USER, [bill[3]])
+    email.attach_file(r"C:\Users\ADMIN\Downloads\%s" %(filename))
+    email.send()
+
+def SalePDF(request):
+    GeneratePDF(request)
+    MailPDF(request)
+    return redirect('home')
 
 def GetPurchasePDF(request):
     cursor = connection.cursor()
