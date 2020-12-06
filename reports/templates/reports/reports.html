@@ -225,6 +225,20 @@ $.ajax({
         weekly=response;
     }
 });
+
+
+$.ajax({
+    url: "get24hours/",
+    type: "GET",
+    traditional : true,
+    datatype:'json',
+    //synchronous
+    async: false,
+    success: function(response){
+        last24hours=response;
+    }
+});
+
 new Chart(document.getElementById("weekly"), {
     type: 'bar',
     data: {
@@ -251,9 +265,9 @@ new Chart(document.getElementById("weekly"), {
 </h4>
 <div class="ui grid">
   
-  <div class="ui three column row">
+  <div class="ui three column row ">
     
-    <div class="column" style="margin-left:100px;">
+    <div class="column" style="">
       <div class="ui card ">
         <div class="content">
             <div class="center aligned header">This Year : </div>
@@ -280,6 +294,20 @@ new Chart(document.getElementById("weekly"), {
         </div>  
       </div>
     </div>
+
+    <div class="column">
+      <div class="ui card ">
+        <div class="content">
+            <div class="center aligned header">Last 24 hours : </div>
+            <div class="ui hidden divider"></div>
+            <div class="center aligned description">
+                <p id="24hoursale"></p>
+                
+                
+            </div>
+        </div>  
+      </div>
+    </div>
     
     
 </div>
@@ -292,7 +320,7 @@ new Chart(document.getElementById("weekly"), {
   document.getElementById('Average_month_sale').innerHTML = "You made <b>Rs."+Math.round(profit_year/12)+"</b> on average / month profit.";
   document.getElementById('30day_sale').innerHTML = "You had sale of <b>Rs. "+Math.round(last30days['30daysale'])+" </b>."
   document.getElementById('30day_profit').innerHTML="With Profit of <b>Rs."+Math.round(last30days['30dayprofit'])+"</b>"
-
+  document.getElementById('24hoursale').innerHTML="You did sale of <b>Rs."+Math.round(last24hours)+"</b>.";
 </script>
 {% endblock content %}
 

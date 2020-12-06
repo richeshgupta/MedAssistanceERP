@@ -260,6 +260,15 @@ def GetYearly(request):
 
     return HttpResponse(json.dumps(sum(Yearly_data)),content_type="application/json")
 
+
+def Get24hours(request):
+    time_frame = datetime.now() - timedelta(days = 1)
+    objs = Bill_Retailer.objects.filter(date__gte=time_frame)
+    data24hours = []
+    for i in objs:
+        data24hours.append(i.total_bill)
+    return HttpResponse(json.dumps(sum(data24hours)),content_type='application/json')
+        
 def GetWeekly(request):
     month = datetime.today().strftime("%m")
     year = datetime.today().strftime("%Y")

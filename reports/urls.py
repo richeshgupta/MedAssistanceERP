@@ -15,6 +15,7 @@ urlpatterns = [
     path('reports/lastWeek/',GetLastWeekData),
     path('reports/last30days/',Last30days),
     path('reports/getYearly/',GetYearly),
+    path('reports/get24hours/',Get24hours),
     path('search/',Search_View,name="search"),
     path('search/getsaledetails/',GetSaleSearchDetail),
     path('search/deletesalebill/',DeleteSaleBill),
