@@ -722,7 +722,7 @@
                             },
                             success:function(){
                                 alert('Updated Stock');
-                                window.open("{% url 'salepdf' %}");
+                                window.open("{% url 'generatepdf' %}");
                                 window.location.replace("{% url 'sale' %}");
                             },
                             error:function(){

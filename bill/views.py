@@ -357,7 +357,6 @@ def SaleUpdateStock(request):
         a='done'
         return HttpResponse(json.dumps({'a': a}), content_type="application/json")
 
-
 def GeneratePDF(request):
     cursor = connection.cursor()
     cursor.execute("SELECT max(id) FROM bill_bill_retailer")
@@ -419,32 +418,21 @@ def GeneratePDF(request):
 
     #code to generate pdf
     template = get_template("bill/sale_pdf_page.html")
-    pdf = render_to_pdf('bill/sale_pdf_page.html',data)
+    # html  = template.render(data)
+    # result = BytesIO()
+    # pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+    result, pdf = render_to_pdf('bill/sale_pdf_page.html',data)
     if pdf:
         response = HttpResponse(pdf, content_type='application/pdf')
         filename = "Sale_Invoice_{cust_name}_{date}.pdf".format(cust_name=bill[2], date=bill[1])
         content = "inline; filename=%s" %(filename)
-        download = request.GET.get("download")
         content = "attachment; filename=%s" %(filename)
         response['Content-Disposition'] = content
+        email = EmailMessage('MedAssistanceERP', 'Thank You for choosing our pharmacy. A copy of your bill has been attached below.', settings.EMAIL_HOST_USER, [bill[3]])
+        email.attach("{filename}".format(filename=filename),result.getvalue(),"application/pdf")
+        email.send()
         return response
     return ErrorPage(request,"PDF Not Found")
-
-def MailPDF(request):
-    cursor = connection.cursor()
-    cursor.execute("SELECT max(id) FROM bill_bill_retailer")
-    bill_id=cursor.fetchone()[0]
-    cursor.execute("SELECT * FROM bill_bill_retailer where id=%s",[bill_id])
-    bill=cursor.fetchone()
-    filename = "Sale_Invoice_{cust_name}_{date}.pdf".format(cust_name=bill[2], date=bill[1])
-    email = EmailMessage('MedAssistanceERP', 'Thank You for choosing our pharmacy. A copy of your bill has been attached below.', settings.EMAIL_HOST_USER, [bill[3]])
-    email.attach_file(r"C:\Users\ADMIN\Downloads\%s" %(filename))
-    email.send()
-
-def SalePDF(request):
-    GeneratePDF(request)
-    MailPDF(request)
-    return redirect('home')
 
 def GetPurchasePDF(request):
     cursor = connection.cursor()
