@@ -214,16 +214,14 @@ def ViewSaleBill(request):
     data['dl'] = DL
     data['contact'] = contact
     template = get_template("bill/sale_pdf_page.html")
-    pdf = render_to_pdf('bill/sale_pdf_page.html',data)
+    result,pdf = render_to_pdf('bill/sale_pdf_page.html',data)
     if pdf:
         response = HttpResponse(pdf, content_type='application/pdf')
-        filename = "Invoice_%s.pdf" %("CustomerName_Date")
+        filename = "Sale_Invoice_{cust_name}_{date}.pdf".format(cust_name=bill[2], date=bill[1])
         content = "inline; filename='%s" %(filename)
+        content = "attachment; filename=%s" %(filename)
         download = request.GET.get("download")
-        content = "attachment; filename='%s" %(filename)
         response['Content-Disposition'] = content
-        current_url = resolve(request.path_info).url_name
-        print(current_url)
         return response
     return ErrorPage(request,"PDF Not Found")
 
