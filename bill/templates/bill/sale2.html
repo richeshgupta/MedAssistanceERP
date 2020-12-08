@@ -315,9 +315,10 @@
                         // Final Equation
                         temp += base - discount + tax;
                     
-                    
+                        
                           if(!(isNaN(temp))) // if temp is not NaN then add temp to tot (temp - > Row wise formula, Total -> all the columns' Temp)
                             {
+                                temp = Math.round(temp);
                                     tot+=temp;
                             }  
 
@@ -591,10 +592,12 @@
                         // Final Equation
                         temp += base - discount + tax;
                     
-                    
+                        
                           if(!(isNaN(temp))) // if temp is not NaN then add temp to tot (temp - > Row wise formula, Total -> all the columns' Temp)
                             {
+                                    temp = Math.round(temp);
                                     tot+=temp;
+                                    
                             }  
 
                         x+=9;

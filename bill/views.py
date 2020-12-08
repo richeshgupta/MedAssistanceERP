@@ -471,8 +471,7 @@ def GetPurchasePDF(request):
         i+=1
 
     data['product_list']=product_list
-    # shop_details = Profile_Retailer.objects.all()[0]
-    # print("shop",shop_details)
+    
     template=get_template("bill/purchase_pdf_page.html")
     data_p=template.render(data)
     result = BytesIO()

@@ -239,6 +239,19 @@ $.ajax({
     }
 });
 
+$.ajax({
+    url: "get24hoursprofit/",
+    type: "GET",
+    traditional : true,
+    datatype:'json',
+    //synchronous
+    async: false,
+    success: function(response){
+        last24hoursprofit=response;
+    }
+});
+
+
 new Chart(document.getElementById("weekly"), {
     type: 'bar',
     data: {
@@ -302,7 +315,7 @@ new Chart(document.getElementById("weekly"), {
             <div class="ui hidden divider"></div>
             <div class="center aligned description">
                 <p id="24hoursale"></p>
-                
+                <p id="24hourprofit"></p>
                 
             </div>
         </div>  
@@ -321,6 +334,7 @@ new Chart(document.getElementById("weekly"), {
   document.getElementById('30day_sale').innerHTML = "You had sale of <b>Rs. "+Math.round(last30days['30daysale'])+" </b>."
   document.getElementById('30day_profit').innerHTML="With Profit of <b>Rs."+Math.round(last30days['30dayprofit'])+"</b>"
   document.getElementById('24hoursale').innerHTML="You did sale of <b>Rs."+Math.round(last24hours)+"</b>.";
+  document.getElementById('24hourprofit').innerHTML = "with profit of <b>Rs." + Math.round(last24hoursprofit)+ " </b>";
 </script>
 {% endblock content %}
 
