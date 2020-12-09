@@ -11,7 +11,6 @@
         <tr>
             <th class='ui center aligned small header'>Bill Id </th>
             <th class='ui center aligned small header'>Date</th>
-            <th class='ui center aligned small header'>Customer Name</th>
             <th class='ui center aligned small header'>Mode Of Payment</th>
             <th class='ui center aligned small header'>Total Bill</th>
             
@@ -32,11 +31,8 @@
                     {{bill.date}}
                 </td>
                 <td style='width:8vw' class="center aligned">
-                {{bill.customer_name}}
-                </td>
-                <td style='width:8vw' class="center aligned">
                     {% if bill.mode_of_payment == 2 %}
-                        Credit
+                        Card
                     {% else %}
                         Cash
                     {% endif %}
@@ -49,9 +45,10 @@
                     <a class="ui red button" href="{% url 'delete_purchase_bill' bill.id %}">Delete</div>
                 </td>
             </tr>
+            {% endfor %}
         </tbody>
     </table>
-            {% endfor %}
+            
         {% else %}
         <div class="ui container">
             <h1 class="ui primary header blue segment">

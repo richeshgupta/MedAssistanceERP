@@ -33,7 +33,7 @@
         <tr>
             <th class='ui center aligned small header'>Bill Id </th>
             <th class='ui center aligned small header'>Date</th>
-            <th class='ui center aligned small header'>Customer Name</th>
+            <th class='ui center aligned small header'>Sale/Purchase</th>
             <th class='ui center aligned small header'>Mode Of Payment</th>
             <th class='ui center aligned small header'>Total Bill</th>
             <th class='ui center aligned small header'>Download</th>
@@ -59,20 +59,23 @@
             {   
                 $('#body').html('');
                 $.each(response,function(key,value){
+                    if(value.length==17){
+                        if(value[4]==2){
+                            m='Card';
+                        }
+                        else{
+                            m='Cash';
+                        }
                     $('#body').append('<tr class="ui">\
                         <td style="width:8vw" class="center aligned">'+ value[0] +'</td>\
                         <td style="width:8vw" class="center aligned">\
                             '+ value[1] +'\
                         </td>\
                         <td style="width:8vw" class="center aligned">\
-                            '+ value[2] +'\
+                            Sale\
                         </td>\
                         <td style="width:8vw" class="center aligned">\
-                            {% if '+ value[4] +' == 2 %}\
-                                Credit\
-                            {% else %}\
-                                Cash\
-                            {% endif %}\
+                            '+ m +'\
                         </td>\
                         <td style="width:8vw" class="center aligned">\
                             '+ value[5] +'\
@@ -83,8 +86,39 @@
                         <td style="width:8vw" class="center aligned">\
                         <a class="ui red button" data-value='+value[0]+'>Delete</div>\
                         </td>\
-                        </tr>');                     
+                        </tr>');   
+                    }
+                    else{
+                        if(value[2]==2){
+                            m='Card';
+                        }
+                        else{
+                            m='Cash';
+                        }
+                        $('#body').append('<tr class="ui">\
+                        <td style="width:8vw" class="center aligned">'+ value[0] +'</td>\
+                        <td style="width:8vw" class="center aligned">\
+                            '+ value[1] +'\
+                        </td>\
+                        <td style="width:8vw" class="center aligned">\
+                            Purchase\
+                        </td>\
+                        <td style="width:8vw" class="center aligned">\
+                            '+m+'\
+                        </td>\
+                        <td style="width:8vw" class="center aligned">\
+                            '+ value[3] +'\
+                        </td>\
+                        <td style="width:8vw" class="center aligned">\
+                        <a class="ui blue button" data-value='+value[0]+'>Download</div>\
+                        </td>\
+                        <td style="width:8vw" class="center aligned">\
+                        <a class="ui red button" data-value='+value[0]+'>Delete</div>\
+                        </td>\
+                        </tr>');   
+                    }                  
                 });
+
             },
         });
     });

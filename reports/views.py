@@ -138,15 +138,26 @@ def GetSaleSearchDetail(request):
         inp = request.GET['input']
         cat = request.GET['category']
         cursor = connection.cursor()
+        sale=[]
+        pur=[]
         if(cat=='cust name'):
             cursor.execute("Select * from bill_bill_retailer where customer_name=%s",[inp])
         elif(cat=='bill no'):
             cursor.execute("Select * from bill_bill_retailer where id=%s",[inp])
+            sale=cursor.fetchall()
+            cursor.execute("Select * from bill_purchase where id=%s",[inp])
+            pur=cursor.fetchall()
         elif(cat=='date'):
             cursor.execute("Select * from bill_bill_retailer where date=%s",[inp])
+            sale=cursor.fetchall()
+            cursor.execute("Select * from bill_purchase where date=%s",[inp])
+            pur=cursor.fetchall()
         elif(cat=='rate'):
             cursor.execute("Select * from bill_bill_retailer where total_bill=%s",[inp])
-        data= cursor.fetchall()
+            sale=cursor.fetchall()
+            cursor.execute("Select * from bill_purchase where total_bill=%s",[inp])
+            pur=cursor.fetchall()
+        data=sale+pur
         return JsonResponse(data, content_type='application/json',safe=False)
 
 def DeleteSaleBill(request):
