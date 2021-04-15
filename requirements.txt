@@ -4,3 +4,4 @@ django-phone-field==1.8.1
 pytz==2020.1
 sqlparse==0.3.1
 psycopg2-binary==2.8.5
+xhtml2pdf
