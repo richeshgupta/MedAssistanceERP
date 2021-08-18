@@ -1,4 +1,8 @@
 # Live Website (demo)
+Admin Credentials - 
+username - admin
+password - admin123
+
 [Live Website](http://med.securebit.tech:8000)
 
 # MedAssistance ERP - For Pharmacies of India
