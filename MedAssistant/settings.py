@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'MedAssistant.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'MedDb',
+        'NAME': 'simple',
         'USER': 'postgres',
         'PASSWORD': 'admin123',
         'HOST': '127.0.0.1',

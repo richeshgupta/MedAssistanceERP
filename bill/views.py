@@ -52,10 +52,13 @@ class DeletePurchaseBill(DeleteView):
     success_url = reverse_lazy('allpurchase')
 
 
+
 @login_required(login_url='/')
 def Sale(request):
     return render(request,"bill/sale2.html",{})
 
+
+@login_required(login_url='/')
 def Bill_Purchase(request):
     return render(request,"bill/purchase.html",{})
 
@@ -83,6 +86,8 @@ def Create_Bill_Sale(request):
     # else:
     #     return ErrorPage(request,"Only POST allowed")
 
+
+@login_required(login_url='home')
 def Create_Bill_Purchase(request):
     if request.method == 'POST':
         Purchase.objects.create(

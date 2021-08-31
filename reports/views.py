@@ -1,3 +1,5 @@
+from users.custom_decorator import is_admin_access
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse,JsonResponse
 from django.shortcuts import render,redirect
 from django.db import connection
@@ -14,6 +16,7 @@ from datetime import datetime,timedelta
 def Reports_View(request):
     return render(request,"reports/reports.html",{})
 
+@login_required(login_url='/')
 def Search_View(request):
     return render(request,"reports/search.html",{})
 
@@ -160,6 +163,7 @@ def GetSaleSearchDetail(request):
         data=sale+pur
         return JsonResponse(data, content_type='application/json',safe=False)
 
+@is_admin_access
 def DeleteSaleBill(request):
     if request.method=="POST":
         id=request.POST['id']

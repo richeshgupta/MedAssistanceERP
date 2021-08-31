@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from django.contrib.auth import logout
+from django.contrib.auth import login, logout
 from .forms import SignUpForm,User_Extended_Form
 from django.contrib.auth.models import User
 from .models import user_extended
@@ -62,6 +62,8 @@ def Signup(request):
         
 
 from django.contrib.auth.hashers import make_password, check_password
+
+
 @login_required(login_url="home")
 def ChangePassword(request):
     if request.method=="POST":
@@ -87,10 +89,11 @@ def ChangePassword(request):
         
     return render(request,"users/change_pass.html",{}) #if get req. sent only this get executed
 
+@login_required(login_url='/')
 def Settings(request):
     return render(request,"users/settings.html",{})
 
-
+@login_required(login_url='/')
 def Tools(request):
     return render(request,'users/tools.html',{})
 
