@@ -34,9 +34,9 @@ password - admin123
 - Analysis of profit and sales based during past week,past month and past year.
 
 
-Features to me added - 
+Features to be added - 
 - Commission Module
-- SHortcuts assigns for some commonly used features
+- Shortcuts assigns for some commonly used features
 
 ----
 ### Color Combination used 
