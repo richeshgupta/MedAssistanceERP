@@ -1,9 +1,6 @@
-# Live Website (demo)
-Admin Credentials - 
-username - admin
-password - admin123
+# YT Demo
 
-[Live Website](http://med.securebit.tech:8000)
+[YT Demo](https://youtu.be/Rcr2Uplwlfg?si=QseQ9zAJKv4U0LCj)
 
 # MedAssistance ERP - For Pharmacies of India
     `We're trying to develop an ERP for pharmacy needs, which includes Inventory management,GST filing,
