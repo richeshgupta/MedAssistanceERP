@@ -1,10 +1,7 @@
-# YT Demo
-
-[YT Demo](https://youtu.be/Rcr2Uplwlfg?si=QseQ9zAJKv4U0LCj)
-
 # MedAssistance ERP - For Pharmacies of India
     `We're trying to develop an ERP for pharmacy needs, which includes Inventory management,GST filing,
     intuitive reports of sale and purchases,profit calculator and everything in between.`
+[YouTube Demo Video](https://youtu.be/Rcr2Uplwlfg?si=QseQ9zAJKv4U0LCj)
 ----
 ### Features
 - Adding Entries of medicines ( purchases )
